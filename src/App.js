@@ -47,10 +47,10 @@ function App() {
         <Route path="/why-buy-made-in-usa" component={WhyMadeInUsaPage} exact />
         <Route path="/product-details" component={CartPage} exact />
         <Route path="/signin" exact >
-          {isLoggedIn ? <Redirect to='/' /> : <SignInPage />}
+          {isLoggedIn ? <Redirect to='/' /> : <SignInPage setIsloggedIn={setIsloggedIn} />}
         </Route>
         <Route path="/signup" exact >
-          {isLoggedIn ? <Redirect to='/' /> : <SignUpPage />}
+          {isLoggedIn ? <Redirect to='/' /> : <SignUpPage setIsloggedIn={setIsloggedIn} />}
         </Route>
         <Route path="/coming-soon" component={ComingSoonPage} exact />
 

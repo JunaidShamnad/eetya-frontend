@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar/index";
 import Footer from "../components/Footer/index";
 import SignIn from "../components/SignIn/SignIn";
 
-const SignInPage = () => {
+const SignInPage = ({setIsloggedIn}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -14,7 +14,7 @@ const SignInPage = () => {
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
-       <SignIn/>
+       <SignIn setIsloggedIn={setIsloggedIn}/>
       <Footer />
     </>
   );

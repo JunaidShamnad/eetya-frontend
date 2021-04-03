@@ -26,9 +26,7 @@ const AddProduct = () => {
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
-
-
-
+  
   const addProducts = (e) => {
     e.preventDefault()
     Axios({
@@ -41,9 +39,20 @@ const AddProduct = () => {
         image: file
       },
       withCredentials: true,
-      url: "http://localhost:4000/add-item",
+      url: "http://localhost:4000/dealer/add-item",
     }).then((res) => {
-      console.log(res);
+       
+        if(res.data.loginErr) alert('Login failed')
+        else if(res.data.err) alert(res.data.err)
+        else {
+          setTitle('')
+          setDescription('')
+          setCategory('')
+          setPrice('')
+          setFile('')
+          alert('product added successfully')
+        }
+        window.location.reload();
     })
   };
 

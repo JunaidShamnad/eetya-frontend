@@ -13,7 +13,7 @@ import {
   SigninText,
 } from "./SignIn.elements";
 
-const SignIn = () => {
+const SignIn = ({setIsloggedIn}) => {
 
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -24,13 +24,19 @@ const SignIn = () => {
     Axios({
       method: "POST",
       data: {
-        username: loginUsername,
+        email: loginUsername,
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:4000/login",
+      url: "http://localhost:4000/dealer/login",
     }).then((res) => {
+      if(res.data.err) alert(res.data.err)
+     else {
+      setIsloggedIn(true)
       localStorage.user = JSON.stringify(res.data)
+      console.log(res);
+     }
+
     });
   };
   return (
@@ -40,9 +46,9 @@ const SignIn = () => {
           <FormContent>
             <Form action="#">
               <FormH1>Sign In</FormH1>
-              <Formlabel htmlFor="for">User Name</Formlabel>
+              <Formlabel htmlFor="for">Email</Formlabel>
               <FormInput
-                type="text"
+                type="email"
                 onChange={(e) => setLoginUsername(e.target.value)}
                 required
               />
