@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
 import GlobalStyle from "./globalStyles";
 import MainPage from "./pages/MainPage";
@@ -23,6 +23,9 @@ import UserDetailsPage from "./pages/UserDetailsPage";
 import AddProductPage from "./pages/AddProductPage";
 
 function App() {
+
+  const [isLoggedIn, setIsloggedIn] = useState(false)
+  const [userData, setUserData] = useState(null)
   return (
     <Router>
       <GlobalStyle />
@@ -43,12 +46,16 @@ function App() {
         <Route path="/what-we-do" component={WhatWeDoPage} exact />
         <Route path="/why-buy-made-in-usa" component={WhyMadeInUsaPage} exact />
         <Route path="/product-details" component={CartPage} exact />
-        <Route path="/signin" component={SignInPage} exact />
-        <Route path="/signup" component={SignUpPage} exact />
+        <Route path="/signin" exact >
+          {isLoggedIn ? <Redirect to='/' /> : <SignInPage />}
+        </Route>
+        <Route path="/signup" exact >
+          {isLoggedIn ? <Redirect to='/' /> : <SignUpPage />}
+        </Route>
         <Route path="/coming-soon" component={ComingSoonPage} exact />
-        
+
         <Route path="*" component={NotFoundPage} exact />
-        
+
       </Switch>
     </Router>
   );

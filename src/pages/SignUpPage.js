@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar/index";
 import Footer from "../components/Footer/index";
 import SignUp from "../components/SignUp/SignUp"
 
-const SignUpPage = () => {
+const SignUpPage = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -14,7 +14,7 @@ const SignUpPage = () => {
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
-       <SignUp/>
+      <SignUp />
       <Footer />
     </>
   );

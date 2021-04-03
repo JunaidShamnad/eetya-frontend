@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Axios from "axios";
 import {
   Container,
@@ -14,12 +14,13 @@ import {
 } from "./SignIn.elements";
 
 const SignIn = () => {
- 
+
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  
- 
-  const login = () => {
+
+
+  const login = (e) => {
+    e.preventDefault()
     Axios({
       method: "POST",
       data: {
@@ -28,9 +29,10 @@ const SignIn = () => {
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
-    }).then((res) => console.log(res));
+    }).then((res) => {
+      localStorage.user = JSON.stringify(res.data)
+    });
   };
-
   return (
     <>
       <Container>
