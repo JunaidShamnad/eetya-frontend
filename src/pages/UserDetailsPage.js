@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar/index";
 import Navbar from "../components/Navbar/index";
 import Footer from "../components/Footer/index";
@@ -10,11 +10,12 @@ const UserDetailsPage = () => {
     setIsOpen(!isOpen);
   };
 
+
   return (
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
-      <UserDetails/>
+      <UserDetails />
       <Footer />
     </>
   );

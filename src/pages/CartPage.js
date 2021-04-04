@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar/index";
 import Navbar from "../components/Navbar/index";
@@ -13,11 +14,13 @@ const CartPage = () => {
     setIsOpen(!isOpen);
   };
 
+  const { id } = useParams()
+
   return (
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
-      <ProductDetails />
+      <ProductDetails id={id} />
       <HomeProducts />
       <HeaderTwo />
       <HeaderThree />

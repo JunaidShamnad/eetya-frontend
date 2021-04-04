@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar/index";
 import Footer from "../components/Footer/index";
 import SignUp from "../components/SignUp/SignUp"
 
-const SignUpPage = (props) => {
+const SignUpPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);

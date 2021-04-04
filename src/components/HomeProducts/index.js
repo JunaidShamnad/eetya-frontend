@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 // import { Products } from "../../data/Products";
+import { CardMedia } from '@material-ui/core'
+
 import Axios from "axios";
 import {
   Logo,
@@ -66,8 +69,8 @@ const HomeProducts = () => {
         <CardContainer>
           {productData.map((item, index) => {
             return (
-              <Card>
-                <ImageContainer key={index} />
+              <Card key={index}>
+                <ImageContainer src={item.image} />
                 <ProductUl>
                   <ProductLi>
                     <ProductTitle>{item.title}</ProductTitle>

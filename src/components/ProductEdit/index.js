@@ -99,8 +99,8 @@ const ProductEdit = () => {
               <Formlabel>Upload Image </Formlabel>
               <FormInput type="file" />
               <ButtonDiv>
-                <BuyButton type="submit"  onClick={editProducts}>Update</BuyButton>
-              
+                <BuyButton type="submit" onClick={editProducts}>Update</BuyButton>
+
               </ButtonDiv>
             </Form>
           </RightDiv>

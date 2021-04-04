@@ -13,11 +13,19 @@ import {
   SigninText,
 } from "./SignIn.elements";
 
-const SignIn = ({setIsloggedIn}) => {
+const SignIn = ({ path }) => {
 
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  if (path === 'buyer' || path === 'dealer' || path === 'admin') {
+    if (localStorage.isLoggedIn === 'true') {
+      if (localStorage.role === 'a') window.location.replace('/admin')
+      else if (localStorage.role === 'd') window.location.replace('/dealer-products')
+      else if (localStorage.role === 'b') window.location.replace('/home')
+    }
+  }
+  else window.location.replace('/')
 
   const login = (e) => {
     e.preventDefault()
@@ -28,14 +36,27 @@ const SignIn = ({setIsloggedIn}) => {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:4000/dealer/login",
-    }).then((res) => {
-      if(res.data.err) alert(res.data.err)
-     else {
-      setIsloggedIn(true)
-      localStorage.user = JSON.stringify(res.data)
-      console.log(res);
-     }
+      url: `http://localhost:4000/${path}/login`,
+    }).then(({ data }) => {
+      if (data.err) alert(data.err)
+      else {
+        console.log(data.role);
+        if (path === 'dealer') {
+          localStorage.role = 'd'
+          localStorage.isLoggedIn = 'true'
+          window.location.replace('/dealer-products')
+        }
+        else if (path === 'buyer') {
+          localStorage.role = 'b'
+          localStorage.isLoggedIn = 'true'
+          window.location.replace('/home')
+        }
+        else if (path === 'admin') {
+          localStorage.role = 'a'
+          localStorage.isLoggedIn = 'true'
+          window.location.replace('/admin')
+        }
+      }
 
     });
   };

@@ -12,25 +12,26 @@ import {
   SignupText,
 } from "./SignUp.elements";
 
-const SignUp = () => {
-  const [registerUsername , setRegisterUsername] = useState("");
-  const [registerEmail , setRegisterEmail] = useState("");
-  const [registerPassword , setRegisterPassword] = useState("");
-  const [registerPrimaryPhone , setRegisterPrimaryPhone] = useState("");
-  const [registerSecondaryNumber , setRegisterSecondaryNumber] = useState("");
-  const [registerAlternativeEmail , setRegisterAlternativeEmail] = useState("");
-  const [registerCompanyName , setRegisterCompanyName] = useState("");
-  const [registerRegistrationNumber , setRegisterRegistrationNumber] = useState("");
-  const [registerTypeOfBusiness , setRegisterTypeOfBusiness] = useState("");
-  const [registerWebsite , setRegisterWebsite] = useState("");
-  const [registerBillingAddress , setRegisterBillingAddress] = useState("");
-  const [registerShippingAddress , setRegisterShippingAddress] = useState("");
+const SignUp = ({ root }) => {
+  const [registerUsername, setRegisterUsername] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPrimaryPhone, setRegisterPrimaryPhone] = useState("");
+  const [registerSecondaryNumber, setRegisterSecondaryNumber] = useState("");
+  const [registerAlternativeEmail, setRegisterAlternativeEmail] = useState("");
+  const [registerCompanyName, setRegisterCompanyName] = useState("");
+  const [registerRegistrationNumber, setRegisterRegistrationNumber] = useState("");
+  const [registerTypeOfBusiness, setRegisterTypeOfBusiness] = useState("");
+  const [registerWebsite, setRegisterWebsite] = useState("");
+  const [registerBillingAddress, setRegisterBillingAddress] = useState("");
+  const [registerShippingAddress, setRegisterShippingAddress] = useState("");
 
-  const register = () => {
+  const register = (e) => {
+    e.preventDefault()
     Axios({
       method: "POST",
       data: {
-        username: registerUsername,
+        name: registerUsername,
         email: registerEmail,
         password: registerPassword,
         primaryPhone: registerPrimaryPhone,
@@ -44,19 +45,30 @@ const SignUp = () => {
         shippingAddress: registerShippingAddress,
       },
       withCredentials: true,
-      url: "http://localhost:4000/register",
+      url: root ? "http://localhost:4000/dealer/signUp" : "http://localhost:4000/buyer/signUp",
     }).then((res) => {
       console.log(res);
+      if (res.data.err) alert(res.data.err)
+      else {
+        alert(res.data.msg)
+        localStorage.isLoggedIn = 'true'
+        localStorage.role = res.data.role
+        if (localStorage.role === 'b') window.location.replace('/products')
+        else window.location.replace('/dealer-products')
+      }
     });
   };
-
+  if (localStorage.isLoggedIn === 'true') {
+    if (localStorage.role === 'b') window.location.replace('/products')
+    else window.location.replace('/dealer-products')
+  }
   return (
     <>
       <Container>
         <FormWrap>
           <FormContent>
             <Form action="#">
-              <FormH1>Sign Up</FormH1>
+              <FormH1>{root && 'Seller'} Sign Up</FormH1>
               <div className="container">
                 <div className="left-sec">
                   <Formlabel htmlFor="for">User Name</Formlabel>

@@ -34,6 +34,7 @@ const ProductsSection = () => {
       withCredentials: true,
       url: "http://localhost:4000/items",
     }).then((res) => {
+
       setProductData(res.data);
       console.log(res.data);
     });
@@ -64,8 +65,8 @@ const ProductsSection = () => {
         <CardContainer>
           {productData.map((item, index) => {
             return (
-              <Card key={index} to={{pathname: `product-details/${item._id}`}}>
-                <ImageContainer   />
+              <Card key={index} to={{ pathname: `product-details/${item._id}` }}>
+                <ImageContainer src={item.image} />
                 <ProductUl>
                   <ProductLi>
                     <ProductTitle>{item.title}</ProductTitle>

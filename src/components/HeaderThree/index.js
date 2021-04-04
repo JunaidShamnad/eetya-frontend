@@ -17,10 +17,10 @@ const HeaderThree = () => {
       <MainDiv>
         <MainContainer>
           <TextContainer>
-          <MainTitle> Become A Member</MainTitle>
-          <SecondaryText>Of This Growing Communtity</SecondaryText>
-          <ShopButton> Register Now <ShopBtnArrow /> </ShopButton>
-          <SecondBtn>Let's Talk</SecondBtn>
+            <MainTitle> Become A Member</MainTitle>
+            <SecondaryText>Of This Growing Communtity</SecondaryText>
+            <ShopButton to='/signup'> Register Now <ShopBtnArrow /> </ShopButton>
+            <SecondBtn>Let's Talk</SecondBtn>
           </TextContainer>
           <MainImage />
         </MainContainer>

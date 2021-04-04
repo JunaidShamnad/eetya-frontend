@@ -11,6 +11,20 @@ import {
   SidebarRoute,
 } from "./Sidebar.elements";
 
+const logout = () => {
+  Axios({
+    url: 'http://localhost:4000/logout',
+    method: 'GET',
+    withCredentials: true
+  }).then(({ data }) => {
+    if (data.err) alert('failed')
+    else {
+      localStorage.isLoggedIn = 'false'
+      window.location.replace('/home')
+    }
+  })
+}
+
 const Sidebar = ({ isOpen, toggle }) => {
   const [data, setData] = useState(null);
 
@@ -43,6 +57,9 @@ const Sidebar = ({ isOpen, toggle }) => {
           </SidebarLink>
           <SidebarLink to="/contact-us" onClick={toggle}>
             Contact Us
+          </SidebarLink>
+          <SidebarLink onClick={toggle, logout}>
+            Log out
           </SidebarLink>
         </SidebarMenu>
         <SideBtnWrap>

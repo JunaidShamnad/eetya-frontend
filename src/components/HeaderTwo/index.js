@@ -22,7 +22,7 @@ const HeaderTwo = () => {
           <FashionLineTwo />
           <SecondaryText>Sell Your</SecondaryText>
           <MainTitle>  Products </MainTitle>
-          <ShopButton> Register Now <ShopBtnArrow /> </ShopButton>
+          <ShopButton to='/signup-seller'> Register Now <ShopBtnArrow /> </ShopButton>
           <MainImage />
         </MainContainer>
       </MainDiv>

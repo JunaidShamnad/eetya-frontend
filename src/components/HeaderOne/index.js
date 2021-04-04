@@ -20,7 +20,7 @@ const HeaderOne = () => {
           <FashionText> FASHION STYLE </FashionText>
           <FashionLineTwo />
           <MainTitle> SEASON SALE </MainTitle>
-          <ShopButton> Shop Now <ShopBtnArrow /> </ShopButton>
+          <ShopButton to='/products'> Shop Now <ShopBtnArrow /> </ShopButton>
           <MainImage />
         </MainContainer>
       </MainDiv>
