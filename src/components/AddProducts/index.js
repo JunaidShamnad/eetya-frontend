@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
-import FileBase from 'react-file-base64'
-import Axios from 'axios'
+import FileBase from "react-file-base64";
+import Axios from "../../axios";
 import { ProductShowcase } from "../../data/Products";
 import {
   LeftDiv,
@@ -14,21 +14,34 @@ import {
   MainImageDiv,
 } from "../ProductDetails/ProductDetails.elements";
 import { Form, FormInput, Formlabel } from "../SignUp/SignUp.elements";
-import { RightDiv, FadeText, DeleteIcon, Maintitle } from "../ProductEdit/ProductEdit.elements";
+import {
+  RightDiv,
+  FadeText,
+  DeleteIcon,
+  Maintitle,
+} from "../ProductEdit/ProductEdit.elements";
 
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([ ]);
   const [price, setPrice] = useState("");
   const [file, setFile] = useState(""); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
-  
+  let categories = [];
+  useEffect(() => {
+    Axios.get("/category").then((res) => {
+      setCategory(res.data);
+    });
+
+    console.log(categories);
+  }, []);
+
   const addProducts = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     Axios({
       method: "POST",
       data: {
@@ -36,26 +49,24 @@ const AddProduct = () => {
         description: description,
         category: category,
         price: price,
-        image: file
+        image: file,
       },
       withCredentials: true,
-      url: "http://localhost:4000/dealer/add-item",
+      url: "/dealer/add-item",
     }).then((res) => {
-       
-        if(res.data.loginErr) alert('Login failed')
-        else if(res.data.err) alert(res.data.err)
-        else {
-          setTitle('')
-          setDescription('')
-          setCategory('')
-          setPrice('')
-          setFile('')
-          alert('product added successfully')
-        }
-        window.location.reload();
-    })
+      if (res.data.loginErr) alert("Login failed");
+      else if (res.data.err) alert(res.data.err);
+      else {
+        setTitle("");
+        setDescription("");
+        setCategory("");
+        setPrice("");
+        setFile("");
+        alert("product added successfully");
+      }
+      window.location.reload();
+    });
   };
-
 
   return (
     <>
@@ -68,7 +79,6 @@ const AddProduct = () => {
                 <>
                   <Maintitle>Image Preview</Maintitle>
                   <MainImageDiv>
-
                     <MainImageConatiner src={item.image} key={index} />
                   </MainImageDiv>
                   <SubImageDiv>
@@ -82,34 +92,54 @@ const AddProduct = () => {
           </LeftDiv>
 
           <RightDiv>
-
             <Form action="#">
               <DeleteIcon />
               <Formlabel>Product Name</Formlabel>
-              <FormInput onChange={(e) => setTitle(e.target.value)} required type="text" />
+              <FormInput
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                type="text"
+              />
 
               <Formlabel>Product Details</Formlabel>
-              <FormInput onChange={(e) => setDescription(e.target.value)} required type="text" />
+              <FormInput
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                type="text"
+              />
 
               <Formlabel>Product Category</Formlabel>
-              <FormInput onChange={(e) => setCategory(e.target.value)} required type="text" />
+              <select   required>
+                {categories.map((category,index) => {
+                  return (
+                    <option key={index} value={category.categoryName}>
+                      {category.categoryName}
+                    </option>
+                  );
+                })}
+              </select>
 
               <Formlabel>Product Price</Formlabel>
-              <FormInput onChange={(e) => setPrice(e.target.value)} required type="text" />
+              <FormInput
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                type="text"
+              />
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
               <FileBase
-                type='file'
+                type="file"
                 multiple={false}
                 onDone={({ base64 }) => setFile(base64)}
               />
               {/* displaying received image*/}
               {data.path && <img src={data.path} alt={data.name} />}
               <ButtonDiv>
-                <BuyButton type="submit" onClick={addProducts} >Add Product</BuyButton>
+                <BuyButton type="submit" onClick={addProducts}>
+                  Add Product
+                </BuyButton>
               </ButtonDiv>
             </Form>
-
           </RightDiv>
         </Row>
       </MainDiv>

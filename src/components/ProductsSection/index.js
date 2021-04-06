@@ -26,17 +26,20 @@ import {
   RightArrow,
 } from "./ProductsSection.elements";
 
+import Products from "../../data/Products"
 const ProductsSection = () => {
-  const [productData, setProductData] = useState([]);
+  const [ProductData, setProductData] = useState([]);
   useEffect(() => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:4000/items",
-    }).then((res) => {
-      setProductData(res.data);
-      console.log(res.data);
-    });
+    // Axios({
+    //   method: "GET",
+    //   withCredentials: true,
+    //   url: "http://localhost:4000/items",
+    // }).then((res) => {
+    //   setProductData(res.data);
+    //   console.log(res.data);
+    // });
+    setProductData(Products)
+    console.log(ProductData);
   }, []);
 
   return (
@@ -62,13 +65,13 @@ const ProductsSection = () => {
           </NavMenu>
         </NavbarContainer>
         <CardContainer>
-          {productData.map((item, index) => {
+          {ProductData.map((item, index) => {
             return (
               <Card key={index} to={{pathname: `product-details/${item._id}`}}>
-                <ImageContainer   />
+                <ImageContainer src={item.image}  />
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.title}</ProductTitle>
+                    <ProductTitle>{item.heading}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>

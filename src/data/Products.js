@@ -1,6 +1,25 @@
 import ImageOne from "../images/Mask-Group-5.jpg";
-
-export const Products = [
+const Products = [
+  {
+    heading: "Tea Stralner",
+    price: "$30",
+    image: ImageOne,
+  },
+  {
+    heading: "T Stralner",
+    price: "$40",
+    image: ImageOne,
+  },
+  {
+    heading: "Ta Stralner",
+    price: "$34",
+    image: ImageOne,
+  },
+  {
+    heading: "Tea Stlner",
+    price: "$30",
+    image: ImageOne,
+  },
   {
     heading: "Tea Stralner",
     price: "$30",
@@ -22,6 +41,8 @@ export const Products = [
     image: ImageOne,
   },
 ];
+
+export default Products;
 
 export const ProductShowcase = [
   {

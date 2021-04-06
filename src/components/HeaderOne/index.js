@@ -10,8 +10,12 @@ import {
   ShopBtnArrow,
   MainImage,
 } from "./HeaderOne.elements";
+import { Link, Redirect } from "react-router-dom";
+
+import { useHistory } from "react-router-dom";
 
 const HeaderOne = () => {
+  const history = useHistory();
   return (
     <>
       <MainDiv>
@@ -19,8 +23,15 @@ const HeaderOne = () => {
           <FashionLine />
           <FashionText> FASHION STYLE </FashionText>
           <FashionLineTwo />
-          <MainTitle> SEASON SALE </MainTitle>
-          <ShopButton> Shop Now <ShopBtnArrow /> </ShopButton>
+          <MainTitle> SEASON SALE</MainTitle>
+          <ShopButton
+            onClick={() => {
+              history.push("/products");
+            }}
+          >
+            {" "}
+            Shop Now <ShopBtnArrow />{" "}
+          </ShopButton>
           <MainImage />
         </MainContainer>
       </MainDiv>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { Products } from "../../data/Products";
-import Axios from "axios";
+import Axios from '../../axios';
 import {
   Logo,
   NavbarContainer,
@@ -23,19 +22,26 @@ import {
   ProductLi,
 } from "./HomeProducts.elements";
 
+import Products from "../../data/Products"
+
 const HomeProducts = () => {
-  const [productData, setProductData] = useState([]);
+  const [ProductData, setProductData] = useState([]);
 
   useEffect(() => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:4000/items",
-    }).then((res) => {
-      setProductData(res.data);
-      console.log(res.data);
-    });
+    // Axios({
+    //   method: "GET",
+    //   withCredentials: true,
+    //   url: "http://localhost:4000/items",
+    // }).then((res) => {
+    //   setProductData(res.data);
+    //   console.log(res.data);
+    // });
+    setProductData(Products)
+    console.log(ProductData);
   }, []);
+
+  
+  
   return (
     <>
       <MainDiv>
@@ -64,13 +70,13 @@ const HomeProducts = () => {
           </NavMenu>
         </NavbarContainer>
         <CardContainer>
-          {productData.map((item, index) => {
+          {ProductData.map((item, index) => {
             return (
               <Card>
-                <ImageContainer key={index} />
+                <ImageContainer src={item.image} key={index} />
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.title}</ProductTitle>
+                    <ProductTitle>{item.heading}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>

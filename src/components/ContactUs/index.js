@@ -22,12 +22,17 @@ import {
 } from "./ContactUs.elements";
 
 const ContactUs = () => {
+
+  const handleForm=()=>{
+    console.log('form handler');
+  }
+
   return (
     <>
       <Container>
         <FormWrap>
           <FormContent>
-            <Form action="#">
+            <Form>
               <FormH1>Contact Us </FormH1>
               <div className="container">
                 <div className="left-sec">
@@ -69,7 +74,7 @@ const ContactUs = () => {
                   <TextInput />
                 </div>
               </div>
-              <FormButton type="submit">Send</FormButton>
+              <FormButton onClick={handleForm} type="submit">Send</FormButton>
             </Form>
           </FormContent>
         </FormWrap>

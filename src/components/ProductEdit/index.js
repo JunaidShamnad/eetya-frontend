@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import Axios from '../../axios';
 import { ProductShowcase } from "../../data/Products";
 import {
   LeftDiv,
@@ -36,7 +36,7 @@ const ProductEdit = () => {
         price: price,
       },
       withCredentials: true,
-      url: "http://localhost:4000/items/:id",
+      url: "/items/:id",
     }).then((res) => {
       console.log(res);
     });

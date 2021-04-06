@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import Axios from "../../axios";
 import {
   Container,
   Form,
@@ -11,20 +11,24 @@ import {
   FormWrap,
   SignupText,
 } from "./SignUp.elements";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const SignUp = () => {
-  const [registerUsername , setRegisterUsername] = useState("");
-  const [registerEmail , setRegisterEmail] = useState("");
-  const [registerPassword , setRegisterPassword] = useState("");
-  const [registerPrimaryPhone , setRegisterPrimaryPhone] = useState("");
-  const [registerSecondaryNumber , setRegisterSecondaryNumber] = useState("");
-  const [registerAlternativeEmail , setRegisterAlternativeEmail] = useState("");
-  const [registerCompanyName , setRegisterCompanyName] = useState("");
-  const [registerRegistrationNumber , setRegisterRegistrationNumber] = useState("");
-  const [registerTypeOfBusiness , setRegisterTypeOfBusiness] = useState("");
-  const [registerWebsite , setRegisterWebsite] = useState("");
-  const [registerBillingAddress , setRegisterBillingAddress] = useState("");
-  const [registerShippingAddress , setRegisterShippingAddress] = useState("");
+  const [registerUsername, setRegisterUsername] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPrimaryPhone, setRegisterPrimaryPhone] = useState("");
+  const [registerSecondaryNumber, setRegisterSecondaryNumber] = useState("");
+  const [registerAlternativeEmail, setRegisterAlternativeEmail] = useState("");
+  const [registerCompanyName, setRegisterCompanyName] = useState("");
+  const [registerRegistrationNumber, setRegisterRegistrationNumber] = useState(
+    ""
+  );
+  const [registerTypeOfBusiness, setRegisterTypeOfBusiness] = useState("");
+  const [registerWebsite, setRegisterWebsite] = useState("");
+  const [registerBillingAddress, setRegisterBillingAddress] = useState("");
+  const [registerShippingAddress, setRegisterShippingAddress] = useState("");
 
   const register = () => {
     Axios({
@@ -44,10 +48,12 @@ const SignUp = () => {
         shippingAddress: registerShippingAddress,
       },
       withCredentials: true,
-      url: "http://localhost:4000/register",
+      url: "/register",
     }).then((res) => {
       console.log(res);
     });
+
+    
   };
 
   return (
@@ -149,6 +155,10 @@ const SignUp = () => {
                   />
                 </div>
               </div>
+              <Formlabel htmlFor="for">Seller / Buyer</Formlabel>
+
+              {/* <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />; */}
+
               <FormButton type="submit" onClick={register}>
                 Sign Up
               </FormButton>

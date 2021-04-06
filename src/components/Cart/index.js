@@ -1,7 +1,7 @@
 import React from 'react'
 import { MainDiv, TableContainer, TableTag, TableTd, TableTh, TableTr,AdminTitle,TableDiv, Boxtitle } from './Admin.elements'
 
-const Admin = () => {
+const Cart = () => {
     return (
         <>
            <MainDiv>
@@ -29,4 +29,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default Cart
