@@ -24,22 +24,26 @@ import {
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState([ ]);
+  const [category, setCategory] = useState([]);
+  const [categoryValue, setCategoryValue] = useState('')
   const [price, setPrice] = useState("");
-  const [file, setFile] = useState(""); // storing the uploaded file    // storing the recived file from backend
+  const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
   const [selectedCategory,setSelectCatgory] = useState("")
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
   let categories = [];
-  useEffect(() => {
+  React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
+      console.log(res.data);
     });
   }, []);
 
   const addProducts = (e) => {
+    console.log(category);
+    console.log(file)
     e.preventDefault();
     Axios({
       method: "POST",
@@ -109,13 +113,14 @@ const AddProduct = () => {
                 type="text"
               />
 
+              <Formlabel>Product Category</Formlabel>
              
-              <select  required>
+         
+              <select onChange={(e)=> setSelectCatgory(e.target.value)}  required>
                 {category.map((category,index) => {
                   return (
                     <option key={index}
-                    on={(e)=> setSelectCatgory(category.categoryName)} 
-                    value={category.categoryName}>
+                     value={category.categoryName}>
                       {category.categoryName}
                     </option>
                   );
@@ -134,7 +139,8 @@ const AddProduct = () => {
               <FileBase
                 type="file"
                 multiple={true}
-                onDone={({ base64 }) => setFile(base64)}
+                // onDone={({ base64 }) => setFile(base64)}
+                onDone={(file)=>{setFile(file)}}
               />
               {/* displaying received image*/}
               {data.path && <img src={data.path} alt={data.name} />}
