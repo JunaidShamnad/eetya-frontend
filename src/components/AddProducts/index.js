@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import FileBase from "react-file-base64";
 import Axios from "../../axios";
 import { ProductShowcase } from "../../data/Products";
@@ -28,6 +28,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [file, setFile] = useState(""); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
+  const [selectedCategory,setSelectCatgory] = useState("")
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
@@ -36,8 +37,6 @@ const AddProduct = () => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
     });
-
-    console.log(categories);
   }, []);
 
   const addProducts = (e) => {
@@ -47,7 +46,7 @@ const AddProduct = () => {
       data: {
         title: title,
         description: description,
-        category: category,
+        category: selectedCategory,
         price: price,
         image: file,
       },
@@ -67,6 +66,8 @@ const AddProduct = () => {
       window.location.reload();
     });
   };
+
+
 
   return (
     <>
@@ -108,15 +109,18 @@ const AddProduct = () => {
                 type="text"
               />
 
-              <Formlabel>Product Category</Formlabel>
-              <select   required>
-                {categories.map((category,index) => {
+             
+              <select  required>
+                {category.map((category,index) => {
                   return (
-                    <option key={index} value={category.categoryName}>
+                    <option key={index}
+                    on={(e)=> setSelectCatgory(category.categoryName)} 
+                    value={category.categoryName}>
                       {category.categoryName}
                     </option>
                   );
                 })}
+                 
               </select>
 
               <Formlabel>Product Price</Formlabel>
@@ -129,7 +133,7 @@ const AddProduct = () => {
               <Formlabel htmlFor="file">Upload Image </Formlabel>
               <FileBase
                 type="file"
-                multiple={false}
+                multiple={true}
                 onDone={({ base64 }) => setFile(base64)}
               />
               {/* displaying received image*/}
