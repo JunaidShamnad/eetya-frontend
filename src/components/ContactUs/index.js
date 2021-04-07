@@ -1,4 +1,7 @@
 import React from "react";
+import Axios from "../../axios";
+import swal from 'sweetalert'
+
 import {
   Container,
   Form,
@@ -22,12 +25,43 @@ import {
 } from "./ContactUs.elements";
 
 const ContactUs = () => {
+
+  const handleForm=(e)=>{ 
+    e.preventDefault()
+    console.log('form handler');
+    let formData = {
+      name: Name,
+      phone: Phone,
+      email: Email
+    }
+    if(Message){
+      formData.message = Message
+    }
+    Axios.post('/contact', formData)
+    .then((res)=>{
+      if(res.data.status){
+        swal("Form has submitted sucessfully", {
+          icon:'success',
+          buttons: false,
+          timer: 3000,
+        }).then(()=>{window.location.href='/'})
+      }
+    })
+    }
+
+  
+
+  const [Name, SetName ] = React.useState()
+  const [Phone, SetPhone] = React.useState()
+  const [Email, SetEmail] = React.useState()
+  const [Message, SetMessage] = React.useState()
+
   return (
     <>
       <Container>
         <FormWrap>
           <FormContent>
-            <Form action="#">
+            <Form onSubmit={handleForm}>
               <FormH1>Contact Us </FormH1>
               <div className="container">
                 <div className="left-sec">
@@ -57,16 +91,16 @@ const ContactUs = () => {
 
                 <div className="right-sec">
                   <Formlabel htmlFor="for"> Name</Formlabel>
-                  <FormInput type="text" required />
+                  <FormInput onChange={ (e) => SetName(e.target.value)} type="text" required />
 
                   <Formlabel htmlFor="for">Contact Number</Formlabel>
-                  <FormInput type="tel" required />
+                  <FormInput onChange={ (e) => SetPhone(e.target.value)} type="tel" required />
 
                   <Formlabel htmlFor="for">Email</Formlabel>
-                  <FormInput type="email" required />
+                  <FormInput onChange={ (e) => SetEmail(e.target.value)} type="email" required />
 
                   <Messagelabel htmlFor="for">Message</Messagelabel>
-                  <TextInput />
+                  <TextInput onChange={ (e) => SetMessage(e.target.value)} />
                 </div>
               </div>
               <FormButton type="submit">Send</FormButton>

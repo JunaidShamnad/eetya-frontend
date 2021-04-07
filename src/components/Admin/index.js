@@ -1,11 +1,14 @@
 import React from 'react'
-import { MainDiv, TableContainer, TableTag, TableTd, TableTh, TableTr } from './Admin.elements'
+import { MainDiv, TableContainer, TableTag, TableTd, TableTh, TableTr,AdminTitle,TableDiv, Boxtitle } from './Admin.elements'
 
 const Admin = () => {
     return (
         <>
            <MainDiv>
-<TableContainer>
+           <AdminTitle>Admin Page</AdminTitle>
+           <TableDiv>
+           <Boxtitle>All Orders</Boxtitle>
+    <TableContainer>
     <TableTag>
         <TableTr>
             <TableTh>User Name</TableTh>
@@ -17,10 +20,10 @@ const Admin = () => {
             <TableTd>hi</TableTd>
             <TableTd>hi</TableTd>
             <TableTd>hi</TableTd>
-     
         </TableTr>
     </TableTag>
-</TableContainer>
+ </TableContainer>
+ </TableDiv>
            </MainDiv> 
         </>
     )

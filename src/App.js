@@ -4,7 +4,7 @@ import SignUpPage from "./pages/SignUpPage";
 import GlobalStyle from "./globalStyles";
 import MainPage from "./pages/MainPage";
 import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ProductEditPage from "./pages/ProductEditPage";
 import SignInPage from "./pages/SignInPage";
 import HomePage from "./pages/HomePage";
@@ -21,6 +21,7 @@ import ComingSoonPage from "./pages/ComingSoonPage";
 import AdminPage from "./pages/AdminPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
 import AddProductPage from "./pages/AddProductPage";
+import CartPage from "./pages/CartPage";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" component={HomePage} exact />
         <Route path="/home" component={MainPage} exact />
         <Route path="/admin" component={AdminPage} exact />
+        <Route path="/cart" component={CartPage} exact />
         <Route path="/user-details" component={UserDetailsPage} exact />
         <Route path="/add-product" component={AddProductPage} exact />
         <Route path="/products" component={ProductPage} exact />
@@ -45,7 +47,7 @@ function App() {
         <Route path="/help-center" component={HelpCenterPage} exact />
         <Route path="/what-we-do" component={WhatWeDoPage} exact />
         <Route path="/why-buy-made-in-usa" component={WhyMadeInUsaPage} exact />
-        <Route path="/product-details" component={CartPage} exact />
+        <Route path="/product-details" component={ProductDetailsPage} exact />
         <Route path="/signin" exact >
           {isLoggedIn ? <Redirect to='/' /> : <SignInPage setIsloggedIn={setIsloggedIn} />}
         </Route>

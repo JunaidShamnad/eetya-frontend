@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import Axios from '../../axios';
 import {
   Container,
   Form,
@@ -28,7 +28,7 @@ const SignIn = ({setIsloggedIn}) => {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:4000/dealer/login",
+      url: "/admin/login",
     }).then((res) => {
       if(res.data.err) alert(res.data.err)
      else {

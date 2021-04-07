@@ -11,8 +11,10 @@ import {
   MainImage,
   SecondaryText
 } from "./HeaderTwo.elements";
+import {useHistory} from "react-router-dom"
 
 const HeaderTwo = () => {
+  const history = useHistory();
   return (
     <>
       <MainDiv>
@@ -22,7 +24,9 @@ const HeaderTwo = () => {
           <FashionLineTwo />
           <SecondaryText>Sell Your</SecondaryText>
           <MainTitle>  Products </MainTitle>
-          <ShopButton> Register Now <ShopBtnArrow /> </ShopButton>
+          <ShopButton  onClick={() => {
+                history.push("/signup");
+              }}> Register Now <ShopBtnArrow /> </ShopButton>
           <MainImage />
         </MainContainer>
       </MainDiv>

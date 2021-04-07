@@ -8,19 +8,29 @@ import {
   MainImage,
   SecondaryText,
   SecondBtn,
-  TextContainer
+  TextContainer,
 } from "./HeaderThree.elements";
 
+import { useHistory } from "react-router-dom";
 const HeaderThree = () => {
+  const history = useHistory();
+
   return (
     <>
       <MainDiv>
         <MainContainer>
           <TextContainer>
-          <MainTitle> Become A Member</MainTitle>
-          <SecondaryText>Of This Growing Communtity</SecondaryText>
-          <ShopButton> Register Now <ShopBtnArrow /> </ShopButton>
-          <SecondBtn>Let's Talk</SecondBtn>
+            <MainTitle> Become A Member</MainTitle>
+            <SecondaryText>Of This Growing Communtity</SecondaryText>
+            <ShopButton
+              onClick={() => {
+                history.push("/signup");
+              }}
+            >
+              {" "}
+              Register Now <ShopBtnArrow />{" "}
+            </ShopButton>
+            <SecondBtn>Let's Talk</SecondBtn>
           </TextContainer>
           <MainImage />
         </MainContainer>
