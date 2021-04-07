@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "../../axios";
+import swal from 'sweetalert'
 
 import {
   Container,
@@ -38,7 +39,13 @@ const ContactUs = () => {
     }
     Axios.post('/contact', formData)
     .then((res)=>{
-      console.log(res.data);
+      if(res.data.status){
+        swal("Form has submitted sucessfully", {
+          icon:'success',
+          buttons: false,
+          timer: 3000,
+        }).then(()=>{window.location.href='/'})
+      }
     })
     }
 
