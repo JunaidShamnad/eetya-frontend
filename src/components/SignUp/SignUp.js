@@ -11,8 +11,8 @@ import {
   FormWrap,
   SignupText,
 } from "./SignUp.elements";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+//import Dropdown from 'react-dropdown';
+//import 'react-dropdown/style.css';
 
 const SignUp = () => {
   const [registerUsername, setRegisterUsername] = useState("");
