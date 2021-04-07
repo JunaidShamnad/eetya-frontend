@@ -42,34 +42,21 @@ const AddProduct = () => {
   const [category, setCategory] = useState([]);
   const [categoryValue, setCategoryValue] = useState();
   const [price, setPrice] = useState("");
-  const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
+  const [file, setFile] = useState(""); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
-  const [selectedCategory,setSelectCatgory] = useState("")
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
   let categories = [];
 
-  React.useEffect(() => {
-    Axios.get("/category").then((res) => {
-      setCategory(res.data);
-      console.log(res.data);
-    });
-  }, []);
-
-
   const addProducts = (e) => {
-    console.log(category);
-    console.log(file)
     e.preventDefault();
     Axios({
       method: "POST",
       data: {
         title: title,
         description: description,
-
         category: categoryValue,
-
         price: price,
         image: file,
       },
@@ -89,8 +76,6 @@ const AddProduct = () => {
       window.location.reload();
     });
   };
-
-
 
   return (
     <>
@@ -133,7 +118,6 @@ const AddProduct = () => {
               />
 
               <Formlabel>Product Category</Formlabel>
-
               <FormSelectDiv>
                 <FormSelect
                   onChange={(e) => console.log(e.target.value)}
@@ -150,12 +134,7 @@ const AddProduct = () => {
                     );
                   })}
                 </FormSelect>
-
               </FormSelectDiv>
-
-                 
-             
-
               <Formlabel>Product Price</Formlabel>
               <FormInput
                 onChange={(e) => setPrice(e.target.value)}
@@ -169,8 +148,6 @@ const AddProduct = () => {
                 type="file"
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}
-
-                onDone={(file)=>{setFile(file)}}
               />
 
               {/* {data.path && <img src={data.path} alt={data.name} />} */}

@@ -2,11 +2,7 @@ import React, { useState, useRef,useEffect } from "react";
 import FileBase from "react-file-base64";
 import Axios from "../../axios";
 import { ProductShowcase } from "../../data/Products";
-import {
-  FormSelectDiv,
-  FormSelect,
-  FormSelectOption,
-} from "./AddProducts.elements";
+import {FormSelectDiv,FormSelect,FormSelectOption} from './AddProducts.elements'
 import {
   LeftDiv,
   MainDiv,
@@ -26,21 +22,11 @@ import {
   Maintitle,
 } from "../ProductEdit/ProductEdit.elements";
 
-
 const AddProduct = () => {
-  useEffect(() => {
-    Axios.get("/category").then((res) => {
-      console.log(res.data);
-      setCategory(res.data);
-      setCategoryValue(res.data[0].categoryName)
-    });
-
-    console.log(categories);
-  }, []);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState([]);
-  const [categoryValue, setCategoryValue] = useState();
+  const [categoryValue, setCategoryValue] = useState('')
   const [price, setPrice] = useState("");
   const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
@@ -49,14 +35,12 @@ const AddProduct = () => {
   const el = useRef(); // accesing input element
 
   let categories = [];
-
   React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
   }, []);
-
 
   const addProducts = (e) => {
     console.log(category);
@@ -67,10 +51,7 @@ const AddProduct = () => {
       data: {
         title: title,
         description: description,
-
-        category: categoryValue,
-
-        price: price,
+        srice: price,
         image: file,
       },
       withCredentials: true,
@@ -133,29 +114,33 @@ const AddProduct = () => {
               />
 
               <Formlabel>Product Category</Formlabel>
-
-              <FormSelectDiv>
-                <FormSelect
-                  onChange={(e) => console.log(e.target.value)}
-                  required
-                >
-                  {category.map((category, index) => {
-                    return (
-                      <FormSelectOption
-                        key={index}
-                        value={category.categoryName}
-                      >
-                        {category.categoryName}
-                      </FormSelectOption>
-                    );
-                  })}
-                </FormSelect>
-
-              </FormSelectDiv>
-
-                 
+<<<<<<< HEAD
+             <FormSelectDiv> 
+              <FormSelect  required>
+                {category.map((category,index) => {
+                  return (
+                    <FormSelectOption key={index} value={category.categoryName}>
+=======
              
+         
+              <select onChange={(e)=> setSelectCatgory(e.target.value)}  required>
+                {category.map((category,index) => {
+                  return (
+                    <option key={index}
+                     value={category.categoryName}>
+>>>>>>> b4c6d837db7db3a3200d8f132e285b00881b33d7
+                      {category.categoryName}
+                    </FormSelectOption>
+                  );
+                })}
+<<<<<<< HEAD
+              </FormSelect>
+              </FormSelectDiv>
+=======
+                 
+              </select>
 
+>>>>>>> b4c6d837db7db3a3200d8f132e285b00881b33d7
               <Formlabel>Product Price</Formlabel>
               <FormInput
                 onChange={(e) => setPrice(e.target.value)}
@@ -165,14 +150,13 @@ const AddProduct = () => {
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
               <FileBase
-                className=""
+className=""
                 type="file"
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}
-
                 onDone={(file)=>{setFile(file)}}
               />
-
+              
               {/* {data.path && <img src={data.path} alt={data.name} />} */}
               <ButtonDiv>
                 <BuyButton type="submit" onClick={addProducts}>

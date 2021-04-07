@@ -49,14 +49,15 @@ const AddProduct = () => {
   const el = useRef(); // accesing input element
 
   let categories = [];
-
+<<<<<<< HEAD
   React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
       console.log(res.data);
     });
   }, []);
-
+=======
+>>>>>>> jobin
 
   const addProducts = (e) => {
     console.log(category);
@@ -67,9 +68,11 @@ const AddProduct = () => {
       data: {
         title: title,
         description: description,
-
+<<<<<<< HEAD
+        category: selectedCategory,
+=======
         category: categoryValue,
-
+>>>>>>> jobin
         price: price,
         image: file,
       },
@@ -133,7 +136,29 @@ const AddProduct = () => {
               />
 
               <Formlabel>Product Category</Formlabel>
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+             <FormSelectDiv> 
+              <FormSelect  required>
+                {category.map((category,index) => {
+                  return (
+                    <FormSelectOption key={index} value={category.categoryName}>
+=======
+             
+         
+              <select onChange={(e)=> setSelectCatgory(e.target.value)}  required>
+                {category.map((category,index) => {
+                  return (
+                    <option key={index}
+                     value={category.categoryName}>
+>>>>>>> b4c6d837db7db3a3200d8f132e285b00881b33d7
+                      {category.categoryName}
+                    </FormSelectOption>
+                  );
+                })}
+<<<<<<< HEAD
+              </FormSelect>
+=======
               <FormSelectDiv>
                 <FormSelect
                   onChange={(e) => console.log(e.target.value)}
@@ -150,12 +175,13 @@ const AddProduct = () => {
                     );
                   })}
                 </FormSelect>
-
+>>>>>>> jobin
               </FormSelectDiv>
-
+=======
                  
-             
+              </select>
 
+>>>>>>> b4c6d837db7db3a3200d8f132e285b00881b33d7
               <Formlabel>Product Price</Formlabel>
               <FormInput
                 onChange={(e) => setPrice(e.target.value)}
@@ -169,8 +195,10 @@ const AddProduct = () => {
                 type="file"
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}
-
+<<<<<<< HEAD
                 onDone={(file)=>{setFile(file)}}
+=======
+>>>>>>> jobin
               />
 
               {/* {data.path && <img src={data.path} alt={data.name} />} */}

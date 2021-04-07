@@ -10,7 +10,8 @@ import {
   FormWrap,
   SigninText,
 } from "../../components/SignIn/SignIn.elements";
-
+import {TableDiv, Boxtitle} from '../Admin/Admin.elements'
+import {TableContainer,TableTag,TableTd,TableTh,TableTr } from './AddCategory.elements'
 
 const AddCategory = () => {
  
@@ -31,7 +32,7 @@ const AddCategory = () => {
               />
              
               <FormButton type="submit">
-                Add Category
+                Add
               </FormButton>
               {/* <SigninText to="/contact-us">Facing any issues , Contact Us </SigninText> */}
             </Form>
@@ -40,22 +41,17 @@ const AddCategory = () => {
 
         <TableDiv>
            <Boxtitle>All Categories</Boxtitle>
-    <TableContainer>
+           <TableContainer>
     <TableTag>
         <TableTr>
             <TableTh>User Name</TableTh>
-            <TableTh>Email</TableTh>
-            <TableTh>Cart</TableTh>
-   
-        </TableTr>
-        <TableTr>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
+            
             <TableTd>hi</TableTd>
         </TableTr>
+       
     </TableTag>
  </TableContainer>
- </TableDiv>
+    </TableDiv>
 
       </Container>
    
