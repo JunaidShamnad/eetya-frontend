@@ -24,7 +24,8 @@ import {
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState([ ]);
+  const [category, setCategory] = useState([]);
+  const [categoryValue, setCategoryValue] = useState('')
   const [price, setPrice] = useState("");
   const [file, setFile] = useState(""); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
@@ -32,7 +33,7 @@ const AddProduct = () => {
   const el = useRef(); // accesing input element
 
   let categories = [];
-  useEffect(() => {
+  React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
     });
@@ -109,8 +110,8 @@ const AddProduct = () => {
               />
 
               <Formlabel>Product Category</Formlabel>
-              <select   required>
-                {categories.map((category,index) => {
+              <select  required>
+                {category.map((category,index) => {
                   return (
                     <option key={index} value={category.categoryName}>
                       {category.categoryName}
