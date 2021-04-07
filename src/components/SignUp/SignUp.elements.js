@@ -161,6 +161,8 @@ export const FormInput = styled.input`
   margin-bottom: 32px;
   border: none;
   outline: none;
+  max-width:500px;
+  min-width:300px;
   background: none;
   border-bottom: 2px solid #707070;
   border-radius: 0px;

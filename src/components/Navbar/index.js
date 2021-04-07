@@ -52,7 +52,7 @@ const Navbar = ({ toggle }) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/">
+                <NavLink to="/cart">
                   <img
                     src={
                       require("../../images/Icon feather-shopping-cart.svg")

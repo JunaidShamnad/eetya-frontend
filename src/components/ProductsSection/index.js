@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import { animateScroll as scroll } from "react-scroll";
+import Axious from "../../axios";
 import {
   NavbarContainer,
   NavItem,
@@ -26,21 +27,48 @@ import {
   RightArrow,
 } from "./ProductsSection.elements";
 
-import Products from "../../data/Products"
 const ProductsSection = () => {
   const [ProductData, setProductData] = useState([]);
   useEffect(() => {
-    // Axios({
-    //   method: "GET",
-    //   withCredentials: true,
-    //   url: "http://localhost:4000/items",
-    // }).then((res) => {
-    //   setProductData(res.data);
-    //   console.log(res.data);
-    // });
-    setProductData(Products)
+    Axious({
+      method: "POST",
+      url: "/products",
+    }).then((response) => {
+      setProductData(response.data);
+    });
     console.log(ProductData);
   }, []);
+
+  const [PageNo, setPageNo] = React.useState(1);
+
+  const updateProductData =async (num) => {
+    console.log("before: "+PageNo);
+    
+    await setPageNo(PageNo + num);
+    console.log(PageNo);
+    Axious({
+      method: "POST",
+      url: "/products",
+      data: { page: PageNo },
+    }).then((response) => {
+      setProductData(response.data);
+      console.log(response.data);
+      scroll.scrollToTop();
+    });
+  };
+
+  useEffect(() => {
+    Axious({
+      method: "POST",
+      url: "/products",
+      data: { page: PageNo },
+    }).then((response) => {
+      setProductData(response.data);
+      console.log(response.data);
+      scroll.scrollToTop();
+    });
+    
+  }, [PageNo])
 
   return (
     <>
@@ -67,11 +95,14 @@ const ProductsSection = () => {
         <CardContainer>
           {ProductData.map((item, index) => {
             return (
-              <Card key={index} to={{pathname: `product-details/${item._id}`}}>
-                <ImageContainer src={item.image}  />
+              <Card
+                key={index}
+                to={{ pathname: `product-details/${item._id}` }}
+              >
+                <ImageContainer src={item.image} />
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.heading}</ProductTitle>
+                    <ProductTitle>{item.name}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
@@ -83,11 +114,22 @@ const ProductsSection = () => {
           })}
         </CardContainer>
         <ProductPageUl>
-          <ProductPageLi>
-            <LeftArrow /> <PrevText>Previous Page</PrevText>{" "}
+          <ProductPageLi
+            onClick={() => {
+              setPageNo(PageNo - 1)
+              // updateProductData(-1);
+            }}
+          >
+            
+            <LeftArrow /> <PrevText>Previous Page</PrevText>
           </ProductPageLi>
-          <ProductPageLi>
-            {" "}
+          <ProductPageLi
+            onClick={() => {
+              setPageNo(PageNo + 1)
+              // updateProductData(+1);
+            }}
+          >
+            
             <PrevText>Next Page</PrevText> <RightArrow />
           </ProductPageLi>
         </ProductPageUl>

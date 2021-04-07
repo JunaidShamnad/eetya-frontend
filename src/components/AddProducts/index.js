@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import FileBase from "react-file-base64";
 import Axios from "../../axios";
 import { ProductShowcase } from "../../data/Products";
+import {FormSelectDiv,FormSelect,FormSelectOption} from './AddProducts.elements'
 import {
   LeftDiv,
   MainDiv,
@@ -110,16 +111,17 @@ const AddProduct = () => {
               />
 
               <Formlabel>Product Category</Formlabel>
-              <select  required>
+             <FormSelectDiv> 
+              <FormSelect  required>
                 {category.map((category,index) => {
                   return (
-                    <option key={index} value={category.categoryName}>
+                    <FormSelectOption key={index} value={category.categoryName}>
                       {category.categoryName}
-                    </option>
+                    </FormSelectOption>
                   );
                 })}
-              </select>
-
+              </FormSelect>
+              </FormSelectDiv>
               <Formlabel>Product Price</Formlabel>
               <FormInput
                 onChange={(e) => setPrice(e.target.value)}
@@ -129,12 +131,13 @@ const AddProduct = () => {
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
               <FileBase
+className=""
                 type="file"
                 multiple={false}
                 onDone={({ base64 }) => setFile(base64)}
               />
-              {/* displaying received image*/}
-              {data.path && <img src={data.path} alt={data.name} />}
+              
+              {/* {data.path && <img src={data.path} alt={data.name} />} */}
               <ButtonDiv>
                 <BuyButton type="submit" onClick={addProducts}>
                   Add Product

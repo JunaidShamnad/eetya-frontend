@@ -24,8 +24,12 @@ export const AdminTitle = styled.h1`
 export const TableDiv = styled.div`
   background:#0d0d0f;
   padding:80px;
+  min-width:85vw;
   border-radius:4px;
-  
+  margin: 10px auto;
+  justify-content:center;
+  align-items:center;
+
 `
 export const Boxtitle = styled.h3`
   font-size: 20px;
@@ -52,7 +56,7 @@ export const TableTag = styled.table`
 `;
 
 export const TableTr = styled.tr`
-
+  text-align:center;
  `;
 export const TableTh = styled.th`
   padding:16px;
@@ -63,7 +67,7 @@ export const TableTh = styled.th`
   border-bottom:1px solid #fff;
 `;
 export const TableTd = styled.td`
-padding:12px;
+   padding:12px;
   border-collapse: collapse;
   border-bottom:1px solid #fff;
 `;
