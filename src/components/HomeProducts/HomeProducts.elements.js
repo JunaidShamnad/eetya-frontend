@@ -174,3 +174,21 @@ export const CartIcon = styled(Link)`
   width: 29px;
   height: 29px;
 `;
+
+
+export const NavLink = styled(Link)`
+  /* If you need smooth scroll change (LinkR) to (LinkS) */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  margin-bottom: 6px;
+  height: 100%;
+  cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  
+`;

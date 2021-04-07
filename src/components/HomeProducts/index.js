@@ -4,11 +4,11 @@ import {
   Logo,
   NavbarContainer,
   NavItem,
-  NavMenu,
-  NavLink,
+  NavMenu
 } from "../Navbar/Navbar.elements";
 import {
   Card,
+  NavLink,
   CardContainer,
   CartIcon,
   FadeText,
@@ -21,7 +21,10 @@ import {
   ProductUl,
   ProductLi,
 } from "./HomeProducts.elements";
-
+import {
+  PrevText,
+  RightArrow,
+} from "../ProductsSection/ProductsSection.elements";
 import Products from "../../data/Products"
 
 const HomeProducts = () => {
@@ -54,17 +57,8 @@ const HomeProducts = () => {
 
           <NavMenu>
             <NavItem>
-              <NavLink to="/">
-                <img
-                  className="search_icon"
-                  src={require("../../images/Icon feather-search.svg").default}
-                  alt="Logo"
-                />
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/">
-                <FilterIcon />
+              <NavLink to="/products">
+              <PrevText>Next Page</PrevText> <RightArrow />
               </NavLink>
             </NavItem>
           </NavMenu>

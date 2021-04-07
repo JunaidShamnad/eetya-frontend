@@ -26,7 +26,7 @@ export const TextContent = styled.h2`
   font-size: 15px;
   font-weight: 300;
   letter-spacing: 1.3px;
-  margin-bottom: 25%;
+  margin-bottom: 15%;
 
   @media screen and (max-width: 962px) {
     margin-bottom: 32px;

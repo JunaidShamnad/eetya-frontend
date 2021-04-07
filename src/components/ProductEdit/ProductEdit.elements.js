@@ -62,7 +62,7 @@ export const DeleteIcon = styled(AiOutlineDelete)`
   font-size: 25px;
   background-position: center;
   margin-left:auto;
- 
+  
   @media screen and (max-width: 560px) {
     font-size: 22px;
     margin-right:5%;

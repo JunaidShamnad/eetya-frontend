@@ -25,6 +25,8 @@ export const TableDiv = styled.div`
   background:#0d0d0f;
   padding:80px;
   min-width:85vw;
+  max-width:85vw;
+  margin-bottom:8%;
   border-radius:4px;
   margin: 10px auto;
   justify-content:center;
