@@ -6,3 +6,8 @@ export const ImageBox = styled.img`
  height:100px;
 
 `
+
+export const CartTotalContainer = styled.div`
+ display:flex;
+
+`
