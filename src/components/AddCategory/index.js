@@ -26,17 +26,19 @@ const HelpCenter = () => {
               <Formlabel htmlFor="for"></Formlabel>
               <FormInput
                 type="text"
-                placeholder="Add"
+                placeholder="Add a new category"
                 required
               />
              
               <FormButton type="submit">
                 Submit
               </FormButton>
-              <SigninText to="/contact-us">Facing any issues , Contact Us </SigninText>
+              {/* <SigninText to="/contact-us">Facing any issues , Contact Us </SigninText> */}
             </Form>
           </FormContent>
         </FormWrap>
+
+        
       </Container>
    
     </>
