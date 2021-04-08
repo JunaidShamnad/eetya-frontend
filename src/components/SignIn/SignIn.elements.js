@@ -120,7 +120,11 @@ export const FormButton = styled.button`
   border-radius: 4px;
   max-width: 140px;
   max-height: 50px;
-  margin-left: 100px;
+  min-width: 140px;
+  min-height: 50px;
+  /* margin-left: 100px; */
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -155,6 +159,8 @@ export const SigninText = styled(Link)`
   font-weight: 300;
   font-size: 15px;
   place-items:center;
+  margin-left: auto;
+  margin-right: auto;
   align-items:center;
   justify-content:center;
   @media screen and (max-width: 480) {

@@ -7,7 +7,12 @@ import {
   NavMenu,
   NavLink,
 } from "../Navbar/Navbar.elements";
-
+import {
+    FormSelectDiv,
+    FormSelect,
+    FormSelectOption,
+  } from "../AddProducts/AddProducts.elements";
+  import {  Formlabel } from "../SignUp/SignUp.elements";
 import {
   Card,
   CardContainer,
@@ -25,9 +30,9 @@ import {
   ProductPageLi,
   ProductPageUl,
   RightArrow,
-} from "./ProductsSection.elements";
+} from "../ProductsSection/ProductsSection.elements";
 
-const ProductsSection = () => {
+const Filter = () => {
   const [ProductData, setProductData] = useState([]);
   useEffect(() => {
     Axious({
@@ -74,15 +79,30 @@ const ProductsSection = () => {
     <>
       <MainDiv>
         <NavbarContainer>
-          <FadeText>Products</FadeText>
-          <NavMenu>
-            <NavItem>
-              <NavLink to="/">
-               <FilterIcon />
-              </NavLink>
-            </NavItem>
-          </NavMenu>
+        <Formlabel>Product Category</Formlabel>
+
+    <FormSelectDiv>
+    <FormSelect required>
+        <FormSelectOption >
+          Category
+        </FormSelectOption>
+      </FormSelect>
+
+      </FormSelectDiv>
         </NavbarContainer>
+        <NavbarContainer>
+        <Formlabel>Wholesaler</Formlabel>
+
+    <FormSelectDiv>
+    <FormSelect required>
+        <FormSelectOption >
+          Wholesaler
+        </FormSelectOption>
+      </FormSelect>
+
+      </FormSelectDiv>
+        </NavbarContainer>
+
         <CardContainer>
           {ProductData.map((item, index) => {
             return (
@@ -129,4 +149,4 @@ const ProductsSection = () => {
   );
 };
 
-export default ProductsSection;
+export default Filter;

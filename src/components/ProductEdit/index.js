@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Axios from '../../axios';
+import FileBase from "react-file-base64";
 import { ProductShowcase } from "../../data/Products";
 import {
   LeftDiv,
@@ -12,6 +13,11 @@ import {
   SubImageDiv,
   MainImageDiv,
 } from "../ProductDetails/ProductDetails.elements";
+import {
+  FormSelectDiv,
+  FormSelect,
+  FormSelectOption,
+} from "../AddProducts/AddProducts.elements";
 import { Form, FormInput, Formlabel } from "../SignUp/SignUp.elements";
 import {
   RightDiv,
@@ -23,8 +29,13 @@ import {
 const ProductEdit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
+  const [categoryValue, setCategoryValue] = useState();
+  const [maxQuantity, setMaxQuantity] = useState(" ");
+  const [minQuantity, setMinQuantity] = useState(" ");
   const [price, setPrice] = useState("");
+  const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
+  const [data, getFile] = useState({ name: "", path: "" });
 
   const editProducts = () => {
     Axios({
@@ -32,7 +43,10 @@ const ProductEdit = () => {
       data: {
         title: title,
         description: description,
-        category: category,
+        category: categoryValue,
+        minQuantity: minQuantity,
+        maxQuantity: maxQuantity,
+
         price: price,
       },
       withCredentials: true,
@@ -82,22 +96,75 @@ const ProductEdit = () => {
                 type="text"
               />
 
-              <Formlabel>Product Category</Formlabel>
-              <FormInput
-                onChange={(e) => setCategory(e.target.value)}
-                required
-                type="text"
-              />
+<Formlabel>Product Category</Formlabel>
 
-              <Formlabel>Product Price</Formlabel>
-              <FormInput
-                onChange={(e) => setPrice(e.target.value)}
-                required
-                type="text"
-              />
+<FormSelectDiv>
+  <FormSelect
+    onChange={(e) => setCategoryValue(e.target.value)}
+    required
+  >
+    {category.map((category, index) => {
+      return (
+        <FormSelectOption
+          key={index}
+          value={category.categoryName}
+        >
+          {category.categoryName}
+        </FormSelectOption>
+      );
+    })}
+  </FormSelect>
 
-              <Formlabel>Upload Image </Formlabel>
-              <FormInput type="file" />
+</FormSelectDiv>
+
+   
+
+
+<Formlabel>Product Price (Price of 1 Product)</Formlabel>
+<FormInput
+  onChange={(e) => setPrice(e.target.value)}
+  required
+  type="text"
+/>
+<Formlabel>Max Quantity</Formlabel>
+<FormInput
+  onChange={(e) => setMaxQuantity(e.target.value)}
+  required
+  type="text"
+/>
+<Formlabel>Min Quantity</Formlabel>
+<FormInput
+  onChange={(e) => setMinQuantity(e.target.value)}
+  required
+  type="text"
+/>
+
+<Formlabel htmlFor="file">Upload Image </Formlabel>
+<FileBase
+  className="fileUpload"
+  type="file"
+  multiple={true}
+  // onDone={({ base64 }) => setFile(base64)}
+
+  onDone={async(Files)=>{
+    console.log("len:"+Files.length)
+    let arry=[]
+    await Files.map((img,index)=>{
+      let data ={
+        Image:img.base64,
+        type:img.file.type
+      };
+      arry.push(data);
+      // setFile( 
+      //   file.concat(data)
+      // );
+      
+     
+      })
+      setFile(arry);
+    
+  }}
+/>
               <ButtonDiv>
                 <BuyButton type="submit"  onClick={editProducts}>Update</BuyButton>
               

@@ -19,6 +19,8 @@ import {
   InputTilte,
   FooterInput,
   InputSubdiv,
+  PlaneIcons,
+  FooterInputDiv
 } from "./Footer.elements";
 
 const Footer = () => {
@@ -79,7 +81,10 @@ const Footer = () => {
       <InputDiv>
         <InputSubdiv>
           <InputTilte>Stay upto Date</InputTilte>
+           <FooterInputDiv>
           <FooterInput placeholder="Your email address" />
+           <PlaneIcons/>
+           </FooterInputDiv>
         </InputSubdiv>
       </InputDiv>
     </FooterContainer>

@@ -7,16 +7,51 @@ import {
   Formlabel,
   FormWrap,
 } from "../SignUp/SignUp.elements";
-import { UserDataText,MainDiv,TableContainer,TableTag,TableTd,TableTh,TableTr, CartTitle } from "./UserDetails.elements";
+import {  TableContainer, TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
+import { UserDataText, CartTitle,MainDiv } from "./UserDetails.elements";
 
 const UserDetails = () => {
   return (
     <>
     <MainDiv>
+    <CartTitle>Cart</CartTitle>
+    <TableContainer>
+     
+      <TableDiv>
+      <TableTag>
+        <TableTr>
+            <TableTh>Product</TableTh>
+            <TableTh>Name</TableTh>
+            <TableTh>Price</TableTh>
+            <TableTh>Quantity</TableTh>
+            <TableTh>Total</TableTh>
+   
+        </TableTr>
+        <TableTr>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+     
+        </TableTr>
+        <TableTr>
+            <TableTh>Total</TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh>$ 50</TableTh>
+         
+   
+        </TableTr>
+    </TableTag>
+  </TableDiv>
+        </TableContainer>
       <Container>
         <FormWrap>
           <FormContent>
             <Form action="#">
+<TableDiv>
               <FormH1>User Details</FormH1>
               <div className="container">
                 <div className="left-sec">
@@ -73,43 +108,14 @@ const UserDetails = () => {
               <SignupText to="/signin">
                 Already have a account Sign In
               </SignupText> */}
+              </TableDiv>
             </Form>
           </FormContent>
         </FormWrap>
 
         
       </Container>
-      
-      <TableContainer>
-      <CartTitle>Cart</CartTitle>
-      <TableTag>
-        <TableTr>
-            <TableTh>Product</TableTh>
-            <TableTh>Name</TableTh>
-            <TableTh>Price</TableTh>
-            <TableTh>Quantity</TableTh>
-            <TableTh>Total</TableTh>
-   
-        </TableTr>
-        <TableTr>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-     
-        </TableTr>
-        <TableTr>
-            <TableTh>Total</TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh>$ 50</TableTh>
-         
-   
-        </TableTr>
-    </TableTag>
-        </TableContainer>
+    
         </MainDiv>
     </>
   );

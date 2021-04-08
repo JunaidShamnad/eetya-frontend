@@ -58,7 +58,7 @@ const HomeProducts = () => {
           <NavMenu>
             <NavItem>
               <NavLink to="/products">
-              <PrevText>Next Page</PrevText> <RightArrow />
+              <PrevText to="/products" >Product Page</PrevText> <RightArrow />
               </NavLink>
             </NavItem>
           </NavMenu>

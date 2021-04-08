@@ -93,7 +93,7 @@ export const NavLink = styled(LinkR)`
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 0;
+  margin-right:20px;
 `;
 
 export const NavItem = styled.li`

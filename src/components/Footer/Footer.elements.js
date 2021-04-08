@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import {FaTelegramPlane} from 'react-icons/fa'
 
 export const FooterContainer = styled.footer`
   background-color: #161619;
@@ -165,6 +166,10 @@ export const InputDiv = styled.div`
 `;
 
 export const InputSubdiv = styled.div`
+position:relative;
+ /* display:flex;
+ flex-direction:column;
+ max-width:260px; */
   @media screen and (max-width: 900px) {
     display: flex;
     flex-direction: column;
@@ -178,8 +183,28 @@ export const InputTilte = styled.h2`
   color: #fff;
   margin-left: 1%;
   font-weight: 400;
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin:0 auto;
+    text-align: left;
+    place-items:center;
+  }
 `;
-
+export const FooterInputDiv = styled.div`
+position:relative;
+display:flex;
+max-width:236px;
+@media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin:0 auto;
+    text-align: left;
+    place-items:center;
+  }
+`
 export const FooterInput = styled.input`
   padding: 8px 15px;
   margin-top: 15px;
@@ -203,4 +228,11 @@ export const FooterInput = styled.input`
     letter-spacing: 1px;
     font-weight: 300;
   }
+`;
+export const PlaneIcons = styled(FaTelegramPlane)`
+  position:absolute;
+  top:28%;
+  right:8%;
+  font-size:25px;
+  color: #fff;
 `;

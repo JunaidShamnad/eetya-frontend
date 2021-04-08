@@ -143,8 +143,9 @@ export const ProductPrice = styled.h3`
 
 export const FilterIcon = styled(VscListFilter)`
   display: flex;
-  font-size: 25px;
+  font-size:30px;
   color: #fff;
+margin-right:20px;
 `;
 
 export const CartIcon = styled(Link)`

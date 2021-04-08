@@ -22,6 +22,7 @@ import AdminPage from "./pages/AdminPage";
 import UserDetailsPage from "./pages/UserDetailsPage";
 import AddProductPage from "./pages/AddProductPage";
 import CartPage from "./pages/CartPage";
+import FilterPage from "./pages/FilterPage";
 import AddCategoryPage from "./pages/AddCategoryPage";
 import NewsLetterPage from "./pages/NewsLetterPage";
 import ChangeAdminEmailPage from "./pages/ChangeAdminEmailPage";
@@ -38,9 +39,10 @@ function App() {
         <Route path="/" component={HomePage} exact />
         <Route path="/home" component={MainPage} exact />
         <Route path="/admin" component={AdminPage} exact />
+        <Route path="/filter" component={FilterPage} exact />
         <Route path="/change-admin-email" component={ChangeAdminEmailPage} exact />
         <Route path="/forgot-password" component={ForgotPasswordPage} exact />
-        <Route path="/add-category" component={AddCategoryPage} exact />
+        <Route path="/admin/category" component={AddCategoryPage} exact />
         <Route path="/cart" component={CartPage} exact />
         <Route path="/user-details" component={UserDetailsPage} exact />
         <Route path="/add-product" component={AddProductPage} exact />
