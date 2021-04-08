@@ -170,7 +170,7 @@ const AddProduct = () => {
                 // onDone={({ base64 }) => setFile(base64)}
 
                 onDone={async(Files)=>{
-                  console.log("len:"+Files.length)
+                  
                   let arry=[]
                   await Files.map((img,index)=>{
                     let data ={
