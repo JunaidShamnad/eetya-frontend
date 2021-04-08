@@ -18,7 +18,75 @@ const UserDetails = () => {
     <TableContainer>
     <CartTitle>Cart</CartTitle>
     
-    <Button>Add Product</Button>
+    <Button to="/add-product">Add Product</Button>
+      <TableDiv>
+      <TableTag>
+        <TableTr>
+            <TableTh>Product</TableTh>
+            <TableTh>Name</TableTh>
+            <TableTh>Price</TableTh>
+            <TableTh>Quantity</TableTh>
+            <TableTh>Total</TableTh>
+   
+        </TableTr>
+        <TableTr>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+     
+        </TableTr>
+        <TableTr>
+            <TableTh>Total</TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh>$ 50</TableTh>
+         
+   
+        </TableTr>
+    </TableTag>
+  </TableDiv>
+        </TableContainer>
+
+    <TableContainer>
+    <CartTitle>Orders</CartTitle>
+    
+      <TableDiv>
+      <TableTag>
+        <TableTr>
+            <TableTh>Product</TableTh>
+            <TableTh>Name</TableTh>
+            <TableTh>Price</TableTh>
+            <TableTh>Quantity</TableTh>
+            <TableTh>Total</TableTh>
+   
+        </TableTr>
+        <TableTr>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+            <TableTd>hi</TableTd>
+     
+        </TableTr>
+        <TableTr>
+            <TableTh>Total</TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
+            <TableTh>$ 50</TableTh>
+         
+   
+        </TableTr>
+    </TableTag>
+  </TableDiv>
+        </TableContainer>
+
+    <TableContainer>
+    <CartTitle>Products</CartTitle>
+    
       <TableDiv>
       <TableTag>
         <TableTr>

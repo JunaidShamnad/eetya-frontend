@@ -12,7 +12,7 @@ import {
     FormSelect,
     FormSelectOption,
   } from "../AddProducts/AddProducts.elements";
-  import {  Formlabel } from "../SignUp/SignUp.elements";
+  import {  Formlabel } from "./FilterPage.elements";
 import {
   Card,
   CardContainer,
@@ -79,9 +79,10 @@ const Filter = () => {
     <>
       <MainDiv>
         <NavbarContainer>
-        <Formlabel>Product Category</Formlabel>
+      
 
     <FormSelectDiv>
+    <Formlabel>Product Category </Formlabel>
     <FormSelect required>
         <FormSelectOption >
           Category
@@ -91,9 +92,10 @@ const Filter = () => {
       </FormSelectDiv>
         </NavbarContainer>
         <NavbarContainer>
-        <Formlabel>Wholesaler</Formlabel>
+     
 
     <FormSelectDiv>
+    <Formlabel>Wholesaler</Formlabel>
     <FormSelect required>
         <FormSelectOption >
           Wholesaler

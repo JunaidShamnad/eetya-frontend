@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {AiOutlineDelete} from 'react-icons/ai'
 
 
 export const ImageBox = styled.img`
@@ -12,11 +13,14 @@ export const CartTotalContainer = styled.div`
  justify-content:space-between;
 `
 export const CartTotalText = styled.h2`
- font-size:20px;
+ font-size:25px;
 font-weight:400;
 color:#fff;
 `
-
+export const DeleteIcon = styled(AiOutlineDelete)`
+color:#b50e02;
+font-size:28px;
+`
 export const PriceTitle = styled.h3`
   font-size: 25px;
   font-weight: 500;

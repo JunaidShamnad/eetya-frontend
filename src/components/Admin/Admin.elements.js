@@ -34,9 +34,10 @@ export const TableDiv = styled.div`
 
 `
 export const Boxtitle = styled.h3`
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing:1px;
+  font-size: 25px;
+  font-weight: 500;
+  padding-bottom:20px;
+  letter-spacing:1.2px;
   color: #fff;
   display: flex;
   justify-content: center;

@@ -168,3 +168,37 @@ export const SigninText = styled(Link)`
     margin-top: 8px;
   }
 `;
+
+
+
+
+export const FormSelectDiv = styled.div`
+display:flex;
+margin:0px 0px 32px 0px;
+padding:16px;
+
+padding-left:0;
+border:none;
+outline:none;
+`
+
+export const FormSelect = styled.select`
+background-color:#141317;
+color:#fff;
+padding:16px;
+font-size:15px;
+font-weight:300;
+letter-spacing:1px;
+border:none;
+border-bottom:1px solid #fff;
+max-width:336px;
+min-width:336px;
+outline:none;
+`
+
+export const FormSelectOption = styled.option`
+border:none;
+outline:none;
+
+`
+

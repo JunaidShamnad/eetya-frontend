@@ -11,7 +11,11 @@ import {
   FormWrap,
   Text,
   SigninText,
+  FormSelectDiv,
+  FormSelect,
+  FormSelectOption
 } from "./SignIn.elements";
+
 
 const SignIn = ({setIsloggedIn}) => {
 
@@ -58,6 +62,13 @@ const SignIn = ({setIsloggedIn}) => {
                 onChange={(e) => setLoginPassword(e.target.value)}
                 required
               />
+<FormSelectDiv>
+                <FormSelect required>
+                      <FormSelectOption >Retailer</FormSelectOption>
+                      <FormSelectOption >Wholesaler</FormSelectOption>
+                </FormSelect>
+
+              </FormSelectDiv>
               <FormButton type="submit" onClick={login}>
                 Sign In
               </FormButton>

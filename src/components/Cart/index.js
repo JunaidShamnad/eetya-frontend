@@ -1,6 +1,6 @@
 import React from 'react'
 import { MainDiv, TableContainer, TableTag, TableTd, TableTh, TableTr,AdminTitle,TableDiv,Boxtitle } from '../Admin/Admin.elements'
-import {ImageBox,CartTotalContainer,CartTotalText, PriceTitle,FormButton,RightDiv} from './Cart.elements'
+import {ImageBox,CartTotalContainer,CartTotalText, PriceTitle,FormButton,RightDiv, DeleteIcon} from './Cart.elements'
 const Cart = () => {
     return (
         <>
@@ -16,6 +16,7 @@ const Cart = () => {
             <TableTh>Category</TableTh>
             <TableTh>Quantity</TableTh>
             <TableTh>Image</TableTh>
+            <TableTh></TableTh>
    
         </TableTr>
         <TableTr>
@@ -24,6 +25,7 @@ const Cart = () => {
             <TableTd>hi</TableTd>
             <TableTd>hi</TableTd>
             <TableTd> <ImageBox src="" alt=""/> </TableTd>
+            <TableTd><DeleteIcon/></TableTd>
           
         </TableTr>
     </TableTag>
