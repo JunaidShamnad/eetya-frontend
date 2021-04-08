@@ -25,7 +25,7 @@ import {
   DeleteIcon,
   Maintitle,
 } from "../ProductEdit/ProductEdit.elements";
-
+import {useHistory} from "react-router-dom"
 
 const AddProduct = () => {
   useEffect(() => {
@@ -48,6 +48,7 @@ const AddProduct = () => {
   const [data, getFile] = useState({ name: "", path: "" });
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
+  const history = useHistory();
 
   let categories = [];
 
@@ -56,7 +57,7 @@ const AddProduct = () => {
       setCategory(res.data);
       
     });
-  }, []);
+  });
 
 
   const addProducts = (e) => {
@@ -68,18 +69,17 @@ const AddProduct = () => {
       data: {
         title: title,
         description: description,
-
         category: categoryValue,
         minQuantity: minQuantity,
         maxQuantity: maxQuantity,
-
         price: price,
         image: file,
       },
       withCredentials: true,
       url: "/dealer/add-item",
     }).then((res) => {
-      if (res.data.loginErr) alert("Login failed");
+      if (res.data.loginErr){ alert("Login failed") 
+      history.push("/signin")}
       else if (res.data.err) alert(res.data.err);
       else {
         setTitle("");
@@ -89,7 +89,7 @@ const AddProduct = () => {
         setFile("");
         alert("product added successfully");
       }
-      window.location.reload();
+      history.push('/add-product')
     });
   };
 
@@ -169,13 +169,14 @@ const AddProduct = () => {
               <FormInput
                 onChange={(e) => setMaxQuantity(e.target.value)}
                 required
-                type="text"
+                type="number"
               />
               <Formlabel>Min Quantity</Formlabel>
               <FormInput
                 onChange={(e) => setMinQuantity(e.target.value)}
                 required
-                type="text"
+                type="number"
+                
               />
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
@@ -186,7 +187,7 @@ const AddProduct = () => {
                 // onDone={({ base64 }) => setFile(base64)}
 
                 onDone={async(Files)=>{
-                  console.log("len:"+Files.length)
+                  
                   let arry=[]
                   await Files.map((img,index)=>{
                     let data ={
@@ -194,12 +195,7 @@ const AddProduct = () => {
                       type:img.file.type
                     };
                     arry.push(data);
-                    // setFile( 
-                    //   file.concat(data)
-                    // );
-                    
-                   
-                    })
+                  })
                     setFile(arry);
                   
                 }}
