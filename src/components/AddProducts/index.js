@@ -57,8 +57,8 @@ const AddProduct = () => {
       setCategory(res.data);
       
     });
-  });
-
+  },[]);
+ 
 
   const addProducts = (e) => {
    
@@ -82,14 +82,15 @@ const AddProduct = () => {
       history.push("/signin")}
       else if (res.data.err) alert(res.data.err);
       else {
+        alert("product added successfully");
         setTitle("");
         setDescription("");
-        setCategory("");
+        setCategory([]);
         setPrice("");
-        setFile("");
-        alert("product added successfully");
+        setFile([]);
+        
       }
-      history.push('/add-product')
+      window.location.reload();
     });
   };
 
