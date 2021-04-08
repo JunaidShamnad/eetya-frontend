@@ -62,7 +62,7 @@ const SignIn = ({setIsloggedIn}) => {
                 Sign In
               </FormButton>
               <SigninText to="/signup">Don't have a account Sign Up</SigninText>
-              <Text>Forgot Password</Text>
+              <Text to="/signup">Forgot Password</Text>
             </Form>
           </FormContent>
         </FormWrap>

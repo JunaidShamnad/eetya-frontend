@@ -11,7 +11,7 @@ outline:none;
 `
 
 export const FormSelect = styled.select`
-background-color:#0D0D0F;
+background-color:#141317;
 color:#fff;
 padding:16px;
 font-size:15px;

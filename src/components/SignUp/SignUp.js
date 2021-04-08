@@ -10,9 +10,11 @@ import {
   Formlabel,
   FormWrap,
   SignupText,
+  FormSelectDiv,
+  FormSelect,
+  FormSelectOption
 } from "./SignUp.elements";
-//import Dropdown from 'react-dropdown';
-//import 'react-dropdown/style.css';
+
 
 const SignUp = () => {
   const [registerUsername, setRegisterUsername] = useState("");
@@ -155,8 +157,14 @@ const SignUp = () => {
                   />
                 </div>
               </div>
-              <Formlabel htmlFor="for">Seller / Buyer</Formlabel>
+              {/* <Formlabel htmlFor="for">Seller / Buyer</Formlabel> */}
+              <FormSelectDiv>
+                <FormSelect required>
+                      <FormSelectOption >Retailer</FormSelectOption>
+                      <FormSelectOption >Wholesaler</FormSelectOption>
+                </FormSelect>
 
+              </FormSelectDiv>
               {/* <Dropdown options={options} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />; */}
 
               <FormButton type="submit" onClick={register}>

@@ -41,6 +41,8 @@ const AddProduct = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState([]);
   const [categoryValue, setCategoryValue] = useState();
+  const [maxQuantity, setMaxQuantity] = useState(" ");
+  const [minQuantity, setMinQuantity] = useState(" ");
   const [price, setPrice] = useState("");
   const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
@@ -68,6 +70,8 @@ const AddProduct = () => {
         description: description,
 
         category: categoryValue,
+        minQuantity: minQuantity,
+        maxQuantity: maxQuantity,
 
         price: price,
         image: file,
@@ -155,16 +159,28 @@ const AddProduct = () => {
                  
              
 
-              <Formlabel>Product Price</Formlabel>
+              <Formlabel>Product Price (Price of 1 Product)</Formlabel>
               <FormInput
                 onChange={(e) => setPrice(e.target.value)}
+                required
+                type="text"
+              />
+              <Formlabel>Max Quantity</Formlabel>
+              <FormInput
+                onChange={(e) => setMaxQuantity(e.target.value)}
+                required
+                type="text"
+              />
+              <Formlabel>Min Quantity</Formlabel>
+              <FormInput
+                onChange={(e) => setMinQuantity(e.target.value)}
                 required
                 type="text"
               />
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
               <FileBase
-                className=""
+                className="fileUpload"
                 type="file"
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}

@@ -226,7 +226,7 @@ export const BuyButton = styled.button`
   padding: 16px 0;
   border: 2px solid #fff;
   outline: none;
-  margin-top: 30px;
+  margin-top: 50px;
   text-decoration: none;
   max-width: 140px;
   min-width: 140px;
