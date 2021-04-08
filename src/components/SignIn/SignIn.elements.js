@@ -135,12 +135,13 @@ export const FormButton = styled.button`
   }
 `;
 
-export const Text = styled.span`
+export const Text = styled(Link)`
   text-align: center;
   margin-top: 15px;
   color: #fff;
   letter-spacing: 1px;
   font-size: 15px;
+  text-decoration:none;
   font-weight: 300;
   cursor: pointer;
 `;
@@ -153,6 +154,9 @@ export const SigninText = styled(Link)`
   letter-spacing: 1px;
   font-weight: 300;
   font-size: 15px;
+  place-items:center;
+  align-items:center;
+  justify-content:center;
   @media screen and (max-width: 480) {
     margin-left: 16px;
     margin-top: 8px;
