@@ -7,16 +7,18 @@ import {
   Formlabel,
   FormWrap,
 } from "../SignUp/SignUp.elements";
-import {  TableContainer, TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
-import { UserDataText, CartTitle,MainDiv } from "./UserDetails.elements";
+import {  TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
+import {  TableContainer,UserDataText, CartTitle,MainDiv,Button } from "./UserDetails.elements";
 
 const UserDetails = () => {
   return (
     <>
     <MainDiv>
-    <CartTitle>Cart</CartTitle>
+    
     <TableContainer>
-     
+    <CartTitle>Cart</CartTitle>
+    
+    <Button>Add Product</Button>
       <TableDiv>
       <TableTag>
         <TableTr>

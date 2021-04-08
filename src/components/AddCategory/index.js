@@ -38,6 +38,10 @@ const AddCategory = () => {
       method:'post',
       url:'/admin/create-category',
       data:{categoryName:newCategory}
+    }).then((response)=>{
+      if (response.data.status){
+        window.location.reload(false)
+      }
     })
   }
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from 'react-router-dom'
 
 export const UserDataText = styled.p`
   font-size: 16px;
@@ -26,6 +27,29 @@ export const MainDiv = styled.div`
   align-items: center;
   flex-direction: column;
   overflow-x: hidden;
+`;
+export const Button = styled(Link)`
+  background: #141317;
+  white-space: nowrap;
+  outline: none;
+  min-width: 140px;
+  max-width: 160px;
+  max-height: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 1.3px;
+  transition: 0.3s;
+  display:flex;
+  flex-direction:row;
+  margin-left:auto;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0px;
+  color: #fff;
+  border: 2px solid #FFF8F0;
+  
+  font-size:18px;
+
 `;
 export const TableContainer = styled.div`
   display: flex;
