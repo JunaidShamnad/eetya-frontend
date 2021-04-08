@@ -46,7 +46,6 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
-  const [selectedCategory,setSelectCatgory] = useState("")
   const [progress, setProgess] = useState(0); // progess bar
   const el = useRef(); // accesing input element
 
@@ -55,13 +54,13 @@ const AddProduct = () => {
   React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
-      console.log(res.data);
+      
     });
   }, []);
 
 
   const addProducts = (e) => {
-    console.log(category);
+   
     console.log(file)
     e.preventDefault();
     Axios({
@@ -140,7 +139,7 @@ const AddProduct = () => {
 
               <FormSelectDiv>
                 <FormSelect
-                  onChange={(e) => console.log(e.target.value)}
+                  onChange={(e) => setCategoryValue(e.target.value)}
                   required
                 >
                   {category.map((category, index) => {
@@ -186,7 +185,24 @@ const AddProduct = () => {
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}
 
-                onDone={(file)=>{setFile(file)}}
+                onDone={async(Files)=>{
+                  console.log("len:"+Files.length)
+                  let arry=[]
+                  await Files.map((img,index)=>{
+                    let data ={
+                      Image:img.base64,
+                      type:img.file.type
+                    };
+                    arry.push(data);
+                    // setFile( 
+                    //   file.concat(data)
+                    // );
+                    
+                   
+                    })
+                    setFile(arry);
+                  
+                }}
               />
 
               {/* {data.path && <img src={data.path} alt={data.name} />} */}
