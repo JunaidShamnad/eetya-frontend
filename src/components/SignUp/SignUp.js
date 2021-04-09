@@ -34,6 +34,7 @@ const SignUp = () => {
   const [registerBillingAddress, setRegisterBillingAddress] = useState("");
   const [registerShippingAddress, setRegisterShippingAddress] = useState("");
   const dispatch = useDispatch(); 
+  const history = useHistory()
   const register = (e) => {
     e.preventDefault()
     Axios({
@@ -56,19 +57,11 @@ const SignUp = () => {
       url: "/register",
     }).then((res) => {
       console.log(res);
+      dispatch({ type: 'AUTH', res });
+
+    history.push('/');
     });
 
-    const signup = (formData, router) => async (dispatch) => {
-  try {
-    const { data } = await api.signUp(formData);
-
-    dispatch({ type: AUTH, data });
-
-    router.push('/');
-  } catch (error) {
-    console.log(error);
-  }
-};
   };
 
   return (

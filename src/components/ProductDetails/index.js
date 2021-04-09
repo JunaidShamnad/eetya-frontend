@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ProductShowcase } from "../../data/Products";
 import { FadeText } from "../HomeProducts/HomeProducts.elements";
+import { DetailBox, DetailInput, Detaillabel } from "../AddProducts/AddProducts.elements";
 import {
   CompanyName,
   LeftDiv,
@@ -63,6 +64,18 @@ const ProductDetails = () => {
                 </>
               );
             })}
+             <DetailBox>
+
+<Detaillabel>Wholesaler Name</Detaillabel>
+<DetailInput required type="text" />
+
+<Detaillabel>Wholesaler Email</Detaillabel>
+<DetailInput required type="text" />
+
+<Detaillabel>Wholesaler Number</Detaillabel>
+<DetailInput required type="text" />
+
+</DetailBox>
           </LeftDiv>
 
           <RightDiv>
