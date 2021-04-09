@@ -7,7 +7,7 @@ import {
   NavMenu,
   NavLink,
 } from "../Navbar/Navbar.elements";
-
+ 
 import {
   Card,
   CardContainer,
@@ -28,34 +28,40 @@ import {
 } from "./ProductsSection.elements";
 
 const ProductsSection = () => {
+  
   const [ProductData, setProductData] = useState([]);
-  useEffect(() => {
-    Axious({
-      method: "POST",
-      url: "/products",
-    }).then((response) => {
-      setProductData(response.data);
-    });
-    console.log(ProductData);
-  }, []);
+  //  useEffect(() => {
+    
+  //   Axious({
+  //     method: "POST",
+  //     url: "/products",
+  //   }).then((response) => {
+  //     console.log("pro len",response.products)
+  //     console.log("hello")
+  //     setProductData(response.products);
+  //   });
+  
+  //   console.log(ProductData);
+  // }, []);
+  
 
   const [PageNo, setPageNo] = React.useState(1);
-
-  const updateProductData =async (num) => {
-    console.log("before: "+PageNo);
+  
+  // const updateProductData =async (num) => {
+  //   console.log("before: "+PageNo);
     
-    await setPageNo(PageNo + num);
-    console.log(PageNo);
-    Axious({
-      method: "POST",
-      url: "/products",
-      data: { page: PageNo },
-    }).then((response) => {
-      setProductData(response.data);
-      console.log(response.data);
-      scroll.scrollToTop();
-    });
-  };
+  //   await setPageNo(PageNo + num);
+  //   console.log(PageNo);
+  //   Axious({
+  //     method: "POST",
+  //     url: "/products",
+  //     data: { page: PageNo },
+  //   }).then((response) => {
+  //     setProductData(response.data);
+  //     console.log(response.data);
+  //     scroll.scrollToTop();
+  //   });
+  // };
 
   useEffect(() => {
     Axious({
@@ -65,6 +71,7 @@ const ProductsSection = () => {
     }).then((response) => {
       setProductData(response.data);
       console.log(response.data);
+      console.log("koii")
       scroll.scrollToTop();
     });
     
@@ -90,10 +97,12 @@ const ProductsSection = () => {
                 key={index}
                 to={{ pathname: `product-details/${item._id}` }}
               >
-                <ImageContainer src={item.image} />
+                <ImageContainer src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
+               
+                
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.name}</ProductTitle>
+                    <ProductTitle>{item.title}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
