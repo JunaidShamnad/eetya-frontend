@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from '../../axios';
+import { animateScroll as scroll } from "react-scroll";
 import {
   Logo,
   NavbarContainer,
@@ -44,7 +45,10 @@ const HomeProducts = () => {
   }, []);
 
   
-  
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <MainDiv>
@@ -58,7 +62,7 @@ const HomeProducts = () => {
           <NavMenu>
             <NavItem>
               <NavLink to="/products">
-              <PrevText to="/products" >Product Page</PrevText> <RightArrow />
+              <PrevText to="/products" onClick={toggleHome} >Product Page</PrevText> <RightArrow />
               </NavLink>
             </NavItem>
           </NavMenu>

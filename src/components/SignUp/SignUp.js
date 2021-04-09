@@ -33,6 +33,7 @@ const SignUp = () => {
   const [registerWebsite, setRegisterWebsite] = useState("");
   const [registerBillingAddress, setRegisterBillingAddress] = useState("");
   const [registerShippingAddress, setRegisterShippingAddress] = useState("");
+  const [role, setrole] = useState('retailer')
   const dispatch = useDispatch(); 
   const history = useHistory()
   const register = (e) => {
@@ -52,12 +53,14 @@ const SignUp = () => {
         website: registerWebsite,
         billingAddress: registerBillingAddress,
         shippingAddress: registerShippingAddress,
+        role:role
       },
       withCredentials: true,
       url: "/register",
     }).then((res) => {
       console.log(res);
-      dispatch({ type: 'AUTH', res });
+      let data = res.data
+      dispatch({ type: 'AUTH', data });
 
     history.push('/');
     });
@@ -165,9 +168,9 @@ const SignUp = () => {
               </div>
               {/* <Formlabel htmlFor="for">Seller / Buyer</Formlabel> */}
               <FormSelectDiv>
-                <FormSelect required>
-                      <FormSelectOption >Retailer</FormSelectOption>
-                      <FormSelectOption >Wholesaler</FormSelectOption>
+                <FormSelect value={role} onChange={(e)=>setrole(e.target.value)} required>
+                      <FormSelectOption value="retailer" >Retailer</FormSelectOption>
+                      <FormSelectOption value="wholesaler" >Wholesaler</FormSelectOption>
                 </FormSelect>
 
               </FormSelectDiv>

@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
 import GlobalStyle from "./globalStyles";
 import MainPage from "./pages/MainPage";
@@ -29,23 +34,30 @@ import ChangeAdminEmailPage from "./pages/ChangeAdminEmailPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
-
-  const [isLoggedIn, setIsloggedIn] = useState(false)
-  const [userData, setUserData] = useState(null)
+  const [isLoggedIn, setIsloggedIn] = useState(false);
+  
   return (
     <Router>
       <GlobalStyle />
+
       <Switch>
-        <Route path="/" component={HomePage} exact />
         <Route path="/home" component={MainPage} exact />
+        <Route path="/user-details" component={UserDetailsPage} exact />
+        <Route path="/add-product" component={AddProductPage} exact />
+
+        <Route path="/" component={HomePage} exact />
+
         <Route path="/admin" component={AdminPage} exact />
         <Route path="/filter" component={FilterPage} exact />
-        <Route path="/change-admin-email" component={ChangeAdminEmailPage} exact />
+        <Route
+          path="/change-admin-email"
+          component={ChangeAdminEmailPage}
+          exact
+        />
         <Route path="/forgot-password" component={ForgotPasswordPage} exact />
         <Route path="/admin/category" component={AddCategoryPage} exact />
         <Route path="/cart" component={CartPage} exact />
-        <Route path="/user-details" component={UserDetailsPage} exact />
-        <Route path="/add-product" component={AddProductPage} exact />
+
         <Route path="/products" component={ProductPage} exact />
         <Route path="/news-letter" component={NewsLetterPage} exact />
         <Route path="/product-edit" component={ProductEditPage} exact />
@@ -58,16 +70,23 @@ function App() {
         <Route path="/what-we-do" component={WhatWeDoPage} exact />
         <Route path="/why-buy-made-in-usa" component={WhyMadeInUsaPage} exact />
         <Route path="/product-details" component={ProductDetailsPage} exact />
-        <Route path="/signin" exact >
-          {isLoggedIn ? <Redirect to='/' /> : <SignInPage setIsloggedIn={setIsloggedIn} />}
+        <Route path="/signin" exact>
+          {isLoggedIn ? (
+            <Redirect to="/" />
+          ) : (
+            <SignInPage setIsloggedIn={setIsloggedIn} />
+          )}
         </Route>
-        <Route path="/signup" exact >
-          {isLoggedIn ? <Redirect to='/' /> : <SignUpPage setIsloggedIn={setIsloggedIn} />}
+        <Route path="/signup" exact>
+          {isLoggedIn ? (
+            <Redirect to="/" />
+          ) : (
+            <SignUpPage setIsloggedIn={setIsloggedIn} />
+          )}
         </Route>
         <Route path="/coming-soon" component={ComingSoonPage} exact />
 
         <Route path="*" component={NotFoundPage} exact />
-
       </Switch>
     </Router>
   );

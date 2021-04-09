@@ -11,6 +11,7 @@
     "googleapis": "^70.0.0",
     "gsap": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
