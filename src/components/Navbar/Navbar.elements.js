@@ -18,6 +18,17 @@ export const Nav = styled.nav`
   }
 `;
 
+export const UserNameTag = styled(LinkR)`
+font-size:18px;
+font-weight:400;
+text-decoration:none;
+color:#fff;
+padding-left:2%;
+padding-right:2%;
+cursor:pointer;
+text-transform:capitalize;
+`
+
 export const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;

@@ -7,6 +7,11 @@ import {
   Formlabel,
   FormWrap,
 } from "../SignUp/SignUp.elements";
+import {
+ 
+  DeleteIcon,
+  EditIcon
+} from "../AddCategory/AddCategory.elements";
 import {  TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
 import {  TableContainer,UserDataText, CartTitle,MainDiv,Button } from "./UserDetails.elements";
 
@@ -18,7 +23,7 @@ const UserDetails = () => {
     <TableContainer>
     <CartTitle>Cart</CartTitle>
     
-    <Button to="/add-product">Add Product</Button>
+
       <TableDiv>
       <TableTag>
         <TableTr>
@@ -86,7 +91,7 @@ const UserDetails = () => {
 
     <TableContainer>
     <CartTitle>Products</CartTitle>
-    
+    <Button to="/add-product">Add Product</Button>
       <TableDiv>
       <TableTag>
         <TableTr>
@@ -95,6 +100,8 @@ const UserDetails = () => {
             <TableTh>Price</TableTh>
             <TableTh>Quantity</TableTh>
             <TableTh>Total</TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
    
         </TableTr>
         <TableTr>
@@ -103,10 +110,14 @@ const UserDetails = () => {
             <TableTd>hi</TableTd>
             <TableTd>hi</TableTd>
             <TableTd>hi</TableTd>
+            <TableTd><EditIcon/></TableTd>
+            <TableTd><DeleteIcon/></TableTd>
      
         </TableTr>
         <TableTr>
             <TableTh>Total</TableTh>
+            <TableTh></TableTh>
+            <TableTh></TableTh>
             <TableTh></TableTh>
             <TableTh></TableTh>
             <TableTh></TableTh>

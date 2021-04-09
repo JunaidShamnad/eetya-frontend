@@ -11,6 +11,7 @@ import {
   NavbarContainer,
   MobileIcon,
   Logo,
+  UserNameTag
 } from "./Navbar.elements";
 import decode from 'jwt-decode'; 
 
@@ -70,7 +71,7 @@ const Navbar = ({ toggle }) => {
             <NavMenu>
               {user ? 
                 <NavItem style={{color: 'white'}}>
-                {user.user.username}
+               <UserNameTag to="/user-details"> {user.user.username} </UserNameTag>
               </NavItem>
               : null}
               

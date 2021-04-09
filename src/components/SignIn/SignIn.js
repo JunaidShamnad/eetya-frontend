@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useHistory } from "react-router";
+import Swal from "sweetalert2";
 import Axios from "../../axios";
 import {
   Container,
@@ -35,6 +36,10 @@ const SignIn = ({ setIsloggedIn }) => {
       url: "/login",
     }).then((res) => {
       if (res.data.err) alert(res.data.err);
+      if(res.data.unVerified){
+        Swal.fire('Your account is under Admin verification.', 'Wait until Admin approves','warning')
+        history.push('/')
+      }
       else {
         setIsloggedIn(true);
         localStorage.user = JSON.stringify(res.data);
@@ -66,12 +71,7 @@ const SignIn = ({ setIsloggedIn }) => {
                 onChange={(e) => setLoginPassword(e.target.value)}
                 required
               />
-              <FormSelectDiv>
-                <FormSelect required>
-                  <FormSelectOption>Retailer</FormSelectOption>
-                  <FormSelectOption>Wholesaler</FormSelectOption>
-                </FormSelect>
-              </FormSelectDiv>
+            
               <FormButton type="submit" onClick={login}>
                 Sign In
               </FormButton>

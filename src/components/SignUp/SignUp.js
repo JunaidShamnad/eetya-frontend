@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "../../axios";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2'
 import {
   Container,
   Form,
@@ -58,11 +59,11 @@ const SignUp = () => {
       withCredentials: true,
       url: "/register",
     }).then((res) => {
-      console.log(res);
-      let data = res.data
-      dispatch({ type: 'AUTH', data });
+      if(res.data.status){
+        Swal.fire('Your Account is under verification.', 'You can only SignIn after Admin Verifies', 'warning')
+      }
 
-    history.push('/');
+      history.push('/');
     });
 
   };
