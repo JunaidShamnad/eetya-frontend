@@ -77,7 +77,7 @@ const ProductsSection = () => {
           <FadeText>Products</FadeText>
           <NavMenu>
             <NavItem>
-              <NavLink to="/">
+              <NavLink to="/filter">
                <FilterIcon />
               </NavLink>
             </NavItem>
