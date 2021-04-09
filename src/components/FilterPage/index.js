@@ -34,33 +34,36 @@ import {
 
 const Filter = () => {
   const [ProductData, setProductData] = useState([]);
+  const [category,setCategory] = useState([])
+  const [wholesaler,setWholsaler]=useState([])
   useEffect(() => {
-    Axious({
-      method: "POST",
-      url: "/products",
-    }).then((response) => {
-      setProductData(response.data);
-    });
-    console.log(ProductData);
+    // Axious({
+    //   method: "POST",
+    //   url: "/products",
+    // }).then((response) => {
+    //   setProductData(response.data);
+    // });
+    Axious.get('/category').then(res=>setCategory(res.data))
+    Axious.get('/wholesaler').then(res=>setWholsaler(res.data))
   }, []);
 
   const [PageNo, setPageNo] = React.useState(1);
 
-  const updateProductData =async (num) => {
-    console.log("before: "+PageNo);
+  // const updateProductData =async (num) => {
+  //   console.log("before: "+PageNo);
     
-    await setPageNo(PageNo + num);
-    console.log(PageNo);
-    Axious({
-      method: "POST",
-      url: "/products",
-      data: { page: PageNo },
-    }).then((response) => {
-      setProductData(response.data);
-      console.log(response.data);
-      scroll.scrollToTop();
-    });
-  };
+  //   await setPageNo(PageNo + num);
+  //   console.log(PageNo);
+  //   Axious({
+  //     method: "POST",
+  //     url: "/products",
+  //     data: { page: PageNo },
+  //   }).then((response) => {
+  //     setProductData(response.data);
+  //     console.log(response.data);
+  //     scroll.scrollToTop();
+  //   });
+  // };
 
   useEffect(() => {
     Axious({
@@ -75,6 +78,11 @@ const Filter = () => {
     
   }, [PageNo])
 
+  const categoryHandler = (e)=>{
+    
+    Axious.post('/get-cat-products',{category:e.target.value}).then(res=>setProductData(res.data))
+  }
+
   return (
     <>
       <MainDiv>
@@ -83,10 +91,14 @@ const Filter = () => {
 
     <FormSelectDiv>
     <Formlabel>Product Category </Formlabel>
-    <FormSelect required>
-        <FormSelectOption >
-          Category
-        </FormSelectOption>
+    <FormSelect required onChange={categoryHandler}>
+      {category.map((cat,key)=>{
+        return <FormSelectOption >
+        {cat.categoryName}
+      </FormSelectOption>
+
+      })}
+        
       </FormSelect>
 
       </FormSelectDiv>
@@ -97,9 +109,12 @@ const Filter = () => {
     <FormSelectDiv>
     <Formlabel>Wholesaler</Formlabel>
     <FormSelect required>
-        <FormSelectOption >
-          Wholesaler
-        </FormSelectOption>
+      {wholesaler.map((saler,index)=>{
+        return <FormSelectOption >
+        {saler.username}
+      </FormSelectOption> 
+      })}
+        
       </FormSelect>
 
       </FormSelectDiv>
@@ -110,12 +125,12 @@ const Filter = () => {
             return (
               <Card
                 key={index}
-                to={{ pathname: `product-details/${item._id}` }}
+                to={{ pathname: `product-details/${item.id}` }}
               >
-                <ImageContainer src={item.image} />
+                <ImageContainer src={`data:image/${item.images[0].type};base64,${item.images[0].data}`} />
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.name}</ProductTitle>
+                    <ProductTitle>{item.title}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
