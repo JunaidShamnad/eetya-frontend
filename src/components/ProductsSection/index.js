@@ -95,7 +95,7 @@ const ProductsSection = () => {
             return (
               <Card
                 key={index}
-                to={{ pathname: `product-details/${item._id}` }}
+                to={{ pathname: `/product-details/${item.id}` }}
               >
                 <ImageContainer src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
                

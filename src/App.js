@@ -57,7 +57,7 @@ function App() {
         <Route path="/help-center" component={HelpCenterPage} exact />
         <Route path="/what-we-do" component={WhatWeDoPage} exact />
         <Route path="/why-buy-made-in-usa" component={WhyMadeInUsaPage} exact />
-        <Route path="/product-details" component={ProductDetailsPage} exact />
+        <Route path="/product-details/:id" component={ProductDetailsPage} exact />
         <Route path="/signin" exact >
           {isLoggedIn ? <Redirect to='/' /> : <SignInPage setIsloggedIn={setIsloggedIn} />}
         </Route>

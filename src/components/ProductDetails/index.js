@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductShowcase } from "../../data/Products";
 import { FadeText } from "../HomeProducts/HomeProducts.elements";
 import { DetailBox, DetailInput, Detaillabel } from "../AddProducts/AddProducts.elements";
+import { useParams } from "react-router";
+import Axios from "../../axios"
 import {
   CompanyName,
   LeftDiv,
@@ -33,58 +35,78 @@ import {
   MainCountTitle
 } from "./ProductDetails.elements";
 
-const ProductDetails = () => {
+const ProductDetails = (props) => {
   const [count, setCount] = useState(0);
+  const [product,setProduct] = useState("")
+  const [user,setUser] = useState("")
+  
   // Create handleIncrement event handler
   const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
+    if(product.maxQuantity<=count) setCount(product.maxQuantity)
+    else if(count<product.minQuantity) setCount(product.minQuantity)
+    else setCount((prevCount) => prevCount + 1);
   };
-
+  let { id } = useParams();
+  
+  
   //Create handleDecrement event handler
   const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
+   if(product.minQuantity<count) setCount((prevCount) => prevCount - 1);
+   else setCount(product.minQuantity) 
   };
+  useEffect(()=>{
+    Axios.post(`/Product`,{id:id}).then((response)=>{
+     setProduct(response.data.Product);
+     setUser(response.data.User)
+     
+    })
+  },[])
+
   return (
     <>
+    
       <MainDiv>
-        <FadeText>Cart</FadeText>
+        <FadeText>Details</FadeText>
         <Row>
           <LeftDiv>
-            {ProductShowcase.map((item, index) => {
-              return (
-                <>
+          <>
                   <MainImageDiv>
-                    <MainImageConatiner src={item.image} key={index} />
+                    {product?<MainImageConatiner src={`data:image/${product.images[0].type};base64,${product.images[0].data}`} />:""}
                   </MainImageDiv>
                   <SubImageDiv>
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
-                  </SubImageDiv>
-                </>
+                  {product?product.images.map((img,index) => { 
+                    
+              return (
+               
+                  
+                    <SubImageConatiner src={`data:image/${img.type};base64,${img.data}`}/>
+                 
+               
               );
-            })}
+            }):""}
+             </SubImageDiv>
+             </>
              <DetailBox>
 
 <Detaillabel>Wholesaler Name</Detaillabel>
-<DetailInput required type="text" />
+<DetailInput value ={user.name} required type="text" />
 
 <Detaillabel>Wholesaler Email</Detaillabel>
-<DetailInput required type="text" />
+<DetailInput value ={user.email} required type="text" />
 
 <Detaillabel>Wholesaler Number</Detaillabel>
-<DetailInput required type="text" />
+<DetailInput value ={user.number} required type="text" />
 
 </DetailBox>
           </LeftDiv>
 
           <RightDiv>
-            <CompanyName>Hinoki Lab</CompanyName>
-            <ProductName>Aroma Mist </ProductName>
+            <CompanyName>{user.companyname}</CompanyName>
+            <ProductName>{product.title} </ProductName>
             <ProductDesc>
-              This natural and refreshing spray will soothes your mood.{" "}
+              { product.description+". "}
             </ProductDesc>
-            <ProductPrice>$ 50.15</ProductPrice>
+            <ProductPrice>$ {product.price}</ProductPrice>
             <ReviewText>
               See Reviews <ReviewArrowIcon />
             </ReviewText>
@@ -92,8 +114,8 @@ const ProductDetails = () => {
               <CountButtonDiv>
             <DecrementButton onClick={handleDecrement}>-</DecrementButton>
            <CountText>{count}</CountText>
-          <IncrementButton onClick={handleIncrement}>+</IncrementButton>
-          <ResetButton onClick={() => setCount(0)}>Reset</ResetButton>
+           <IncrementButton onClick={handleIncrement}>+</IncrementButton>
+          <ResetButton onClick={() => setCount(product.minQuantity)}>Reset</ResetButton>
           </CountButtonDiv>      
           
             <ButtonDiv>
