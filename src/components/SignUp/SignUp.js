@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Axios from "../../axios";
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   Form,
@@ -31,8 +33,9 @@ const SignUp = () => {
   const [registerWebsite, setRegisterWebsite] = useState("");
   const [registerBillingAddress, setRegisterBillingAddress] = useState("");
   const [registerShippingAddress, setRegisterShippingAddress] = useState("");
-
-  const register = () => {
+  const dispatch = useDispatch(); 
+  const register = (e) => {
+    e.preventDefault()
     Axios({
       method: "POST",
       data: {
@@ -55,7 +58,17 @@ const SignUp = () => {
       console.log(res);
     });
 
-    
+    const signup = (formData, router) => async (dispatch) => {
+  try {
+    const { data } = await api.signUp(formData);
+
+    dispatch({ type: AUTH, data });
+
+    router.push('/');
+  } catch (error) {
+    console.log(error);
+  }
+};
   };
 
   return (
