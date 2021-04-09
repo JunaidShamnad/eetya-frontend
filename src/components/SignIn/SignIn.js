@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Axios from '../../axios';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useHistory } from "react-router";
+import Axios from "../../axios";
 import {
   Container,
   Form,
@@ -13,18 +15,16 @@ import {
   SigninText,
   FormSelectDiv,
   FormSelect,
-  FormSelectOption
+  FormSelectOption,
 } from "./SignIn.elements";
 
-
-const SignIn = ({setIsloggedIn}) => {
-
+const SignIn = ({ setIsloggedIn }) => {
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
+  const history = useHistory();
 
   const login = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     Axios({
       method: "POST",
       data: {
@@ -32,15 +32,19 @@ const SignIn = ({setIsloggedIn}) => {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "/admin/login",
+      url: "/login",
     }).then((res) => {
-      if(res.data.err) alert(res.data.err)
-     else {
-      setIsloggedIn(true)
-      localStorage.user = JSON.stringify(res.data)
-      console.log(res);
-     }
-
+      if (res.data.err) alert(res.data.err);
+      else {
+        setIsloggedIn(true);
+        localStorage.user = JSON.stringify(res.data);
+        let role = res.data.user.role;
+        if (role === 3) {
+          history.push("/admin");
+        } else if (role === 1) {
+          history.push("/home");
+        }
+      }
     });
   };
   return (
@@ -62,12 +66,11 @@ const SignIn = ({setIsloggedIn}) => {
                 onChange={(e) => setLoginPassword(e.target.value)}
                 required
               />
-<FormSelectDiv>
+              <FormSelectDiv>
                 <FormSelect required>
-                      <FormSelectOption >Retailer</FormSelectOption>
-                      <FormSelectOption >Wholesaler</FormSelectOption>
+                  <FormSelectOption>Retailer</FormSelectOption>
+                  <FormSelectOption>Wholesaler</FormSelectOption>
                 </FormSelect>
-
               </FormSelectDiv>
               <FormButton type="submit" onClick={login}>
                 Sign In

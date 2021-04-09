@@ -24,6 +24,7 @@ import {
 } from "./Footer.elements";
 
 const Footer = () => {
+
   const toggleHome = () => {
     scroll.scrollToTop();
   };
