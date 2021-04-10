@@ -130,7 +130,7 @@ const Navbar = ({ toggle }) => {
               : null}
               
               <NavItem>
-                <NavLink >
+                <NavLink to="/">
                      <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
