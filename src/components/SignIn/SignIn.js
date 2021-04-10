@@ -36,7 +36,7 @@ const SignIn = ({ setIsloggedIn }) => {
       url: "/login",
     }).then((res) => {
       if (res.data.err) alert(res.data.err);
-      if(res.data.unVerified){
+      else if(res.data.unVerified){
         Swal.fire('Your account is under Admin verification.', 'Wait until Admin approves','warning')
         history.push('/')
       }

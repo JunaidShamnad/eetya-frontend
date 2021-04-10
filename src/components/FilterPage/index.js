@@ -78,9 +78,20 @@ const Filter = () => {
     
   }, [PageNo])
 
+  const allProducts = ()=>{
+    Axious({
+      method: "POST",
+      url: "/products",
+      data: { page: PageNo },
+    }).then((response) => {
+      setProductData(response.data);
+     
+      scroll.scrollToTop();
+    });
+  }
   const categoryHandler = (e)=>{
-    
-    Axious.post('/get-cat-products',{category:e.target.value}).then(res=>setProductData(res.data))
+    if(e.target.value === "ALL") allProducts()
+    else Axious.post('/get-cat-products',{category:e.target.value}).then(res=>setProductData(res.data))
   }
 
   return (
@@ -91,7 +102,11 @@ const Filter = () => {
 
     <FormSelectDiv>
     <Formlabel>Product Category </Formlabel>
+    
     <FormSelect required onChange={categoryHandler}>
+    <FormSelectOption >
+       ALL
+      </FormSelectOption>
       {category.map((cat,key)=>{
         return <FormSelectOption >
         {cat.categoryName}
@@ -103,7 +118,7 @@ const Filter = () => {
 
       </FormSelectDiv>
         </NavbarContainer>
-        <NavbarContainer>
+        {/* <NavbarContainer>
      
 
     <FormSelectDiv>
@@ -118,7 +133,7 @@ const Filter = () => {
       </FormSelect>
 
       </FormSelectDiv>
-        </NavbarContainer>
+        </NavbarContainer> */}
 
         <CardContainer>
           {ProductData.map((item, index) => {
