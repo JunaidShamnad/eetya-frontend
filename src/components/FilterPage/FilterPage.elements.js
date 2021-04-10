@@ -13,4 +13,11 @@ export const Formlabel = styled.label`
   display: flex;
   font-size: 18px;
   color: #fff;
+
+  @media screen and (max-width:600px){
+    max-width:100px;
+   min-width:100px;
+   padding-left:2%;
+   font-size: 16px;
+  }
 `;
