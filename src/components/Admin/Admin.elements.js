@@ -63,15 +63,21 @@ export const Button = styled(Link)`
 export const TableDiv = styled.div`
   background:#0d0d0f;
   padding:80px;
-  min-width:85vw;
-  max-width:85vw;
+  min-width:90vw;
+  overflow-x:auto;
+  max-width:90vw;
   margin-bottom:8%;
   border-radius:4px;
   margin: 10px auto;
   justify-content:center;
   align-items:center;
 
-`
+  @media screen and (max-width:680px){
+    min-width:100%;
+    max-width:100%;
+  }
+
+`;
 export const Boxtitle = styled.h3`
   font-size: 25px;
   font-weight: 500;
