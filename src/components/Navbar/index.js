@@ -3,6 +3,8 @@ import { IconContext } from "react-icons/lib";
 import { animateScroll as scroll } from "react-scroll";
 import {  useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Badge from '@material-ui/core/Badge';
+
 
 import {
   Nav,
@@ -17,7 +19,7 @@ import {
 import decode from 'jwt-decode'; 
 
 const Navbar = ({ toggle }) => {
-    
+ 
   
   const [scrollNav, setScrollNav] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
@@ -81,6 +83,7 @@ const Navbar = ({ toggle }) => {
              
               <NavItem>
                 <NavLink to="/cart">
+                <Badge color="secondary" badgeContent={5}>
                   <img
                     src={
                       require("../../images/Icon feather-shopping-cart.svg")
@@ -88,6 +91,7 @@ const Navbar = ({ toggle }) => {
                     }
                     alt="Logo"
                   />
+                  </Badge>
                 </NavLink>
               </NavItem>
 

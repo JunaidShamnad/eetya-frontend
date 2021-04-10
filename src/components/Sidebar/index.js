@@ -31,7 +31,6 @@ const Sidebar = ({ isOpen, toggle }) => {
     }
 
     setUser(JSON.parse(localStorage.getItem('user')));
-    console.log(user);
   }, [location]);
 
   const logout = () => {

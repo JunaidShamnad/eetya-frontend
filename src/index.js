@@ -8,6 +8,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import { reducers } from './reducers/index';
+import { stopReportingRuntimeErrors } from "react-error-overlay";
+
+// if (process.env.NODE_ENV === "development") {
+//   stopReportingRuntimeErrors(); // disables error overlays
+// }
+
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(

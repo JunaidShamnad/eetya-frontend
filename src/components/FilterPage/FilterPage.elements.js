@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {BiSearch} from 'react-icons/bi'
 
 export const Formlabel = styled.label`
   margin-bottom: 8px;
@@ -21,3 +22,5 @@ export const Formlabel = styled.label`
    font-size: 16px;
   }
 `;
+
+export const SearchIcon = styled(BiSearch)``

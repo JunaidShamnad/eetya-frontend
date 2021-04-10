@@ -128,11 +128,13 @@ const Admin = () => {
           <TableContainer>
             <TableTag>
               <TableTr>
-                <TableTh>User Name</TableTh>
+                <TableTh>product Name</TableTh>
                 <TableTh>Email</TableTh>
-                <TableTh>Cart</TableTh>
+                <TableTh>Phone</TableTh>
+                <tableTh>Role</tableTh>
               </TableTr>
               <TableTr>
+                <TableTd>hi</TableTd>
                 <TableTd>hi</TableTd>
                 <TableTd>hi</TableTd>
                 <TableTd>hi</TableTd>
