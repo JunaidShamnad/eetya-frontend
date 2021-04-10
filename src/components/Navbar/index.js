@@ -125,7 +125,7 @@ const Navbar = ({ toggle }) => {
             <NavMenu>
               {user ? 
                 <NavItem style={{color: 'white'}}>
-               <UserNameTag to="/user-details"> {user.user.username} </UserNameTag>
+               <UserNameTag to="/user-details"> {user.username} </UserNameTag>
               </NavItem>
               : null}
               
