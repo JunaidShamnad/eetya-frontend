@@ -232,6 +232,7 @@ export const FooterInput = styled.input`
 export const PlaneIcons = styled(FaTelegramPlane)`
   position:absolute;
   top:28%;
+cursor:pointer;
   right:8%;
   font-size:25px;
   color: #fff;
