@@ -27,41 +27,12 @@ import {
   RightArrow,
 } from "./ProductsSection.elements";
 
-const ProductsSection = () => {
+const ProductsSection = ({setIsloggedIn}) => {
   
   const [ProductData, setProductData] = useState([]);
-  //  useEffect(() => {
-    
-  //   Axious({
-  //     method: "POST",
-  //     url: "/products",
-  //   }).then((response) => {
-  //     console.log("pro len",response.products)
-  //     console.log("hello")
-  //     setProductData(response.products);
-  //   });
-  
-  //   console.log(ProductData);
-  // }, []);
-  
-
   const [PageNo, setPageNo] = React.useState(1);
   
-  // const updateProductData =async (num) => {
-  //   console.log("before: "+PageNo);
-    
-  //   await setPageNo(PageNo + num);
-  //   console.log(PageNo);
-  //   Axious({
-  //     method: "POST",
-  //     url: "/products",
-  //     data: { page: PageNo },
-  //   }).then((response) => {
-  //     setProductData(response.data);
-  //     console.log(response.data);
-  //     scroll.scrollToTop();
-  //   });
-  // };
+  
 
   useEffect(() => {
     Axious({
@@ -76,6 +47,7 @@ const ProductsSection = () => {
     });
     
   }, [PageNo])
+  
 
   return (
     <>

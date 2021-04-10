@@ -6,7 +6,7 @@ import HeaderTwo from "../components/HeaderTwo";
 import HeaderThree from "../components/HeaderThree";
 import ProductsSection from "../components/ProductsSection";
 
-const ProductPage = () => {
+const ProductPage = ({setIsloggedIn}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -16,7 +16,7 @@ const ProductPage = () => {
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
-      <ProductsSection />
+      <ProductsSection setIsloggedIn={setIsloggedIn} />
       <HeaderTwo />
       <HeaderThree />
       <Footer />
