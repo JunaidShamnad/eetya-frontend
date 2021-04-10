@@ -148,7 +148,11 @@ const Filter = () => {
     if(e.target.value === "ALL") allProducts()
     else Axious.post('/get-cat-products',{category:e.target.value}).then(res=>setProductData(res.data))
   }
-
+  //search handler
+const searchHandler =(e)=>{
+  if(e.target.value === "") allProducts()
+  else Axious.post('/searchProducts',{data:e.target.value}).then(res=>setProductData(res.data))
+}
   return (
     <>
       <MainDiv>
@@ -172,7 +176,25 @@ const Filter = () => {
       </FormSelect>
 
       </FormSelectDiv>
+
+     
         </NavbarContainer>
+        <NavLink to="/filter">
+                     <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              onChange={searchHandler}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+                </NavLink>
         {/* <NavbarContainer>
      
 

@@ -78,27 +78,7 @@ const Navbar = ({ toggle }) => {
               </NavItem>
               : null}
               
-<<<<<<< HEAD
-              <NavItem>
-                <NavLink to="/filter">
-                     <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-                </NavLink>
-              </NavItem>
-=======
              
->>>>>>> 13085ede4373e3a120b9fc1582a86d46ac9e0b97
               <NavItem>
                 <NavLink to="/cart">
                   <img
