@@ -27,7 +27,8 @@ import {
   RightArrow,
 } from "./ProductsSection.elements";
 
-const ProductsSection = ({setIsloggedIn}) => {
+const ProductsSection = () => {
+
   
   const [ProductData, setProductData] = useState([]);
   const [PageNo, setPageNo] = React.useState(1);
@@ -49,6 +50,10 @@ const ProductsSection = ({setIsloggedIn}) => {
   }, [PageNo])
   
 
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <MainDiv>
@@ -69,7 +74,10 @@ const ProductsSection = ({setIsloggedIn}) => {
                 key={index}
                 to={{ pathname: `/product-details/${item.id}` }}
               >
-                <ImageContainer src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
+                <ImageContainer onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } }  src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
                
                 
                 <ProductUl>
@@ -78,7 +86,10 @@ const ProductsSection = ({setIsloggedIn}) => {
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
-                    <CartIcon />
+                    <CartIcon onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } }  />
                   </ProductLi>
                 </ProductUl>
               </Card>

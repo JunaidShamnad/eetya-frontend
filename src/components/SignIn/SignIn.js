@@ -46,9 +46,12 @@ const SignIn = ({ setIsloggedIn }) => {
         let role = res.data.user.role;
         if (role === 3) {
           history.push("/admin");
-        } else if (role === 1) {
+        } else if (role === 1 ) {
           history.push("/home");
+        } else if (role === 2 ) {
+          history.push("/user-details");
         }
+         
       }
     });
   };
