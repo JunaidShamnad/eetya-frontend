@@ -102,6 +102,15 @@ const AddProduct = () => {
         <FadeText>Add Product</FadeText>
         <Row>
           <LeftDiv>
+          {/* {product
+                  ? product.images.map((img, index) => {
+                      return (
+                        <SubImageConatiner
+                          src={`data:image/${img.type};base64,${img.data}`}
+                        />
+                      );
+                    })
+                  : ""} */}
             {ProductShowcase.map((item, index) => {
               return (
                 <>

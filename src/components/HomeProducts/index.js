@@ -81,8 +81,8 @@ const HomeProducts = () => {
                     } }  src={`data:image/${item.images[0].type};base64,${item.images[0].data}`} key={index} />
                 <ProductUl>
                   <ProductLi>
-                    <ProductTitle>{item.heading}</ProductTitle>
-                    <ProductPrice>{item.price}</ProductPrice>
+                    <ProductTitle>{item.title}</ProductTitle>
+                    <ProductPrice>$ {item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
           

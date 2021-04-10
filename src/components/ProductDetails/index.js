@@ -41,7 +41,7 @@ import Swal from 'sweetalert2'
 
 const ProductDetails = (props) => {
   const [count, setCount] = useState(0);
-  const [product, setProduct] = useState("");
+  const [product, setProduct] = useState([]);
   const [user, setUser] = useState("");
   const [addedToCart, setAddedToCart] = useState()
 
@@ -61,6 +61,7 @@ const ProductDetails = (props) => {
   useEffect(() => {
     Axios.post(`/Product`, { id: id }).then((response) => {
       console.log(response);
+      
       setProduct(response.data.Product);
       setUser(response.data.User);
     });
@@ -88,7 +89,7 @@ const ProductDetails = (props) => {
     Axios({
       url:'/buyer/add-to-cart',
       method:'post',
-      data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity, price: product.price}
+      data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity, price: product.price, storeId:user.id}
     }).then((res)=>{
       if(!res.data.err){
         Swal.fire({

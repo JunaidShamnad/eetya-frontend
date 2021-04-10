@@ -16,10 +16,22 @@ import decode from 'jwt-decode';
 
 
 const Sidebar = ({ isOpen, toggle }) => {
+ 
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+ 
+  
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  let role 
+  if(userData){
+    role = userData.user.role;
+    
+  }
+
 
   useEffect(() => {
     const token = user?.token;
@@ -41,7 +53,9 @@ const Sidebar = ({ isOpen, toggle }) => {
     setUser(null);
   };
 
-  
+ 
+
+ 
 
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -50,9 +64,21 @@ const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
+        {(role ===1 || role ===2)&&
           <SidebarLink to="/products" onClick={toggle}>
-            Shop
+          Shop
           </SidebarLink>
+          } 
+        {(role ===1 || role ===2)&&
+          <SidebarLink to="/user-details" onClick={toggle}>
+          User Details
+          </SidebarLink>
+          }
+          {(role ===3)&&
+          <SidebarLink to="/admin" onClick={toggle}>
+           Admin
+          </SidebarLink>
+}
           <SidebarLink to="/cart" onClick={toggle}>
             Cart
           </SidebarLink>
@@ -65,7 +91,7 @@ const Sidebar = ({ isOpen, toggle }) => {
         </SidebarMenu>
         {user ? 
         <SideBtnWrap>
-        <SidebarRoute onClick={logout}>Log out</SidebarRoute>
+        <SidebarRoute onClick={logout} to="/">Log out</SidebarRoute>
       </SideBtnWrap>
       :
       <SideBtnWrap>
