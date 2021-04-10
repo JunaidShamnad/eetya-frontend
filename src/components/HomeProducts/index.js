@@ -32,16 +32,18 @@ const HomeProducts = () => {
   const [ProductData, setProductData] = useState([]);
 
   useEffect(() => {
-    // Axios({
-    //   method: "GET",
-    //   withCredentials: true,
-    //   url: "http://localhost:4000/items",
-    // }).then((res) => {
-    //   setProductData(res.data);
-    //   console.log(res.data);
-    // });
-    setProductData(Products)
+    Axios({
+      method: "GET",
+      withCredentials: true,
+      url: "/newArrivals",
+    }).then((res) => {
+      setProductData(res.data);
+      console.log(res.data);
+    setProductData(res.data)
+
+    });
     console.log(ProductData);
+ 
   }, []);
 
   
@@ -70,15 +72,24 @@ const HomeProducts = () => {
         <CardContainer>
           {ProductData.map((item, index) => {
             return (
-              <Card>
-                <ImageContainer src={item.image} key={index} />
+              <Card
+              key={index}
+                to={{ pathname: `/product-details/${item.id}` }}>
+                <ImageContainer onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } }  src={`data:image/${item.images[0].type};base64,${item.images[0].data}`} key={index} />
                 <ProductUl>
                   <ProductLi>
                     <ProductTitle>{item.heading}</ProductTitle>
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
-                    <CartIcon />
+          
+                    <CartIcon onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } } />
                   </ProductLi>
                 </ProductUl>
               </Card>

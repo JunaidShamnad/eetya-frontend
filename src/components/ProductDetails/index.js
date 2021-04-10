@@ -66,6 +66,7 @@ const ProductDetails = (props) => {
     });
     
     let userId = JSON.parse(localStorage.getItem('user')).user._id
+    console.log("id:"+userId + " productId: "+id);
     Axios({
       method:'post',
       url:'/buyer/confirm-product',
@@ -74,7 +75,9 @@ const ProductDetails = (props) => {
         productId:id
       }
     }).then((res)=>{
-      console.log("response: "+res.data);
+      if(res.data.status){
+        setAddedToCart(true)
+      }
       
     })
   }, []);
@@ -85,7 +88,7 @@ const ProductDetails = (props) => {
     Axios({
       url:'/buyer/add-to-cart',
       method:'post',
-      data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity}
+      data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity, price: product.price}
     }).then((res)=>{
       if(res.data){
         Swal.fire({
@@ -95,6 +98,8 @@ const ProductDetails = (props) => {
           showConfirmButton: false,
           timer: 1500
         })
+        setAddedToCart(true)
+
       }
     })
   };
@@ -144,9 +149,9 @@ const ProductDetails = (props) => {
             <ProductName>{product.title} </ProductName>
             <ProductDesc>{product.description + ". "}</ProductDesc>
             <ProductPrice>$ {product.price}</ProductPrice>
-            <ReviewText>
+            {/* <ReviewText>
               See Reviews <ReviewArrowIcon />
-            </ReviewText>
+            </ReviewText> */}
             <MainCountTitle>Product Count</MainCountTitle>
             <CountButtonDiv>
               <DecrementButton onClick={handleDecrement}>-</DecrementButton>
@@ -159,6 +164,13 @@ const ProductDetails = (props) => {
 
             <ButtonDiv>
               <BuyButton>Buy Now</BuyButton>
+              {addedToCart?
+                <CartButton
+                to='/cart'
+              >
+                Go to cart
+              </CartButton>
+              :
               <CartButton
                 onClick={() => {
                   addToCart();
@@ -166,10 +178,12 @@ const ProductDetails = (props) => {
               >
                 Add to cart
               </CartButton>
+            }
+              
             </ButtonDiv>
             <QuestionDiv>
               <QuestionTextWrapper>
-                <QuestionText>
+                <QuestionText to="/help-center">
                   Dispatched in 5-7 weeks.
                   <br /> Why the longer lead time?
                 </QuestionText>
@@ -177,7 +191,7 @@ const ProductDetails = (props) => {
               </QuestionTextWrapper>
               <LongLine />
               <QuestionTextWrapper>
-                <QuestionText>Any Questions </QuestionText>{" "}
+                <QuestionText to="/help-center">Any Questions </QuestionText>{" "}
                 <QuestionArrowIcon />{" "}
               </QuestionTextWrapper>
             </QuestionDiv>

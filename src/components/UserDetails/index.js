@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import {
   Container,
   Form,
@@ -14,12 +14,32 @@ import {
 } from "../AddCategory/AddCategory.elements";
 import {  TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
 import {  TableContainer,UserDataText, CartTitle,MainDiv,Button } from "./UserDetails.elements";
+import { useHistory } from "react-router";
 
 const UserDetails = () => {
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
+  const history = useHistory();
+
+  // useEffect(() => {
+  //   if (!userData) {
+  //     history.push("/signin");
+  //   } else {
+  //     let role = userData.user.role;
+  //     if (role === 3) {
+  //       history.push("/admin");
+  //     } else if (role === 1 || role === 2) {
+  //       history.push("/home");
+  //     }
+  //   }
+  // }, []);
+
+  let role = userData.user.role;
   return (
     <>
     <MainDiv>
-    
+    {(role === 1) &&
     <TableContainer>
     <CartTitle>Cart</CartTitle>
     
@@ -54,7 +74,9 @@ const UserDetails = () => {
     </TableTag>
   </TableDiv>
         </TableContainer>
+      }
 
+  {(role === 2) &&
     <TableContainer>
     <CartTitle>Orders</CartTitle>
     
@@ -88,7 +110,8 @@ const UserDetails = () => {
     </TableTag>
   </TableDiv>
         </TableContainer>
-
+}
+{(role === 2) &&
     <TableContainer>
     <CartTitle>Products</CartTitle>
     <Button to="/add-product">Add Product</Button>
@@ -128,6 +151,7 @@ const UserDetails = () => {
     </TableTag>
   </TableDiv>
         </TableContainer>
+}
       <Container>
         <FormWrap>
           <FormContent>

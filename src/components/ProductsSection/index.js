@@ -28,6 +28,7 @@ import {
 } from "./ProductsSection.elements";
 
 const ProductsSection = () => {
+
   
   const [ProductData, setProductData] = useState([]);
   //  useEffect(() => {
@@ -77,6 +78,10 @@ const ProductsSection = () => {
     
   }, [PageNo])
 
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
       <MainDiv>
@@ -97,7 +102,10 @@ const ProductsSection = () => {
                 key={index}
                 to={{ pathname: `/product-details/${item.id}` }}
               >
-                <ImageContainer src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
+                <ImageContainer onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } }  src={`data:image/${item.images[0].type};base64,${item.images[0].data}`}/>
                
                 
                 <ProductUl>
@@ -106,7 +114,10 @@ const ProductsSection = () => {
                     <ProductPrice>{item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
-                    <CartIcon />
+                    <CartIcon onClick={ ()=>{
+                      window.location.href = `/product-details/${item.id}`
+                      toggleHome()
+                    } }  />
                   </ProductLi>
                 </ProductUl>
               </Card>
