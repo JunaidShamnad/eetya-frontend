@@ -259,7 +259,7 @@ export const CartButton = styled(Link)`
   margin-right: 5%;
   border: none;
   text-decoration: none;
-  margin-top: 30px;
+  margin-top: 50px;
   max-width: 140px;
   min-width: 140px;
   max-height: 50px;

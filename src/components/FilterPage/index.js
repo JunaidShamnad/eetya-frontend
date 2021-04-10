@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { animateScroll as scroll } from "react-scroll";
 import Axious from "../../axios";
 import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import {
   NavbarContainer,
@@ -15,7 +15,7 @@ import {
     FormSelect,
     FormSelectOption,
   } from "../AddProducts/AddProducts.elements";
-  import {  Formlabel } from "./FilterPage.elements";
+  import {  Formlabel,SearchIcon } from "./FilterPage.elements";
 import {
   Card,
   CardContainer,
