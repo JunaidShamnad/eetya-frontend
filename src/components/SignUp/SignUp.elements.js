@@ -57,13 +57,15 @@ export const FormContent = styled.div`
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
+    max-width:90vw;
   }
 `;
 
 export const Form = styled.form`
   background: #141317;
   height: auto;
-  width: 90%;
+  max-width: 90vw;
+  
   z-index: 1;
   display: grid;
   padding: 80px 32px;
@@ -95,7 +97,8 @@ margin-bottom:32px;
       .conatiner {
         display: grid;
         grid-template-columns: 1fr;
-        max-width: 400px;
+        max-width: 90vw;
+       
         grid-gap: 0px;
         padding: 0;
         margin: 0;
@@ -114,6 +117,7 @@ margin-bottom:32px;
     }
   }
 `;
+
 
 export const FormH1 = styled.h1`
   margin-bottom: 40px;
