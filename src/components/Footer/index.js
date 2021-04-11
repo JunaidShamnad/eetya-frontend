@@ -1,6 +1,6 @@
 import React from "react";
 import { animateScroll as scroll } from "react-scroll";
-import IconButton from '@material-ui/core/IconButton';
+
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 import {
@@ -85,9 +85,9 @@ const Footer = () => {
           <InputTilte>Stay upto Date</InputTilte>
            <FooterInputDiv>
           <FooterInput placeholder="Your email address" />
-            <IconButton>
+           
            <PlaneIcons/>
-            </IconButton>
+          
            </FooterInputDiv>
         </InputSubdiv>
       </InputDiv>

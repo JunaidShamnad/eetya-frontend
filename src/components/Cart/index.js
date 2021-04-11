@@ -9,15 +9,9 @@ import {
   AdminTitle,
   TableDiv,
   Boxtitle,
+  
 } from "../Admin/Admin.elements";
-import {
-  DecrementButton,
-  IncrementButton,
-  ResetButton,
-  CountText,
-  CountButtonDiv,
-  MainCountTitle,
-} from "../ProductDetails/ProductDetails.elements";
+
 import {
   ImageBox,
   CartTotalContainer,
@@ -26,6 +20,12 @@ import {
   FormButton,
   RightDiv,
   DeleteIcon,
+  DecrementButton,
+  IncrementButton,
+  ResetButton,
+  CountText,
+  CountButtonDiv,
+  MainCountTitle,
 } from "./Cart.elements";
 import Axios from "../../axios";
 
@@ -49,11 +49,11 @@ const Cart = () => {
       data: { id: userId },
     }).then((res) => {
       if (res.data.cart) {
+          console.log(res.data.cart.items)
         setCart(res.data.cart.items);
         console.log(res.data);
         let Total = 0;
-        const items = res.data.cart.items;
-        items.map((item, i) => {
+        res.data.cart.items.map((item, i) => {
           let price = item.price * item.quantity;
           Total = Total + price;
         });
@@ -65,15 +65,47 @@ const Cart = () => {
     });
   }, []);
 
-  const changeQuantity = (value, productId, userId)=>{
-    console.log({value, productId, userId});
+  const changeQuantity = (value, productId, userId) => {
     Axios({
-        url:'/buyer/change-qnt',
-        method:'POST',
-        data:{value, productId, userId}
+      url: "/buyer/change-qnt",
+      method: "POST",
+      data: { value, productId, userId },
+    }).then((res) => {
+      if (res.data.status) {
+        document.getElementById(productId).innerHTML =
+          parseInt(document.getElementById(productId).innerHTML) + value;
+        let Total = 0;
+        const items = res.data.cart.items;
+        items.map((item, i) => {
+          let price = item.price * item.quantity;
+          Total = Total + price;
+        });
+        settotalPrice(Total);
+      }
+    });
+  };
+
+  const refreshPrice = () => {
+    let Total = 0;
+    console.log(cart);
+    cart.map((item, i) => {
+      let price = item.price * item.quantity;
+      console.log(price);
+      Total = Total + price;
+      console.log(Total);
+    });
+    settotalPrice(Total);
+  };
+
+  const deleteItem = (prodId, userId)=>{
+    Axios({
+        url:'/buyer/removeItem',
+        method:'post',
+        data:{prodId, userId}
     }).then((res)=>{
-        if(res.data.status){
-            
+        if(!res.data.err){
+            console.log(res.data);
+            setCart(res.data.cart.items)
         }
     })
   }
@@ -94,13 +126,10 @@ const Cart = () => {
                   <TableTh>Name</TableTh>
                   <TableTh>Price</TableTh>
                   <TableTh>Quantity</TableTh>
-                  <TableTh>Image</TableTh>
                   <TableTh></TableTh>
                 </TableTr>
                 {cart.map((item, i) => {
-                    
                   return (
-                      
                     <TableTr>
                       <TableTd>{item.name}</TableTd>
                       <TableTd>$ {item.price}</TableTd>
@@ -108,30 +137,41 @@ const Cart = () => {
                       <TableTd>
                         {" "}
                         <CountButtonDiv>
-                          <DecrementButton key={i}
+                          <DecrementButton
+                            key={i}
                             onClick={(e) => {
-                              changeQuantity(-1, item.productId, item.userId);
+                              changeQuantity(
+                                -1,
+                                item.productId,
+                                item.userId
+                              );
                             }}
                           >
                             -
                           </DecrementButton>
-                          <CountText>{item.quantity}</CountText>
-                          <IncrementButton key={i}
+                          <CountText id={`${item.productId}`}>
+                            {item.quantity}
+                          </CountText>
+                          <IncrementButton
+                            key={i}
                             onClick={() => {
-    
-                              changeQuantity(+1, item.productId, item.userId);
+                              changeQuantity(
+                                +1,
+                                item.productId,
+                                item.userId
+                            
+                              );
                             }}
                           >
                             +
                           </IncrementButton>
-                          
                         </CountButtonDiv>
                       </TableTd>
+                      
                       <TableTd>
-                        <ImageBox src="" alt="Product-name" />
-                      </TableTd>
-                      <TableTd>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={()=>{
+                            deleteItem(item.productId, item.userId)
+                        }} />
                       </TableTd>
                     </TableTr>
                   );
@@ -146,7 +186,7 @@ const Cart = () => {
             <RightDiv>
               <CartTotalText> $ {totalPrice} </CartTotalText>
 
-              <FormButton>Checkout</FormButton>
+              <FormButton onClick={refreshPrice}>Checkout</FormButton>
             </RightDiv>
           </CartTotalContainer>
         </TableDiv>

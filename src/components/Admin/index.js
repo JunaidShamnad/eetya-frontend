@@ -131,7 +131,7 @@ const Admin = () => {
                 <TableTh>product Name</TableTh>
                 <TableTh>Email</TableTh>
                 <TableTh>Phone</TableTh>
-                <tableTh>Role</tableTh>
+                <TableTh>Role</TableTh>
               </TableTr>
               <TableTr>
                 <TableTd>hi</TableTd>

@@ -17,11 +17,14 @@ import {
   UserNameTag
 } from "./Navbar.elements";
 import decode from 'jwt-decode'; 
+import Axios from "../../axios";
 
 const Navbar = ({ toggle }) => {
  
   
   const [scrollNav, setScrollNav] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const dispatch = useDispatch();
   const location = useLocation();
@@ -46,7 +49,20 @@ const Navbar = ({ toggle }) => {
 
     setUser(JSON.parse(localStorage.getItem('user')));
     console.log(user);
+
   }, [location]);
+
+  useEffect(() => {
+    if(!JSON.parse(localStorage.getItem('user')))return
+    Axios({
+      url:'/buyer/cart-count',
+      method:'post',
+      data:{userId:JSON.parse(localStorage.getItem('user')).user._id}
+    }).then((res)=>{
+        setCartCount(res.data.count)
+    })
+    
+  }, [])
 
   const chnageNav = () => {
     if (window.scrollY >= 80) {
@@ -83,7 +99,7 @@ const Navbar = ({ toggle }) => {
              
               <NavItem>
                 <NavLink to="/cart">
-                <Badge color="secondary" badgeContent={5}>
+                <Badge color="secondary" badgeContent={cartCount}>
                   <img
                     src={
                       require("../../images/Icon feather-shopping-cart.svg")
