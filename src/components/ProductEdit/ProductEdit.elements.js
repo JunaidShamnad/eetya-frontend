@@ -28,8 +28,8 @@ export const FadeText = styled.h1`
 `;
 
 export const RightDiv = styled.div`
-   max-width: 60vw;
-   min-width: 58vw;
+   max-width: 50vw;
+   min-width: 40vw;
    margin-right: 8%;
    margin-bottom: 40px;
    display: flex;

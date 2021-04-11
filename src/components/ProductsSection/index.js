@@ -31,38 +31,9 @@ const ProductsSection = () => {
 
   
   const [ProductData, setProductData] = useState([]);
-  //  useEffect(() => {
-    
-  //   Axious({
-  //     method: "POST",
-  //     url: "/products",
-  //   }).then((response) => {
-  //     console.log("pro len",response.products)
-  //     console.log("hello")
-  //     setProductData(response.products);
-  //   });
-  
-  //   console.log(ProductData);
-  // }, []);
-  
-
   const [PageNo, setPageNo] = React.useState(1);
   
-  // const updateProductData =async (num) => {
-  //   console.log("before: "+PageNo);
-    
-  //   await setPageNo(PageNo + num);
-  //   console.log(PageNo);
-  //   Axious({
-  //     method: "POST",
-  //     url: "/products",
-  //     data: { page: PageNo },
-  //   }).then((response) => {
-  //     setProductData(response.data);
-  //     console.log(response.data);
-  //     scroll.scrollToTop();
-  //   });
-  // };
+  
 
   useEffect(() => {
     Axious({
@@ -75,6 +46,7 @@ const ProductsSection = () => {
     });
     
   }, [PageNo])
+  
 
   const toggleHome = () => {
     scroll.scrollToTop();
@@ -109,7 +81,7 @@ const ProductsSection = () => {
                 <ProductUl>
                   <ProductLi>
                     <ProductTitle>{item.title}</ProductTitle>
-                    <ProductPrice>{item.price}</ProductPrice>
+                    <ProductPrice>$ {item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
                     <CartIcon onClick={ ()=>{

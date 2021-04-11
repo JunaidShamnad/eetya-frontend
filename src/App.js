@@ -58,9 +58,11 @@ function App() {
         <Route path="/admin/category" component={AddCategoryPage} exact />
         <Route path="/cart" component={CartPage} exact />
 
-        <Route path="/products" component={ProductPage} exact />
+        <Route path="/products"  exact >
+          <ProductPage setIsloggedIn={setIsloggedIn}/>
+        </Route>
         <Route path="/news-letter" component={NewsLetterPage} exact />
-        <Route path="/product-edit" component={ProductEditPage} exact />
+        <Route path="/product-edit/:id" component={ProductEditPage} exact />
         <Route path="/about-us" component={AboutUsPage} exact />
         <Route path="/contact-us" component={ContactUsPage} exact />
         <Route path="/privacy-policy" component={PrivacyPolicyPage} exact />

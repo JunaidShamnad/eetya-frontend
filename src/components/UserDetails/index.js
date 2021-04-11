@@ -16,11 +16,12 @@ import {
 import {  TableTag, TableTd, TableTh, TableTr,TableDiv, Boxtitle } from '../Admin/Admin.elements'
 import {  TableContainer,UserDataText, CartTitle,MainDiv,Button } from "./UserDetails.elements";
 import { useHistory } from "react-router";
-
+import Axios from "../../axios"
 const UserDetails = () => {
   const [userData, setUserData] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
+  const [products,setProducts] =useState([])
   const history = useHistory();
 
   // useEffect(() => {
@@ -35,6 +36,9 @@ const UserDetails = () => {
   //     }
   //   }
   // }, []);
+  useEffect(()=>{
+  if(userData.user.role == 2) Axios.post('/getDealerProduts',{dealerId:userData.user._id}).then(res=>setProducts(res.data))
+  })
 
   let role = userData.user.role;
 
@@ -92,35 +96,34 @@ const UserDetails = () => {
             <TableTh>Name</TableTh>
             <TableTh>Price</TableTh>
             <TableTh>Quantity</TableTh>
-            <TableTh>Total</TableTh>
+           
             <TableTh></TableTh>
             <TableTh></TableTh>
    
         </TableTr>
-        <TableTr>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd>hi</TableTd>
-            <TableTd><EditIcon onClick={ ()=>{
-                      window.location.href = `/product-edit`
+        
+          {products.map((item,index) => {
+              return ( 
+                
+                <TableTr>
+              <TableTd>{item.category}</TableTd>
+              <TableTd>{item.title}</TableTd>
+              <TableTd>{item.price}</TableTd>
+              <TableTd>{item.minQuantity}-{item.maxQuantity}</TableTd>
+              
+              <TableTd><EditIcon onClick={ ()=>{
+                      window.location.href = `/product-edit/${item._id}`
                       toggleHome()
                     } }/></TableTd>
-            <TableTd><DeleteIcon/></TableTd>
+              <TableTd><DeleteIcon/></TableTd>
+              </TableTr>
+              
+              );
+            })} 
+            
      
-        </TableTr>
-        <TableTr>
-            <TableTh>Total</TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh></TableTh>
-            <TableTh>$ 50</TableTh>
-         
-   
-        </TableTr>
+        
+       
     </TableTag>
   </TableDiv>
         </TableContainer>
