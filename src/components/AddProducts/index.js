@@ -74,6 +74,7 @@ const AddProduct = () => {
         maxQuantity: maxQuantity,
         price: price,
         image: file,
+        dealerId:JSON.parse(localStorage.getItem("user")).user._id
       },
       withCredentials: true,
       url: "/dealer/add-item",

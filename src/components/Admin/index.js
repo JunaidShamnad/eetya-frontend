@@ -1,5 +1,6 @@
 import Axios from "../../axios";
 import React, { useState, useEffect } from "react";
+import Swal from 'sweetalert2'
 
 import {
   Button,
@@ -18,17 +19,41 @@ import {
 
 const Admin = () => {
   const [newUsers, setnewUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     Axios({
-        url: "/admin/new-users",
-        method: "GET",
-      }).then((res) => {
-        setnewUsers(res.data);
-        console.log(res.data);
-      });
-      console.log(newUsers);
+      url: "/admin/new-users",
+      method: "GET",
+    }).then((res) => {
+      setnewUsers(res.data);
+    });
+
+    Axios({
+      url: "/admin/orders",
+      method: "get",
+    }).then((res) => {
+      setOrders(res.data);
+    });
+
+    Axios({
+      url: "/admin/products",
+      method: "get",
+    }).then((res) => {
+      setProducts(res.data);
+    });
+
+    Axios({
+      url: "/admin/users",
+      method: "get",
+    }).then((res) => {
+      setAllUsers(res.data);
+    });
   }, []);
+
+  
 
   const getNewUsers = () => {
     Axios({
@@ -39,87 +64,135 @@ const Admin = () => {
     });
   };
 
-  const reject=(id)=>{
-      Axios({
-          url:'/admin/reject',
-          data:{id:id},
-          method:'post'
-      }).then((res)=>{
-          if(res.data.status){
-            getNewUsers()
-          }
-      })
-  }
-
-  const accept=(id)=>{
+  const reject = (id) => {
     Axios({
-        url:'/admin/accept',
-        data:{id:id},
-        method:'post'
-    }).then((res)=>{
-        if(res.data.status){
-          getNewUsers()
-        }
+      url: "/admin/reject",
+      data: { id: id },
+      method: "post",
+    }).then((res) => {
+      if (res.data.status) {
+        getNewUsers();
+      }
+    });
+  };
+
+  const accept = (id) => {
+    Axios({
+      url: "/admin/accept",
+      data: { id: id },
+      method: "post",
+    }).then((res) => {
+      if (res.data.status) {
+        getNewUsers();
+      }
+    });
+  };
+
+  const deleteUser = (id, name)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: name+" will be deleted. You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Axios({
+          url: "/admin/remove-user",
+          data: { id: id },
+          method: "post",
+        }).then((res) => {
+          alert(res.data.status)
+          if(res.data.status){
+            Axios({
+              url: "/admin/users",
+              method: "get",
+            }).then((res) => {
+              setAllUsers(res.data);
+              Swal.fire(
+                'Deleted!',
+                name+' has been deleted.',
+                'success'
+              )
+            });
+          }
+        });
+        
+      }
     })
-}
+    
+  }
   return (
     <>
       <MainDiv>
         <AdminTitle>Admin Page</AdminTitle>
-        <TableDiv>
-          <Boxtitle>New Users</Boxtitle>
-          <TableContainer>
-            <TableTag>
-              <TableTr>
-                <TableTh>User Name</TableTh>
-                <TableTh>Email</TableTh>
-                <TableTh>Mobile Number</TableTh>
-                <TableTh>Role</TableTh>
-                <TableTh></TableTh>
-                <TableTh></TableTh>
-              </TableTr>
-              {newUsers.map((newUser, index) => {
-                return (
+
+        {newUsers.map((newUser, index) => {
+          return (
+            <TableDiv>
+              <Boxtitle>New Users</Boxtitle>
+              <TableContainer>
+                <TableTag>
+                  <TableTr>
+                    <TableTh>User Name</TableTh>
+                    <TableTh>Email</TableTh>
+                    <TableTh>Mobile Number</TableTh>
+                    <TableTh>Role</TableTh>
+                    <TableTh></TableTh>
+                    <TableTh></TableTh>
+                  </TableTr>
                   <TableTr>
                     <TableTd>{newUser.username}</TableTd>
                     <TableTd>{newUser.email}</TableTd>
                     <TableTd>{newUser.primaryPhone}</TableTd>
-                    {newUser.email.role === 1 ?
-                    <TableTd>Retailer</TableTd>
-                    :
-                    <TableTd>Wholesaler</TableTd>
-
-                }
+                    {newUser.email.role === 1 ? (
+                      <TableTd>Retailer</TableTd>
+                    ) : (
+                      <TableTd>Wholesaler</TableTd>
+                    )}
                     <TableTd>
-                      <TickIcon onClick={()=>{
-                          accept(newUser._id)
-                      }} />
+                      <TickIcon
+                        onClick={() => {
+                          accept(newUser._id);
+                        }}
+                      />
                     </TableTd>
                     <TableTd>
-                      <CloseIcon onClick={()=>{
-                          reject(newUser._id)
-                      }} />
+                      <CloseIcon
+                        onClick={() => {
+                          reject(newUser._id);
+                        }}
+                      />
                     </TableTd>
                   </TableTr>
-                );
-              })}
-            </TableTag>
-          </TableContainer>
-        </TableDiv>
+                </TableTag>
+              </TableContainer>
+            </TableDiv>
+          );
+        })}
+
         <TableDiv>
           <Boxtitle>All Orders</Boxtitle>
           <TableContainer>
             <TableTag>
               <TableTr>
-                <TableTh>User Name</TableTh>
-                <TableTh>Email</TableTh>
-                <TableTh>Cart</TableTh>
+                <TableTh>No.</TableTh>
+                <TableTh>Dealer Name</TableTh>
+                <TableTh>Retailer Name</TableTh>
+                <TableTh>Total Cart Price</TableTh>
               </TableTr>
-              <TableTr>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
-              </TableTr>
+              {orders.map((order, i) => {
+                return (
+                  <TableTr>
+                    <TableTh>{i + 1}</TableTh>
+                    <TableTd>{order.dealerName}</TableTd>
+                    <TableTd>{order.buyerName}</TableTd>
+                    <TableTd>{order.cartTotal}</TableTd>
+                  </TableTr>
+                );
+              })}
             </TableTag>
           </TableContainer>
         </TableDiv>
@@ -128,17 +201,24 @@ const Admin = () => {
           <TableContainer>
             <TableTag>
               <TableTr>
+                <TableTh>No.</TableTh>
                 <TableTh>product Name</TableTh>
-                <TableTh>Email</TableTh>
-                <TableTh>Phone</TableTh>
-                <TableTh>Role</TableTh>
+                <TableTh>Min. Quantity</TableTh>
+                <TableTh>Max. Quantity</TableTh>
+                <TableTh>Price</TableTh>
               </TableTr>
-              <TableTr>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
+              {products.map((product, i)=>{
+                return(
+                  <TableTr>
+                <TableTd>{i+1}</TableTd>
+                <TableTd>{product.title}</TableTd>
+                <TableTd>{product.minQuantity}</TableTd>
+                <TableTd>{product.maxQuantity}</TableTd>
+                <TableTd>$ {product.price}</TableTd>
               </TableTr>
+                )
+              })}
+              
             </TableTag>
           </TableContainer>
         </TableDiv>
@@ -147,20 +227,33 @@ const Admin = () => {
           <TableContainer>
             <TableTag>
               <TableTr>
+                <TableTh>No.</TableTh>
                 <TableTh>User Name</TableTh>
                 <TableTh>Email</TableTh>
-                <TableTh>Cart</TableTh>
+                <TableTh>Role</TableTh>
                 <TableTh></TableTh>
               </TableTr>
-              <TableTr>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
-                <TableTd>hi</TableTd>
+              {allUsers.map((user, i)=>{
+                return(
+                  <TableTr>
+                <TableTd>{i+1}</TableTd>
+                <TableTd>{user.userName}</TableTd>
+                <TableTd>{user.email}</TableTd>
+                {user.role === 1   ?
+                <TableTd>Buyer</TableTd>
+                :
+                <TableTd>Dealer</TableTd>
+              }
                 <TableTd>
                   {" "}
-                  <CloseIcon />
+                  <CloseIcon onClick={()=>{
+                    deleteUser(user._id, user.userName)
+                  }} />
                 </TableTd>
               </TableTr>
+                )
+                
+              })}
             </TableTag>
           </TableContainer>
         </TableDiv>

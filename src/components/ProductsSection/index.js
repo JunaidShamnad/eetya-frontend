@@ -71,8 +71,6 @@ const ProductsSection = () => {
       data: { page: PageNo },
     }).then((response) => {
       setProductData(response.data);
-      console.log(response.data);
-      console.log("koii")
       scroll.scrollToTop();
     });
     

@@ -37,13 +37,13 @@ import {
   CountButtonDiv,
   MainCountTitle,
 } from "./ProductDetails.elements";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const ProductDetails = (props) => {
-  const [count, setCount] = useState(0);
   const [product, setProduct] = useState([]);
+  const [count, setCount] = useState();
   const [user, setUser] = useState("");
-  const [addedToCart, setAddedToCart] = useState()
+  const [addedToCart, setAddedToCart] = useState();
 
   // Create handleIncrement event handler
   const handleIncrement = () => {
@@ -61,49 +61,97 @@ const ProductDetails = (props) => {
   useEffect(() => {
     Axios.post(`/Product`, { id: id }).then((response) => {
       console.log(response);
-      
+
       setProduct(response.data.Product);
       setUser(response.data.User);
+      setCount(response.data.Product.minQuantity);
     });
-    
-    let userId = JSON.parse(localStorage.getItem('user')).user._id
-    console.log("id:"+userId + " productId: "+id);
+
+    let userId = JSON.parse(localStorage.getItem("user")).user._id;
+    console.log("id:" + userId + " productId: " + id);
     Axios({
-      method:'post',
-      url:'/buyer/confirm-product',
-      data:{
-        id:userId,
-        productId:id
+      method: "post",
+      url: "/buyer/confirm-product",
+      data: {
+        id: userId,
+        productId: id,
+      },
+    }).then((res) => {
+      if (res.data.status) {
+        setAddedToCart(true);
       }
-    }).then((res)=>{
-      if(res.data.status){
-        setAddedToCart(true)
-      }
-      
-    })
+    });
   }, []);
 
   const addToCart = () => {
-    let quantity = count < product.minQuantity ? product.minQuantity : count
-    let userId = JSON.parse(localStorage.getItem('user')).user._id
+    let quantity = count < product.minQuantity ? product.minQuantity : count;
+    let userId = JSON.parse(localStorage.getItem("user")).user._id;
     Axios({
-      url:'/buyer/add-to-cart',
-      method:'post',
-      data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity, price: product.price, storeId:user.id}
-    }).then((res)=>{
-      if(!res.data.err){
+      url: "/buyer/add-to-cart",
+      method: "post",
+      data: {
+        prodId: product.id,
+        userId: userId,
+        name: product.title,
+        qnt: quantity,
+        price: product.price,
+        storeId: user.id,
+      },
+    }).then((res) => {
+      if (!res.data.err) {
         Swal.fire({
-          position: 'top-end',
-          icon: 'success',
+          position: "top-end",
+          icon: "success",
           title: `${product.title} has added to your cart`,
           showConfirmButton: false,
-          timer: 1500
-        })
-        setAddedToCart(true)
-
+          timer: 1500,
+        });
+        setAddedToCart(true);
       }
-      
-    })
+    });
+  };
+
+  const buyNow = () => {
+    let userId = JSON.parse(localStorage.getItem("user")).user._id;
+    Swal.fire({
+      title: "Are you sure?",
+      text: `${product.title} will order Now!`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Order!",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        Axios({
+          method: "POST",
+          url: "/order/buy-now",
+          data: {
+            productId: id,
+            storeId: user.id,
+            userId: userId,
+            price: product.price * count,
+            quantity: count,
+            name:product.title,
+            dealerEmail:user.email,
+            userEmail:JSON.parse(localStorage.getItem("user")).user.email
+          },
+        }).then((res) => {
+          if (!res.data.status) {
+            Swal.showValidationMessage(`something went wrong`);
+          }else{
+            Swal.fire(
+              'Item Ordered',
+              `contact dealer
+              name: ${user.name}
+              email: ${user.email}
+              phone: ${user.number}`,
+              'success'
+            )
+          }
+        });
+      },
+    });
   };
 
   return (
@@ -114,7 +162,7 @@ const ProductDetails = (props) => {
           <LeftDiv>
             <>
               <MainImageDiv>
-                {product ? (
+                {product.images ? (
                   <MainImageConatiner
                     src={`data:image/${product.images[0].type};base64,${product.images[0].data}`}
                   />
@@ -123,7 +171,7 @@ const ProductDetails = (props) => {
                 )}
               </MainImageDiv>
               <SubImageDiv>
-                {product
+                {product.images
                   ? product.images.map((img, index) => {
                       return (
                         <SubImageConatiner
@@ -165,23 +213,18 @@ const ProductDetails = (props) => {
             </CountButtonDiv>
 
             <ButtonDiv>
-              <BuyButton>Buy Now</BuyButton>
-              {addedToCart?
+              <BuyButton onClick={buyNow}>Buy Now</BuyButton>
+              {addedToCart ? (
+                <CartButton to="/cart">Go to cart</CartButton>
+              ) : (
                 <CartButton
-                to='/cart'
-              >
-                Go to cart
-              </CartButton>
-              :
-              <CartButton
-                onClick={() => {
-                  addToCart();
-                }}
-              >
-                Add to cart
-              </CartButton>
-            }
-              
+                  onClick={() => {
+                    addToCart();
+                  }}
+                >
+                  Add to cart
+                </CartButton>
+              )}
             </ButtonDiv>
             <QuestionDiv>
               <QuestionTextWrapper>
