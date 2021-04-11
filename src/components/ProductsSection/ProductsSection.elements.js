@@ -143,7 +143,7 @@ export const ProductPrice = styled.h3`
 
 export const FilterIcon = styled(VscListFilter)`
   display: flex;
-  font-size:30px;
+  font-size:35px;
   color: #fff;
 margin-right:20px;
 `;
