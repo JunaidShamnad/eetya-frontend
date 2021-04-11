@@ -37,7 +37,7 @@ const UserDetails = () => {
   //   }
   // }, []);
   useEffect(()=>{
-    if(userData.user.role === 2) Axios.post('/getDealerProduts',{dealerId:userData.user._id}).then(res=>setProducts(res.data))
+  if(userData.user.role == 2) Axios.post('/getDealerProduts',{dealerId:userData.user._id}).then(res=>setProducts(res.data))
   })
 
   let role = userData.user.role;

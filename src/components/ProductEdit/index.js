@@ -40,7 +40,7 @@ const ProductEdit = () => {
   const {id} = useParams(); //Product Id 
   const editProducts = () => {
     Axios({
-      method: "PUT",
+      method: "POST",
       data: {
         id :id,
         title: title,
