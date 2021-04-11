@@ -90,7 +90,7 @@ const ProductDetails = (props) => {
       method:'post',
       data:{prodId:product.id, userId: userId, name:product.title, qnt: quantity, price: product.price}
     }).then((res)=>{
-      if(res.data){
+      if(!res.data.err){
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -101,6 +101,7 @@ const ProductDetails = (props) => {
         setAddedToCart(true)
 
       }
+      
     })
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Axios from '../../axios';
 import FileBase from "react-file-base64";
 import { ProductShowcase } from "../../data/Products";
@@ -25,7 +25,7 @@ import {
   DeleteIcon,
   Maintitle,
 } from "./ProductEdit.elements";
-
+import { useParams } from "react-router";
 const ProductEdit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -36,47 +36,57 @@ const ProductEdit = () => {
   const [price, setPrice] = useState("");
   const [file, setFile] = useState([]); // storing the uploaded file    // storing the recived file from backend
   const [data, getFile] = useState({ name: "", path: "" });
-
+  const [oldProductData,setOldProduct] = useState("")
+  const {id} = useParams(); //Product Id 
   const editProducts = () => {
     Axios({
       method: "PUT",
       data: {
+        id :id,
         title: title,
         description: description,
         category: categoryValue,
         minQuantity: minQuantity,
         maxQuantity: maxQuantity,
-
         price: price,
+        images:file
       },
       withCredentials: true,
-      url: "/items/:id",
+      url: "/Edit-Product",
     }).then((res) => {
       console.log(res);
-    });
+    }); 
   };
+  useEffect(()=>{
+    Axios.post("/getProduct-edit",{Id:id}).then(res=>setOldProduct(res.data))
+    Axios.get("/category").then(res=>setCategory(res.data))
+  }) 
 
   return (
     <>
       <MainDiv>
-        <FadeText>Add Product</FadeText>
+        <FadeText>Edit Product</FadeText>
         <Row>
           <LeftDiv>
-            {ProductShowcase.map((item, index) => {
-              return (
-                <>
+          
+                
                   <Maintitle>Image Preview</Maintitle>
-                  <MainImageDiv>
-                    <MainImageConatiner src={item.image} key={index} />
+                  <MainImageDiv>{
+                    oldProductData?<MainImageConatiner src={`data:image/${oldProductData.images[0].type};base64,${oldProductData.images[0].data}`} />
+                    :""
+                    }
+                    
                   </MainImageDiv>
                   <SubImageDiv>
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
+                  {oldProductData?oldProductData.images.map((img, index) => {
+              return (
+                    <SubImageConatiner src={`data:image/${img.type};base64,${img.data}`} />
+                    );
+                  }):""}
+                   
                   </SubImageDiv>
-                </>
-              );
-            })}
+               
+             
           </LeftDiv>
 
           <RightDiv>
@@ -84,6 +94,7 @@ const ProductEdit = () => {
               <DeleteIcon />
               <Formlabel>Product Name</Formlabel>
               <FormInput
+                value={oldProductData.title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 type="text"
@@ -91,6 +102,7 @@ const ProductEdit = () => {
 
               <Formlabel>Product Details</Formlabel>
               <FormInput
+                value={oldProductData.description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 type="text"
@@ -100,9 +112,15 @@ const ProductEdit = () => {
 
 <FormSelectDiv>
   <FormSelect
+    
     onChange={(e) => setCategoryValue(e.target.value)}
     required
   >
+    <FormSelectOption
+          value={oldProductData.category}
+        >
+          {oldProductData.category}
+        </FormSelectOption>
     {category.map((category, index) => {
       return (
         <FormSelectOption
@@ -122,21 +140,24 @@ const ProductEdit = () => {
 
 <Formlabel>Product Price (Price of 1 Product)</Formlabel>
 <FormInput
+value={oldProductData.price}
   onChange={(e) => setPrice(e.target.value)}
   required
   type="text"
 />
 <Formlabel>Max Quantity</Formlabel>
 <FormInput
+  value={oldProductData.maxQuantity}
   onChange={(e) => setMaxQuantity(e.target.value)}
   required
-  type="text"
+  type="number"
 />
 <Formlabel>Min Quantity</Formlabel>
 <FormInput
+value={oldProductData.minQuantity}
   onChange={(e) => setMinQuantity(e.target.value)}
   required
-  type="text"
+  type="number"
 />
 
 <Formlabel htmlFor="file">Upload Image </Formlabel>
@@ -162,7 +183,7 @@ const ProductEdit = () => {
      
       })
       setFile(arry);
-    
+      
   }}
 />
               <ButtonDiv>

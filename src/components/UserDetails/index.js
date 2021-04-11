@@ -1,4 +1,5 @@
 import React ,{useState,useEffect} from "react";
+import { animateScroll as scroll } from "react-scroll";
 import {
   Container,
   Form,
@@ -40,6 +41,11 @@ const UserDetails = () => {
   })
 
   let role = userData.user.role;
+
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <>
     <MainDiv>
@@ -141,7 +147,10 @@ const UserDetails = () => {
               <TableTd>{item.price}</TableTd>
               <TableTd>{item.minQuantity}-{item.maxQuantity}</TableTd>
               
-              <TableTd><EditIcon/></TableTd>
+              <TableTd><EditIcon onClick={ ()=>{
+                      window.location.href = `/product-edit/${item._id}`
+                      toggleHome()
+                    } }/></TableTd>
               <TableTd><DeleteIcon/></TableTd>
               </TableTr>
               
