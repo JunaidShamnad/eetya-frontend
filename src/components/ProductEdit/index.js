@@ -48,16 +48,18 @@ const ProductEdit = () => {
         id: id,
         title: title ? title : oldProductData.title,
         description: description ? description : oldProductData.description,
-        category: categoryValue ? categoryValue : oldProductData.categoryValue,
-        minQuantity: minQuantity ? minQuantity : oldProductData.minQuantity,
-        maxQuantity: maxQuantity ? maxQuantity : oldProductData.maxQuantity,
+        category: categoryValue ? categoryValue : oldProductData.category,
+        minQuantity: minQuantity == ' ' ? oldProductData.minQuantity :minQuantity ,
+        maxQuantity: maxQuantity == ' ' ? oldProductData.maxQuantity :maxQuantity ,
         price: price ? price : oldProductData.price,
         images: file ? file : false,
       },
       withCredentials: true,
       url: '/Edit-Product',
     }).then((res) => {
-      console.log(res)
+      if(res.status) alert("Product edited !")
+      else alert("Product editing failed try again letter !..")
+      window.location.reload();
     })
   }
   useEffect(() => {
@@ -75,7 +77,7 @@ const ProductEdit = () => {
           <LeftDiv>
             <Maintitle>Image Preview</Maintitle>
             <MainImageDiv>
-              {oldProductData ? (
+              {oldProductData.images ? (
                 <MainImageConatiner
                   src={`data:image/${oldProductData.images[0].type};base64,${oldProductData.images[0].data}`}
                 />
@@ -84,7 +86,7 @@ const ProductEdit = () => {
               )}
             </MainImageDiv>
             <SubImageDiv>
-              {oldProductData
+              {oldProductData.images
                 ? oldProductData.images.map((img, index) => {
                     return (
                       <SubImageConatiner
