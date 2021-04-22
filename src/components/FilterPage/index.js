@@ -223,7 +223,7 @@ const searchHandler =(e)=>{
                 <ProductUl>
                   <ProductLi>
                     <ProductTitle>{item.title}</ProductTitle>
-                    <ProductPrice>{item.price}</ProductPrice>
+                    <ProductPrice>$ {item.price}</ProductPrice>
                   </ProductLi>
                   <ProductLi>
                     <CartIcon />

@@ -38,6 +38,7 @@ import {
   MainCountTitle,
 } from "./ProductDetails.elements";
 import Swal from "sweetalert2";
+import { responsiveFontSizes } from "@material-ui/core";
 
 const ProductDetails = (props) => {
   const [product, setProduct] = useState([]);
@@ -58,17 +59,16 @@ const ProductDetails = (props) => {
     if (product.minQuantity < count) setCount((prevCount) => prevCount - 1);
     else setCount(product.minQuantity);
   };
-  useEffect(() => {
-    Axios.post(`/Product`, { id: id }).then((response) => {
-      console.log(response);
 
-      setProduct(response.data.Product);
-      setUser(response.data.User);
+  useEffect(() => {
+    Axios.post(`/product`, { id: id }).then((response) => {
+      setProduct(response.data.Product ? response.data.Product : '')
+      
+      setUser(response.data.User ? response.data.User : '')
       setCount(response.data.Product.minQuantity);
     });
 
     let userId = JSON.parse(localStorage.getItem("user")).user._id;
-    console.log("id:" + userId + " productId: " + id);
     Axios({
       method: "post",
       url: "/buyer/confirm-product",
@@ -81,7 +81,7 @@ const ProductDetails = (props) => {
         setAddedToCart(true);
       }
     });
-  }, []);
+  },[]);
 
   const addToCart = () => {
     let quantity = count < product.minQuantity ? product.minQuantity : count;
@@ -130,7 +130,7 @@ const ProductDetails = (props) => {
             productId: id,
             storeId: user.id,
             userId: userId,
-            price: product.price * count,
+            price: product.price,
             quantity: count,
             name:product.title,
             dealerEmail:user.email,

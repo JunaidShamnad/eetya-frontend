@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import FileBase from "react-file-base64";
 import Axios from "../../axios";
 import { ProductShowcase } from "../../data/Products";
@@ -25,14 +25,16 @@ import {
   DeleteIcon,
   Maintitle,
 } from "../ProductEdit/ProductEdit.elements";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import { animateScroll as scroll } from "react-scroll";
 
 const AddProduct = () => {
   useEffect(() => {
     Axios.get("/category").then((res) => {
       console.log(res.data);
       setCategory(res.data);
-      setCategoryValue(res.data[0].categoryName)
+      setCategoryValue(res.data[0].categoryName);
     });
 
     console.log(categories);
@@ -50,52 +52,86 @@ const AddProduct = () => {
   const el = useRef(); // accesing input element
   const history = useHistory();
 
+  let sampleImg =
+    "https://freepikpsd.com/wp-content/uploads/2019/10/no-image-png-5-Transparent-Images.png";
+  const [{ altOne, srcOne }, setImgOne] = useState({
+    srcOne: sampleImg,
+    altOne: "Image 1 preview",
+  });
+
+  const [{ altTwo, srcTwo }, setImgTwo] = useState({
+    srcTwo: sampleImg,
+    altTwo: "Image 2 preview",
+  });
+
+  const [{ altThree, srcThree }, setImgThree] = useState({
+    srcThree: sampleImg,
+    altThree: "Image 3 preview",
+  });
+
   let categories = [];
 
   React.useEffect(() => {
     Axios.get("/category").then((res) => {
       setCategory(res.data);
-      
     });
-  },[]);
- 
+  }, []);
 
   const addProducts = (e) => {
-   
-    console.log(file)
     e.preventDefault();
-    Axios({
-      method: "POST",
-      data: {
-        title: title,
-        description: description,
-        category: categoryValue,
-        minQuantity: minQuantity,
-        maxQuantity: maxQuantity,
-        price: price,
-        image: file,
-        dealerId:JSON.parse(localStorage.getItem("user")).user._id
+    scroll.scrollToTop();
+    Swal.queue([
+      {
+        title: "Add product",
+        confirmButtonText: "Add Product",
+        cancelButtonText: "Edit more",
+        html:
+          "<h3>Product name: " +
+          title +
+          "<h3></br><p>Description: " +
+          description +
+          "</p></br><p>Price per product: " +
+          price+"</p>",
+        showLoaderOnConfirm: true,
+        showCancelButton: true,
+        preConfirm: () => {
+          Axios({
+            method: "POST",
+            data: {
+              title: title,
+              description: description,
+              category: categoryValue,
+              minQuantity: minQuantity,
+              maxQuantity: maxQuantity,
+              price: price,
+              image: file,
+              dealerId: JSON.parse(localStorage.getItem("user")).user._id,
+            },
+            withCredentials: true,
+            url: "/dealer/add-item",
+          }).then((res) => {
+            if (res.data.loginErr) {
+              alert("Login failed");
+              history.push("/signin");
+            } else if (res.data.err) alert(res.data.err);
+            else {
+              Swal.fire(
+                "Product added succesfully",
+                title + " has listed in Eetya!",
+                "success"
+              );
+              setTitle("");
+              setDescription("");
+              setCategory([]);
+              setPrice("");
+              setFile([]);
+              window.location.reload();
+            }
+          });
+        },
       },
-      withCredentials: true,
-      url: "/dealer/add-item",
-    }).then((res) => {
-      if (res.data.loginErr){ alert("Login failed") 
-      history.push("/signin")}
-      else if (res.data.err) alert(res.data.err);
-      else {
-        alert("product added successfully");
-        setTitle("");
-        setDescription("");
-        setCategory([]);
-        setPrice("");
-        setFile([]);
-        
-      }
-      window.location.reload();
-    });
+    ]);
   };
-
-
 
   return (
     <>
@@ -103,7 +139,7 @@ const AddProduct = () => {
         <FadeText>Add Product</FadeText>
         <Row>
           <LeftDiv>
-          {/* {product
+            {/* {product
                   ? product.images.map((img, index) => {
                       return (
                         <SubImageConatiner
@@ -112,21 +148,16 @@ const AddProduct = () => {
                       );
                     })
                   : ""} */}
-            {ProductShowcase.map((item, index) => {
-              return (
-                <>
-                  <Maintitle>Image Preview</Maintitle>
-                  <MainImageDiv>
-                    <MainImageConatiner src={item.image} key={index} />
-                  </MainImageDiv>
-                  <SubImageDiv>
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
-                    <SubImageConatiner src={item.image} />
-                  </SubImageDiv>
-                </>
-              );
-            })}
+
+            <Maintitle>Image Preview</Maintitle>
+            <MainImageDiv>
+              <MainImageConatiner alt={altOne} src={srcOne} />
+            </MainImageDiv>
+            <SubImageDiv>
+              <SubImageConatiner alt={altOne} src={srcOne} />
+              <SubImageConatiner alt={altTwo} src={srcTwo} />
+              <SubImageConatiner alt={altThree} src={srcThree} />
+            </SubImageDiv>
           </LeftDiv>
 
           <RightDiv>
@@ -164,11 +195,7 @@ const AddProduct = () => {
                     );
                   })}
                 </FormSelect>
-
               </FormSelectDiv>
-
-                 
-             
 
               <Formlabel>Product Price (Price of 1 Product)</Formlabel>
               <FormInput
@@ -187,7 +214,6 @@ const AddProduct = () => {
                 onChange={(e) => setMinQuantity(e.target.value)}
                 required
                 type="number"
-                
               />
 
               <Formlabel htmlFor="file">Upload Image </Formlabel>
@@ -197,18 +223,36 @@ const AddProduct = () => {
                 multiple={true}
                 // onDone={({ base64 }) => setFile(base64)}
 
-                onDone={async(Files)=>{
-                  
-                  let arry=[]
-                  await Files.map((img,index)=>{
-                    let data ={
-                      Image:img.base64,
-                      type:img.file.type
-                    };
-                    arry.push(data);
-                  })
-                    setFile(arry);
-                  
+                onDone={async (Files) => {
+                  console.log(Files);
+                  if (Files.length > 3) {
+                    Swal.fire(
+                      "ALERT!",
+                      `Cannot upload files more than 3`,
+                      "warning"
+                    );
+                    setFile(null);
+                  }
+                  let arry = [];
+                  await Files.map((img, index) => {
+                    if (index <= 2) {
+                      if (index === 0) {
+                        setImgOne({ srcOne: img.base64 });
+                      } else if (index === 1) {
+                        setImgTwo({ srcTwo: img.base64 });
+                      } else if (index === 2) {
+                        setImgThree({ srcThree: img.base64 });
+                      }
+
+                      let data = {
+                        Image: img.base64,
+                        type: img.file.type,
+                      };
+                      arry.push(data);
+                    }
+                  });
+
+                  setFile(arry);
                 }}
               />
 

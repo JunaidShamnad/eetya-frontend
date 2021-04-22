@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import ImageOne from "../../images/hiding-1-733x1100.jpg";
 import ImageArrow from "../../images/Path-1.svg";
 import ImageSmallLine from "../../images/Line-4.svg";
 import ImageLinkArrow from "../../images/Icon-awesome-long-arrow-alt-right.svg";
@@ -115,20 +114,19 @@ export const ShopCircle = styled(Link)`
   right: 10%;
 `;
 
-export const MainImage = styled.div`
-  background-image: url(${ImageOne});
+export const MainImage = styled.img`
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
-  width: 400px;
-  height: 600px;
+  width: 157px;
+  height: 441px;
   border: none;
   outline: none;
   margin-bottom: 10px;
   object-fit: contain;
   position: absolute;
-  top: 22%;
-  right: 25%;
+  top: 25%;
+  right: 19%;
   z-index: 1;
   cursor: pointer;
 

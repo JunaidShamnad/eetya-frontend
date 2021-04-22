@@ -36,6 +36,7 @@ const Admin = () => {
       method: "get",
     }).then((res) => {
       setOrders(res.data);
+      console.log(res.data);
     });
 
     Axios({
@@ -104,7 +105,6 @@ const Admin = () => {
           data: { id: id },
           method: "post",
         }).then((res) => {
-          alert(res.data.status)
           if(res.data.status){
             Axios({
               url: "/admin/users",
@@ -129,9 +129,8 @@ const Admin = () => {
       <MainDiv>
         <AdminTitle>Admin Page</AdminTitle>
 
-        {newUsers.map((newUser, index) => {
-          return (
-            <TableDiv>
+        
+        <TableDiv>
               <Boxtitle>New Users</Boxtitle>
               <TableContainer>
                 <TableTag>
@@ -143,11 +142,14 @@ const Admin = () => {
                     <TableTh></TableTh>
                     <TableTh></TableTh>
                   </TableTr>
+        {newUsers.map((newUser, index) => {
+          return (
+            
                   <TableTr>
                     <TableTd>{newUser.username}</TableTd>
                     <TableTd>{newUser.email}</TableTd>
                     <TableTd>{newUser.primaryPhone}</TableTd>
-                    {newUser.email.role === 1 ? (
+                    {newUser.role === 1 ? (
                       <TableTd>Retailer</TableTd>
                     ) : (
                       <TableTd>Wholesaler</TableTd>
@@ -167,11 +169,12 @@ const Admin = () => {
                       />
                     </TableTd>
                   </TableTr>
-                </TableTag>
-              </TableContainer>
-            </TableDiv>
+                
           );
         })}
+        </TableTag>
+              </TableContainer>
+            </TableDiv>
 
         <TableDiv>
           <Boxtitle>All Orders</Boxtitle>
@@ -180,16 +183,22 @@ const Admin = () => {
               <TableTr>
                 <TableTh>No.</TableTh>
                 <TableTh>Dealer Name</TableTh>
+                <TableTh>Dealer Phone</TableTh>
                 <TableTh>Retailer Name</TableTh>
-                <TableTh>Total Cart Price</TableTh>
+                <TableTh>Product Name</TableTh>
+                <TableTh>Total Price</TableTh>
+                <TableTh>Commission (15%)</TableTh>
               </TableTr>
               {orders.map((order, i) => {
                 return (
                   <TableTr>
                     <TableTh>{i + 1}</TableTh>
                     <TableTd>{order.dealerName}</TableTd>
-                    <TableTd>{order.buyerName}</TableTd>
-                    <TableTd>{order.cartTotal}</TableTd>
+                    <TableTd>{order.dealerPhone}</TableTd>
+                    <TableTd>{order.retailerName}</TableTd>
+                    <TableTd>{order.items[0].name}</TableTd>
+                    <TableTd>${order.items[0].price *order.items[0].quantity  }</TableTd>
+                    <TableTd>$ {((order.items[0].price *order.items[0].quantity)*0.15).toFixed(2)}</TableTd>
                   </TableTr>
                 );
               })}
@@ -237,7 +246,7 @@ const Admin = () => {
                 return(
                   <TableTr>
                 <TableTd>{i+1}</TableTd>
-                <TableTd>{user.userName}</TableTd>
+                <TableTd>{user.username}</TableTd>
                 <TableTd>{user.email}</TableTd>
                 {user.role === 1   ?
                 <TableTd>Buyer</TableTd>
@@ -247,7 +256,7 @@ const Admin = () => {
                 <TableTd>
                   {" "}
                   <CloseIcon onClick={()=>{
-                    deleteUser(user._id, user.userName)
+                    deleteUser(user._id, user.username)
                   }} />
                 </TableTd>
               </TableTr>

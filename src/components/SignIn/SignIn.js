@@ -19,6 +19,7 @@ import {
   FormSelectOption,
 } from "./SignIn.elements";
 
+
 const SignIn = ({ setIsloggedIn }) => {
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -35,7 +36,9 @@ const SignIn = ({ setIsloggedIn }) => {
       withCredentials: true,
       url: "/login",
     }).then((res) => {
-      if (res.data.err) alert(res.data.err);
+      if (res.data.err){
+        Swal.fire('Warning', res.data.err, 'warning')
+      }
       else if(res.data.unVerified){
         Swal.fire('Your account is under Admin verification.', 'Wait until Admin approves','warning')
         history.push('/')

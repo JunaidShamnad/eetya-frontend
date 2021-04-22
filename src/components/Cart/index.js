@@ -28,6 +28,7 @@ import {
   MainCountTitle,
 } from "./Cart.elements";
 import Axios from "../../axios";
+import Swal from "sweetalert2"
 
 const Cart = () => {
   const [count, setCount] = useState(0);
@@ -85,18 +86,7 @@ const Cart = () => {
     });
   };
 
-  const refreshPrice = () => {
-    let Total = 0;
-    console.log(cart);
-    cart.map((item, i) => {
-      let price = item.price * item.quantity;
-      console.log(price);
-      Total = Total + price;
-      console.log(Total);
-    });
-    settotalPrice(Total);
-  };
-
+  
   const deleteItem = (prodId, userId)=>{
     Axios({
         url:'/buyer/removeItem',
@@ -105,10 +95,51 @@ const Cart = () => {
     }).then((res)=>{
         if(!res.data.err){
             console.log(res.data);
-            setCart(res.data.cart.items)
-        }
+            setCart(res.data.items)
+        }else{}
     })
   }
+
+  const checkout = () => {
+    let userId = JSON.parse(localStorage.getItem("user")).user._id;
+    Swal.fire({
+      title: "Are you sure?",
+      text: `The items will be ordered`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Order!",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        Axios({
+          method: "POST",
+          url: "/order/checkout",
+          data: {
+            userId:userId,
+            userEmail:JSON.parse(localStorage.getItem("user")).user.email
+          },
+        }).then((res) => {
+          if (!res.data.status) {
+            Swal.showValidationMessage(`something went wrong`);
+          }else{
+            Swal.fire(
+              'Item Ordered',
+              `Dealers will contact you soon..`,
+              'success'
+            ).then((e)=>{
+              if(e.isConfirmed){
+                window.location.href='/home'
+              }else if(e.isDismissed){
+                window.location.href='/home'
+              }
+            })
+            
+          }
+        });
+      },
+    });
+  };
 
   return (
     <>
@@ -118,6 +149,7 @@ const Cart = () => {
         {cart === null ? (
           <h2>you dont have any items</h2>
         ) : (
+          <>
           <TableDiv>
             <Boxtitle>All Orders</Boxtitle>
             <TableContainer>
@@ -179,17 +211,19 @@ const Cart = () => {
               </TableTag>
             </TableContainer>
           </TableDiv>
-        )}
-        <TableDiv>
+          <TableDiv>
           <CartTotalContainer>
             <PriceTitle>Total</PriceTitle>
             <RightDiv>
               <CartTotalText> $ {totalPrice} </CartTotalText>
 
-              <FormButton onClick={refreshPrice}>Checkout</FormButton>
+              <FormButton onClick={checkout}>Checkout</FormButton>
             </RightDiv>
           </CartTotalContainer>
         </TableDiv>
+        </>
+        )}
+        
       </MainDiv>
     </>
   );

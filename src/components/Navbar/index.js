@@ -59,6 +59,7 @@ const Navbar = ({ toggle }) => {
       method:'post',
       data:{userId:JSON.parse(localStorage.getItem('user')).user._id}
     }).then((res)=>{
+      console.log(res.data);
         setCartCount(res.data.count)
     })
     

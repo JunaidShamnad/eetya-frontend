@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "proxy": "https://eetya.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,11 +10,13 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "firebase-tools": "^9.9.0",
     "googleapis": "^70.0.0",
     "gsap": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "prop-types": "^15.7.2",
+    "querystring": "^0.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropdown": "^1.9.2",

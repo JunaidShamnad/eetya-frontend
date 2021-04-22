@@ -17,7 +17,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if(!userData){
-      history.push('/signin')
+      history.push('/')
     }else{
       history.push('/home')
     }

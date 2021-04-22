@@ -1,4 +1,5 @@
 import React from "react";
+import ImageOne from "../../images/eetya-new.png";
 
 import {
   Arrow,
@@ -30,16 +31,16 @@ const Home = () => {
 
         <ShopCircle to="/home">Shop</ShopCircle>
         <LinkContainer>
-          <LinkText>Jackets</LinkText>
+          <LinkText to="/products">Gadgets</LinkText>
           <Arrow />
-          <LinkText className="sweaters">
-            Sweaters <LinkArrow />
+          <LinkText to="/products" className="sweaters">
+          Books<LinkArrow to="/products" />
           </LinkText>
           <Arrow />
-          <LinkText>Jeans</LinkText>
+          <LinkText to="/products">Food Items</LinkText>
         </LinkContainer>
 
-        <MainImage />
+        <MainImage src={ImageOne} />
       </HomeContainer>
      
     </>

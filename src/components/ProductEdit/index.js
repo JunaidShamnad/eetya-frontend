@@ -165,7 +165,7 @@ const ProductEdit = () => {
                 type='number'
               />
 
-              <Formlabel htmlFor='file'>Upload Image </Formlabel>
+              {/* <Formlabel htmlFor='file'>Upload Image </Formlabel>
               <FileBase
                 className='fileUpload'
                 type='file'
@@ -187,7 +187,7 @@ const ProductEdit = () => {
                   })
                   setFile(arry)
                 }}
-              />
+              /> */}
               <ButtonDiv>
                 <BuyButton type='submit' onClick={editProducts}>
                   Update
