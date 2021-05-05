@@ -45,7 +45,7 @@ const ForgotPassword = () => {
       method: 'POST'
     }).then((res)=>{
       if(!res.data.status){
-        setEmailErr("Something went wrong try agin later.")
+        setEmailErr("email ID not found")
         return
       }
     setSubmitBtn('submit')
