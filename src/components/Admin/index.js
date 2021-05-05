@@ -1,8 +1,7 @@
 import Axios from "../../axios";
 import React, { useState, useEffect } from "react";
-import Swal from 'sweetalert2'
-
-import { Form, FormInput, Formlabel } from '../SignUp/SignUp.elements'
+import Swal from "sweetalert2";
+import styled from "styled-components";
 
 import {
   Button,
@@ -19,13 +18,33 @@ import {
   TickIcon,
 } from "./Admin.elements";
 
+const TableDivTwo = styled.div`
+  background: #0d0d0f;
+  padding: 80px;
+  min-width: 90vw;
+  overflow-x: auto;
+  max-width: 90vw;
+  margin-bottom: 8%;
+  border-radius: 4px;
+  margin: 10px auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  @media screen and (max-width: 680px) {
+    min-width: 100%;
+    flex-direction: column;
+    max-width: 100%;
+  }
+`;
+
 const Admin = () => {
   const [newUsers, setnewUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
-  const [newEmail,setNewEmail] = useState('admin@')
+  const [newEmail, setNewEmail] = useState("admin@");
 
   useEffect(() => {
     Axios({
@@ -57,18 +76,14 @@ const Admin = () => {
     });
 
     Axios({
-      url: '/admin/email',
-      method: 'GET',
+      url: "/admin/email",
+      method: "GET",
       withCredentials: true,
     }).then((res) => {
-      console.log(res)
-      setNewEmail(res.data)
-    })
-
-
+      console.log(res);
+      setNewEmail(res.data);
+    });
   }, []);
-
-  
 
   const getNewUsers = () => {
     Axios({
@@ -103,15 +118,15 @@ const Admin = () => {
     });
   };
 
-  const deleteUser = (id, name)=>{
+  const deleteUser = (id, name) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: name+" will be deleted. You won't be able to revert this!",
-      icon: 'warning',
+      title: "Are you sure?",
+      text: name + " will be deleted. You won't be able to revert this!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         Axios({
@@ -119,44 +134,20 @@ const Admin = () => {
           data: { id: id },
           method: "post",
         }).then((res) => {
-          if(res.data.status){
+          if (res.data.status) {
             Axios({
               url: "/admin/users",
               method: "get",
             }).then((res) => {
               setAllUsers(res.data);
-              Swal.fire(
-                'Deleted!',
-                name+' has been deleted.',
-                'success'
-              )
+              Swal.fire("Deleted!", name + " has been deleted.", "success");
             });
           }
         });
-        
       }
-    })
-    
-  }
+    });
+  };
 
-  
-
-  const emailChangeHandler = async() => {
-    console.log(newEmail)
-    Axios({
-      url: '/admin/email',
-      data: { newEmail: newEmail },
-      method: 'post',
-      withCredentials:true
-    }).then((res) => {
-      if (res.data.status) {
-        console.log('Email Updated')
-        
-      } else {
-        console.log('Email not updated');
-      }
-    })
-  }
   return (
     <>
       <MainDiv>
@@ -188,19 +179,19 @@ const Admin = () => {
                     <TableTd>
                       <TickIcon
                         onClick={() => {
-                          accept(newUser._id)
+                          accept(newUser._id);
                         }}
                       />
                     </TableTd>
                     <TableTd>
                       <CloseIcon
                         onClick={() => {
-                          reject(newUser._id)
+                          reject(newUser._id);
                         }}
                       />
                     </TableTd>
                   </TableTr>
-                )
+                );
               })}
             </TableTag>
           </TableContainer>
@@ -231,7 +222,7 @@ const Admin = () => {
                       ${order.items[0].price * order.items[0].quantity}
                     </TableTd>
                     <TableTd>
-                      ${' '}
+                      ${" "}
                       {(
                         order.items[0].price *
                         order.items[0].quantity *
@@ -239,7 +230,7 @@ const Admin = () => {
                       ).toFixed(2)}
                     </TableTd>
                   </TableTr>
-                )
+                );
               })}
             </TableTag>
           </TableContainer>
@@ -264,7 +255,7 @@ const Admin = () => {
                     <TableTd>{product.maxQuantity}</TableTd>
                     <TableTd>$ {product.price}</TableTd>
                   </TableTr>
-                )
+                );
               })}
             </TableTag>
           </TableContainer>
@@ -292,22 +283,22 @@ const Admin = () => {
                       <TableTd>Dealer</TableTd>
                     )}
                     <TableTd>
-                      {' '}
+                      {" "}
                       <CloseIcon
                         onClick={() => {
-                          deleteUser(user._id, user.username)
+                          deleteUser(user._id, user.username);
                         }}
                       />
                     </TableTd>
                   </TableTr>
-                )
+                );
               })}
             </TableTag>
           </TableContainer>
         </TableDiv>
 
         {/* change email */}
-        <TableDiv>
+        {/* <TableDiv>
           <Boxtitle>Change Email</Boxtitle>
           <Form>
             <FormInput
@@ -318,14 +309,15 @@ const Admin = () => {
             />
           </Form>
           <Button onClick={emailChangeHandler}>Change</Button>
-        </TableDiv>
-
-        <Button to='/news-letter'>Post NewsLetter</Button>
-        <Button to='/products'>Product Page</Button>
+        </TableDiv> */}
+        <TableDivTwo>
+          <Button to="/news-letter">Post NewsLetter</Button>
+          <Button to="/products">Product Page</Button>
+          <Button to="/change-admin-email">Change Email</Button>
+        </TableDivTwo>
       </MainDiv>
     </>
-  )
+  );
 };
 
 export default Admin;
-

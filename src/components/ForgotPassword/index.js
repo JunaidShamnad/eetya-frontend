@@ -83,6 +83,8 @@ const ForgotPassword = () => {
           setNewPassInput(true)
           setOtpInput(false)
           setFunctionTrigger(3)
+        }else{
+          setOtpErr('Invalid OTP!')
         }
       })
     }
