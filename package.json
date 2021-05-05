@@ -1,6 +1,5 @@
 {
   "name": "client",
-  "proxy": "https://eetya.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,6 +21,7 @@
     "react-dropdown": "^1.9.2",
     "react-file-base64": "^1.0.3",
     "react-icons": "^4.2.0",
+    "react-otp-input": "^2.3.0",
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
