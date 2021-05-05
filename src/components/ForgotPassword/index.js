@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Container,
-  Form,
   FormButton,
   FormContent,
   FormH1,
@@ -12,6 +11,7 @@ import {
 } from "../../components/SignIn/SignIn.elements";
 import OtpInput from "react-otp-input";
 import Axios from "../../axios";
+import { Form } from "./ForgotPassword.elements";
 
 
 const ForgotPassword = () => {
