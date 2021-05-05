@@ -2,6 +2,8 @@ import Axios from "../../axios";
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2'
 
+import { Form, FormInput, Formlabel } from '../SignUp/SignUp.elements'
+
 import {
   Button,
   MainDiv,
@@ -23,6 +25,8 @@ const Admin = () => {
   const [products, setProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
+  const [newEmail,setNewEmail] = useState('admin@')
+
   useEffect(() => {
     Axios({
       url: "/admin/new-users",
@@ -36,7 +40,6 @@ const Admin = () => {
       method: "get",
     }).then((res) => {
       setOrders(res.data);
-      console.log(res.data);
     });
 
     Axios({
@@ -52,6 +55,17 @@ const Admin = () => {
     }).then((res) => {
       setAllUsers(res.data);
     });
+
+    Axios({
+      url: '/admin/email',
+      method: 'GET',
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res)
+      setNewEmail(res.data)
+    })
+
+
   }, []);
 
   
@@ -124,28 +138,45 @@ const Admin = () => {
     })
     
   }
+
+  
+
+  const emailChangeHandler = async() => {
+    console.log(newEmail)
+    Axios({
+      url: '/admin/email',
+      data: { newEmail: newEmail },
+      method: 'post',
+      withCredentials:true
+    }).then((res) => {
+      if (res.data.status) {
+        console.log('Email Updated')
+        
+      } else {
+        console.log('Email not updated');
+      }
+    })
+  }
   return (
     <>
       <MainDiv>
         <AdminTitle>Admin Page</AdminTitle>
 
-        
         <TableDiv>
-              <Boxtitle>New Users</Boxtitle>
-              <TableContainer>
-                <TableTag>
-                  <TableTr>
-                    <TableTh>User Name</TableTh>
-                    <TableTh>Email</TableTh>
-                    <TableTh>Mobile Number</TableTh>
-                    <TableTh>Role</TableTh>
-                    <TableTh></TableTh>
-                    <TableTh></TableTh>
-                  </TableTr>
-        {newUsers.map((newUser, index) => {
-          return (
-            
-                  <TableTr>
+          <Boxtitle>New Users</Boxtitle>
+          <TableContainer>
+            <TableTag>
+              <TableTr>
+                <TableTh>User Name</TableTh>
+                <TableTh>Email</TableTh>
+                <TableTh>Mobile Number</TableTh>
+                <TableTh>Role</TableTh>
+                <TableTh></TableTh>
+                <TableTh></TableTh>
+              </TableTr>
+              {newUsers.map((newUser, index) => {
+                return (
+                  <TableTr key={newUser.email}>
                     <TableTd>{newUser.username}</TableTd>
                     <TableTd>{newUser.email}</TableTd>
                     <TableTd>{newUser.primaryPhone}</TableTd>
@@ -157,24 +188,23 @@ const Admin = () => {
                     <TableTd>
                       <TickIcon
                         onClick={() => {
-                          accept(newUser._id);
+                          accept(newUser._id)
                         }}
                       />
                     </TableTd>
                     <TableTd>
                       <CloseIcon
                         onClick={() => {
-                          reject(newUser._id);
+                          reject(newUser._id)
                         }}
                       />
                     </TableTd>
                   </TableTr>
-                
-          );
-        })}
-        </TableTag>
-              </TableContainer>
-            </TableDiv>
+                )
+              })}
+            </TableTag>
+          </TableContainer>
+        </TableDiv>
 
         <TableDiv>
           <Boxtitle>All Orders</Boxtitle>
@@ -191,16 +221,25 @@ const Admin = () => {
               </TableTr>
               {orders.map((order, i) => {
                 return (
-                  <TableTr>
+                  <TableTr key={i}>
                     <TableTh>{i + 1}</TableTh>
                     <TableTd>{order.dealerName}</TableTd>
                     <TableTd>{order.dealerPhone}</TableTd>
                     <TableTd>{order.retailerName}</TableTd>
                     <TableTd>{order.items[0].name}</TableTd>
-                    <TableTd>${order.items[0].price *order.items[0].quantity  }</TableTd>
-                    <TableTd>$ {((order.items[0].price *order.items[0].quantity)*0.15).toFixed(2)}</TableTd>
+                    <TableTd>
+                      ${order.items[0].price * order.items[0].quantity}
+                    </TableTd>
+                    <TableTd>
+                      ${' '}
+                      {(
+                        order.items[0].price *
+                        order.items[0].quantity *
+                        0.15
+                      ).toFixed(2)}
+                    </TableTd>
                   </TableTr>
-                );
+                )
               })}
             </TableTag>
           </TableContainer>
@@ -216,18 +255,17 @@ const Admin = () => {
                 <TableTh>Max. Quantity</TableTh>
                 <TableTh>Price</TableTh>
               </TableTr>
-              {products.map((product, i)=>{
-                return(
-                  <TableTr>
-                <TableTd>{i+1}</TableTd>
-                <TableTd>{product.title}</TableTd>
-                <TableTd>{product.minQuantity}</TableTd>
-                <TableTd>{product.maxQuantity}</TableTd>
-                <TableTd>$ {product.price}</TableTd>
-              </TableTr>
+              {products.map((product, i) => {
+                return (
+                  <TableTr key={i}>
+                    <TableTd>{i + 1}</TableTd>
+                    <TableTd>{product.title}</TableTd>
+                    <TableTd>{product.minQuantity}</TableTd>
+                    <TableTd>{product.maxQuantity}</TableTd>
+                    <TableTd>$ {product.price}</TableTd>
+                  </TableTr>
                 )
               })}
-              
             </TableTag>
           </TableContainer>
         </TableDiv>
@@ -242,36 +280,51 @@ const Admin = () => {
                 <TableTh>Role</TableTh>
                 <TableTh></TableTh>
               </TableTr>
-              {allUsers.map((user, i)=>{
-                return(
-                  <TableTr>
-                <TableTd>{i+1}</TableTd>
-                <TableTd>{user.username}</TableTd>
-                <TableTd>{user.email}</TableTd>
-                {user.role === 1   ?
-                <TableTd>Buyer</TableTd>
-                :
-                <TableTd>Dealer</TableTd>
-              }
-                <TableTd>
-                  {" "}
-                  <CloseIcon onClick={()=>{
-                    deleteUser(user._id, user.username)
-                  }} />
-                </TableTd>
-              </TableTr>
+              {allUsers.map((user, i) => {
+                return (
+                  <TableTr key={i}>
+                    <TableTd>{i + 1}</TableTd>
+                    <TableTd>{user.username}</TableTd>
+                    <TableTd>{user.email}</TableTd>
+                    {user.role === 1 ? (
+                      <TableTd>Buyer</TableTd>
+                    ) : (
+                      <TableTd>Dealer</TableTd>
+                    )}
+                    <TableTd>
+                      {' '}
+                      <CloseIcon
+                        onClick={() => {
+                          deleteUser(user._id, user.username)
+                        }}
+                      />
+                    </TableTd>
+                  </TableTr>
                 )
-                
               })}
             </TableTag>
           </TableContainer>
         </TableDiv>
 
-        <Button to="/news-letter">Post NewsLetter</Button>
-        <Button to="/products">Product Page</Button>
+        {/* change email */}
+        <TableDiv>
+          <Boxtitle>Change Email</Boxtitle>
+          <Form>
+            <FormInput
+              placeholder={newEmail}
+              required
+              type='text'
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+          </Form>
+          <Button onClick={emailChangeHandler}>Change</Button>
+        </TableDiv>
+
+        <Button to='/news-letter'>Post NewsLetter</Button>
+        <Button to='/products'>Product Page</Button>
       </MainDiv>
     </>
-  );
+  )
 };
 
 export default Admin;

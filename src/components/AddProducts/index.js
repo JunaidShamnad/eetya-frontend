@@ -53,7 +53,7 @@ const AddProduct = () => {
   const history = useHistory();
 
   let sampleImg =
-    "https://freepikpsd.com/wp-content/uploads/2019/10/no-image-png-5-Transparent-Images.png";
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
   const [{ altOne, srcOne }, setImgOne] = useState({
     srcOne: sampleImg,
     altOne: "Image 1 preview",

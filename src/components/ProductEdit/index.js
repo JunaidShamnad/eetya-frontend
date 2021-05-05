@@ -63,6 +63,7 @@ const ProductEdit = () => {
     })
   }
   useEffect(() => {
+    console.log('get here');
     Axios.post('/getProduct-edit', { Id: id }).then((res) =>
       setOldProduct(res.data)
     )
