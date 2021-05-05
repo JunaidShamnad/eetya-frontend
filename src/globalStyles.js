@@ -11,6 +11,15 @@ const GlobalStyle = createGlobalStyle`
  html,body{
    overflow-x:hidden;
  }
+ 
+ .inputStyle {
+  width: 3rem !important;
+  height: 3rem;
+  margin: 0 1rem;
+  font-size: 2rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.3);
+}
 `;
 
 export default GlobalStyle;
