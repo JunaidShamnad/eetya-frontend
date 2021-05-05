@@ -12,16 +12,23 @@ import {
 import OtpInput from "react-otp-input";
 import Axios from "../../axios";
 import { Form } from "./ForgotPassword.elements";
+import Swal from "sweetalert2"
+
 
 
 const ForgotPassword = () => {
   const [newpassInput, setNewPassInput] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
   const [otpInput, setOtpInput] = useState('');
   const [emailErr, setEmailErr] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState('');
   const [otpErr, setOtpErr] = useState(false);
   const [submitBtn, setSubmitBtn] = useState('change');
+  const [functionTrigger, setFunctionTrigger] = useState(1);
+  const [passwordErr, setPasswordErr] = useState('');
+
+  
 
   function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -51,6 +58,7 @@ const ForgotPassword = () => {
     setSubmitBtn('submit')
     setEmailErr("");
     setOtpInput(true);
+    setFunctionTrigger(2)
     })
 
 
@@ -59,12 +67,49 @@ const ForgotPassword = () => {
 
   const submitOtp = () => {
     if(otp == ''){
-      setOtpErr('Enter OTP');
+       setOtpErr('Enter OTP');
+       return
     }else{
       setOtpErr(false);
-
+      if(otp.length < 5){
+        return setOtpErr('invalid !')
+      }
+      Axios({
+        url:'buyer/change-pass-verify',
+        data:{email:email, otp:otp},
+        method:'POST'
+      }).then((res)=>{
+        if(res.data.status){
+          setNewPassInput(true)
+          setOtpInput(false)
+          setFunctionTrigger(3)
+        }
+      })
     }
+
+
   };
+
+  const submitNewPass = ()=>{
+    if(newPassword ===''){
+      setPasswordErr('Password is required')
+      return
+    }else{
+      setPasswordErr('')
+    }
+
+    Axios({
+      url:'buyer/change-pass-update',
+      data:{email:email, password:newPassword},
+      method:'POST'
+    }).then((res)=>{
+      if(res.data.status){
+        Swal.fire('Password updated succesfully', 'You can now login with your new passsword', 'success').then(()=>{window.location.href='/signin'})
+      }else{
+        Swal.fire('Failed', 'Something went wrong try again later ..', 'warning')
+      }
+    })
+  }
 
   const handleChange = (otp) => setOtp(otp);
 
@@ -98,6 +143,7 @@ const ForgotPassword = () => {
                 hasErrored={otpErr}
                 onChange={handleChange}
                 numInputs={6}
+                isDisabled={newpassInput}
                 separator={<span style={{ color: "white" }}>-</span>}
               />
               {otpErr !='' ? (
@@ -106,18 +152,26 @@ const ForgotPassword = () => {
               </div>
               
               <FormInput
-                style={newpassInput ? { display: "flex" } : { display: "none" }}
+                style={newpassInput ? { display: "flex", marginTop:'20px' } : { display: "none" }}
                 type="text"
                 placeholder="New Password"
+                onChange={(e) =>{
+                  setNewPassword(e.target.value)
+                }}
               />
+              {passwordErr !='' ? (
+                <p style={{ color: "red", textalign: "center" }}>{passwordErr}</p>
+              ) : null}
 
               <FormButton
                 onClick={(e) => {
                   e.preventDefault();
-                  if (!otpInput) {
+                  if (functionTrigger ===1) {
                     sendEmail();
-                  } else if (otpInput) {
+                  } else if (functionTrigger === 2) {
                     submitOtp();
+                  }else if(functionTrigger===3){
+                    submitNewPass();
                   }
                 }}
               >

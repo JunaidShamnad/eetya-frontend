@@ -9,6 +9,7 @@ export const Form = styled.form`
   z-index: 1;
   display: grid;
   margin: 0 auto;
+  justify-content: center;
   padding: 80px 32px;
   border-radius: 4px;
   @media screen and (max-width: 400px) {
